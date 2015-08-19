@@ -54,10 +54,10 @@ while not finished:
 
     if ballY - Radius <= 0:
         finished = True
-        print("initial velocity: " + str(velocity))
-        print("angle throw: " + str(angle))
-        print("seconds in flight: " + str(seconds))
-        print("Distance in the X direction: " + str(ballX))
+        print "initial velocity: " + str(velocity)
+        print "angle throw: " + str(angle)
+        print "seconds in flight: " + str(seconds)
+        print "Distance in the X direction: " + str(ballX)
         
 
 
