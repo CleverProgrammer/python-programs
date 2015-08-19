@@ -1,0 +1,11 @@
+kids = input("Enter the number of kids: ")
+hoursWorked = input("Enter the number of hours worked:")
+remainder = kids-6
+pay = 35
+contract_pay = 3*(remainder)
+actualPay = pay+contract_pay
+print actualPay*(hoursWorked)
+
+
+
+
