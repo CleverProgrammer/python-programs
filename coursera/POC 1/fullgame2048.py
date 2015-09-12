@@ -138,5 +138,5 @@ class TestFullGame2048(unittest.TestCase):
         self.assertEqual(merge([8, 16, 16, 8, 2, 6]), [8, 32, 8, 2, 6, 0])
 
 
-if __name__ == '__main__':
-    unittest.main()
+suite = unittest.TestLoader().loadTestsFromTestCase(TestFullGame2048)
+unittest.TextTestRunner(verbosity=2).run(suite)
