@@ -8,6 +8,7 @@ Created on Sat Sep 12 01:41:42 2015
 """
 Clone of 2048 game.
 """
+from random import randint
 import unittest
 #import poc_2048_gui
 
@@ -70,7 +71,6 @@ class TwentyFortyEight:
         self._columns = grid_width
         self.board = self.reset()
 
-
     def reset(self):
         """
         Reset the game so the grid is empty except for two
@@ -84,25 +84,22 @@ class TwentyFortyEight:
         """
         Return a string representation of the grid for debugging.
         """
-        grid = self.board
-        dummy_grid = ''
-        for i in grid:
-            dummy_grid += "\n" + str(i)
-        return dummy_grid
+        string_grid = ''
+        for i in self.board:
+            string_grid += "\n" + str(i)
+        return "\n\n A %s x %s board %s \n" %(self._rows,self._columns,string_grid)
 
     def get_grid_height(self):
         """
         Get the height of the board.
         """
-        # replace with your code
-        return 0
+        return self._rows
 
     def get_grid_width(self):
         """
         Get the width of the board.
         """
-        # replace with your code
-        return 0
+        return self._columns
 
     def move(self, direction):
         """
@@ -118,8 +115,14 @@ class TwentyFortyEight:
         square.  The tile should be 2 90% of the time and
         4 10% of the time.
         """
-        # replace with your code
-        pass
+        tile_row = randint(0, self._rows-1)
+        tile_col = randint(0, self._columns-1)
+        value = 2
+        if randint(1,10) == 10:  # 10% chance of being 4.
+            value = 4
+        if self.board[tile_row][tile_col] == 0:
+            self.board[tile_row][tile_col] = value
+        return value  # self.board
 
     def set_tile(self, row, col, value):
         """
@@ -139,6 +142,9 @@ class TwentyFortyEight:
 #poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
 class TestFullGame2048(unittest.TestCase):
 
+
+
+
     def testMerge(self):
         self.assertEqual(merge([0, 0, 2, 2]), [4, 0, 0, 0])
         self.assertEqual(merge([2, 0, 2, 4]), [4, 4, 0, 0])
@@ -149,7 +155,28 @@ class TestFullGame2048(unittest.TestCase):
 
     def test__init__(self):
         self.assertIsInstance(TwentyFortyEight(5, 5), TwentyFortyEight)
+
+    def test__str__(self):
+        self.assertIsInstance(TwentyFortyEight(5, 5).__str__(), str)
         print(TwentyFortyEight(5, 5))
+
+    def test_get_grid_height(self):
+        self.assertEqual(TwentyFortyEight(3,5).get_grid_height(), 3)
+        self.assertEqual(TwentyFortyEight(20,5).get_grid_height(), 20)
+        self.assertNotEqual(TwentyFortyEight(5,20).get_grid_height(), 20)
+
+    def test_get_grid_width(self):
+        self.assertEqual(TwentyFortyEight(3,20).get_grid_width(), 20)
+        self.assertEqual(TwentyFortyEight(20,5).get_grid_width(), 5)
+        self.assertNotEqual(TwentyFortyEight(5,20).get_grid_width(), 5)
+
+    def test_new_tile(self):
+        probability = [TwentyFortyEight(5, 5).new_tile() for i in range(1000)]
+        self.assertLess(probability.count(4), len(probability)*.15)
+        print(TwentyFortyEight(5, 5).new_tile())
+        #self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), int)
+
+
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestFullGame2048)
 unittest.TextTestRunner(verbosity=2).run(suite)
