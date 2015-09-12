@@ -24,6 +24,7 @@ OFFSETS = {UP: (1, 0),
            LEFT: (0, 1),
            RIGHT: (0, -1)}
 
+
 def merge(line):
     """
     Helper function that merges a single row or column in 2048
@@ -65,9 +66,9 @@ class TwentyFortyEight:
         """
         Initializing the board
         """
-        self.
-        self.board = [[row+col for col in range(grid_width)] \
-                         for row in range(grid_height)]
+        self._rows = grid_height
+        self._columns = grid_width
+        self.board = self.reset()
 
 
     def reset(self):
@@ -75,15 +76,19 @@ class TwentyFortyEight:
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-
-        pass
+        self.grid = [[0 for col in range(self._columns)] \
+                         for row in range(self._rows)]
+        return self.grid
 
     def __str__(self):
         """
         Return a string representation of the grid for debugging.
         """
-        # replace with your code
-        return ""
+        grid = self.board
+        dummy_grid = ''
+        for i in grid:
+            dummy_grid += "\n" + str(i)
+        return dummy_grid
 
     def get_grid_height(self):
         """
@@ -134,7 +139,7 @@ class TwentyFortyEight:
 #poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
 class TestFullGame2048(unittest.TestCase):
 
-    def test_merge(self):
+    def testMerge(self):
         self.assertEqual(merge([0, 0, 2, 2]), [4, 0, 0, 0])
         self.assertEqual(merge([2, 0, 2, 4]), [4, 4, 0, 0])
         self.assertEqual(merge([2, 2, 0, 0]), [4, 0, 0, 0])
@@ -142,6 +147,9 @@ class TestFullGame2048(unittest.TestCase):
         self.assertEqual(merge([8, 16, 16, 8]), [8, 32, 8, 0])
         self.assertEqual(merge([8, 16, 16, 8, 2, 6]), [8, 32, 8, 2, 6, 0])
 
+    def test__init__(self):
+        self.assertIsInstance(TwentyFortyEight(5, 5), TwentyFortyEight)
+        print(TwentyFortyEight(5, 5))
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestFullGame2048)
 unittest.TextTestRunner(verbosity=2).run(suite)
