@@ -83,7 +83,7 @@ class TwentyFortyEight:
         Return a string representation of the grid for debugging.
         """
         title = "\n\n A %s x %s board" %(self._rows,self._columns)
-        return title + "".join(["\n" + str(col) for col in self.board])+"\n"
+        return title + "".join(["\n" + str(col) for col in self.board])
 
 
     def get_grid_height(self):
@@ -151,7 +151,7 @@ class TestFullGame2048(unittest.TestCase):
 
     def test__str__(self):
         self.assertIsInstance(TwentyFortyEight(5, 5).__str__(), str)
-        print(TwentyFortyEight(5, 5))
+        print("\n\nNew Game" + str(TwentyFortyEight(5, 5)))
 
     def test_get_grid_height(self):
         self.assertEqual(TwentyFortyEight(3, 5).get_grid_height(), 3)
@@ -168,12 +168,15 @@ class TestFullGame2048(unittest.TestCase):
         self.assertLess(probability.count(4), len(probability)*.15)
         a = TwentyFortyEight(5, 5)
         a.new_tile()
-        print(a.board)
+        print(" \nnew_tile function" + str(a))
         self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), tuple)
 
     def test_set_tile(self):
         self.assertIsInstance(TwentyFortyEight(5, 5).set_tile(3, 1, 5), list)
-        print(TwentyFortyEight(5, 5).set_tile(3, 1, 5))
+        a = TwentyFortyEight(5, 5)
+        a.set_tile(3, 1, 5)
+        self.assertEqual(a.board[3][1], 5)
+        print(" \nset_tile function" + str(a))
 
     def test_get_tile(self):
         a = TwentyFortyEight(5, 5)
