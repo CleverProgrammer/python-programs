@@ -40,23 +40,20 @@ def merge(line):
     >>> merge([8, 16, 16, 8])
     [8, 32, 8, 0]
     """
+    slide = [num for num in line if num]
     pairs = []
-    prev = None
-    for num in line:
-        if not num:
-            continue
-        if prev is None:
-            prev = num
-        elif num == prev:
-            pairs.append(num+prev)
-            prev = None
+    for i, num in enumerate(slide):
+        if i == len(slide)-1:
+            pairs.append(num)
+            break
+        elif num == slide[i+1]:
+            pairs.append(num*2)
+            slide[i+1] = None
         else:
-            pairs.append(prev)
-            prev = num
-    if prev is not None:  # Append last value if non-zero
-        pairs.append(prev)
-    pairs.extend([0] * (len(line) - len(pairs)))
-    return pairs
+            pairs.append(num)
+    slide = [pair for pair in pairs if pair]
+    slide.extend([0] * (len(line) - len(slide)))
+    return slide
 
 class TwentyFortyEight:
     """
@@ -139,11 +136,8 @@ class TwentyFortyEight:
         return 0
 
 
-#poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
+# poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
 class TestFullGame2048(unittest.TestCase):
-
-
-
 
     def testMerge(self):
         self.assertEqual(merge([0, 0, 2, 2]), [4, 0, 0, 0])
@@ -161,22 +155,20 @@ class TestFullGame2048(unittest.TestCase):
         print(TwentyFortyEight(5, 5))
 
     def test_get_grid_height(self):
-        self.assertEqual(TwentyFortyEight(3,5).get_grid_height(), 3)
-        self.assertEqual(TwentyFortyEight(20,5).get_grid_height(), 20)
-        self.assertNotEqual(TwentyFortyEight(5,20).get_grid_height(), 20)
+        self.assertEqual(TwentyFortyEight(3, 5).get_grid_height(), 3)
+        self.assertEqual(TwentyFortyEight(20, 5).get_grid_height(), 20)
+        self.assertNotEqual(TwentyFortyEight(5, 20).get_grid_height(), 20)
 
     def test_get_grid_width(self):
-        self.assertEqual(TwentyFortyEight(3,20).get_grid_width(), 20)
-        self.assertEqual(TwentyFortyEight(20,5).get_grid_width(), 5)
-        self.assertNotEqual(TwentyFortyEight(5,20).get_grid_width(), 5)
+        self.assertEqual(TwentyFortyEight(3, 20).get_grid_width(), 20)
+        self.assertEqual(TwentyFortyEight(20, 5).get_grid_width(), 5)
+        self.assertNotEqual(TwentyFortyEight(5, 20).get_grid_width(), 5)
 
     def test_new_tile(self):
         probability = [TwentyFortyEight(5, 5).new_tile() for i in range(1000)]
         self.assertLess(probability.count(4), len(probability)*.15)
         print(TwentyFortyEight(5, 5).new_tile())
         #self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), int)
-
-
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestFullGame2048)
 unittest.TextTestRunner(verbosity=2).run(suite)
