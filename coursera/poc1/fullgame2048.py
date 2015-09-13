@@ -8,6 +8,7 @@ Created on Sat Sep 12 01:41:42 2015
 """
 Clone of 2048 game.
 """
+
 from random import randint
 import unittest
 #import poc_2048_gui
@@ -81,10 +82,9 @@ class TwentyFortyEight:
         """
         Return a string representation of the grid for debugging.
         """
-        string_grid = ''
-        for i in self.board:
-            string_grid += "\n" + str(i)
-        return "\n\n A %s x %s board %s \n" %(self._rows,self._columns,string_grid)
+        title = "\n\n A %s x %s board" %(self._rows,self._columns)
+        return title + "".join(["\n" + str(col) for col in self.board])+"\n"
+
 
     def get_grid_height(self):
         """
@@ -115,25 +115,24 @@ class TwentyFortyEight:
         tile_row = randint(0, self._rows-1)
         tile_col = randint(0, self._columns-1)
         value = 2
-        if randint(1,10) == 10:  # 10% chance of being 4.
+        if randint(1, 10) == 10:  # 10% chance of being 4.
             value = 4
         if self.board[tile_row][tile_col] == 0:
             self.board[tile_row][tile_col] = value
-        return value  # self.board
+        return value, self.board
 
     def set_tile(self, row, col, value):
         """
         Set the tile at position row, col to have the given value.
         """
-        # replace with your code
-        pass
+        self.board[row][col] = value
+        return self.board
 
     def get_tile(self, row, col):
         """
         Return the value of the tile at position row, col.
         """
-        # replace with your code
-        return 0
+        return self.board[row][col]
 
 
 # poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
@@ -167,8 +166,19 @@ class TestFullGame2048(unittest.TestCase):
     def test_new_tile(self):
         probability = [TwentyFortyEight(5, 5).new_tile() for i in range(1000)]
         self.assertLess(probability.count(4), len(probability)*.15)
-        print(TwentyFortyEight(5, 5).new_tile())
-        #self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), int)
+        a = TwentyFortyEight(5, 5)
+        a.new_tile()
+        print(a.board)
+        self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), tuple)
+
+    def test_set_tile(self):
+        self.assertIsInstance(TwentyFortyEight(5, 5).set_tile(3, 1, 5), list)
+        print(TwentyFortyEight(5, 5).set_tile(3, 1, 5))
+
+    def test_get_tile(self):
+        a = TwentyFortyEight(5, 5)
+        a.set_tile(3, 1, 5)
+        self.assertEqual(a.get_tile(3, 1), 5)
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestFullGame2048)
 unittest.TextTestRunner(verbosity=2).run(suite)
