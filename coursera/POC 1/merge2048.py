@@ -4,7 +4,6 @@ Created on Thu Sep  3 17:55:56 2015
 merge2048.py
 @author: Rafeh
 """
-import unittest
 
 
 def merge(nums):
@@ -41,6 +40,7 @@ def merge(nums):
         pairs.append(prev)
     pairs.extend([0] * (len(nums) - len(pairs)))
     return pairs
+
 
 if __name__ == '__main__':
     import doctest
