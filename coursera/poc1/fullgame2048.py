@@ -68,6 +68,7 @@ class TwentyFortyEight:
         self._rows = grid_height
         self._columns = grid_width
         self.board = self.reset()
+        self.new_tile()
 
     def reset(self):
         """
@@ -75,7 +76,9 @@ class TwentyFortyEight:
         initial tiles.
         """
         self.grid = [[0 for col in range(self._columns)] \
-                         for row in range(self._rows)]
+                        for row in range(self._rows)]
+
+
         return self.grid
 
     def __str__(self):
@@ -103,7 +106,9 @@ class TwentyFortyEight:
         Move all tiles in the given direction and add
         a new tile if any tiles moved.
         """
-        # replace with your code
+        if direction == UP:
+            for i in range(self._rows*self._columns):
+                pass
         pass
 
     def new_tile(self):
@@ -119,14 +124,13 @@ class TwentyFortyEight:
             value = 4
         if self.board[tile_row][tile_col] == 0:
             self.board[tile_row][tile_col] = value
-        return value, self.board
+        #return value  #self.board
 
     def set_tile(self, row, col, value):
         """
         Set the tile at position row, col to have the given value.
         """
         self.board[row][col] = value
-        return self.board
 
     def get_tile(self, row, col):
         """
@@ -169,10 +173,10 @@ class TestFullGame2048(unittest.TestCase):
         a = TwentyFortyEight(5, 5)
         a.new_tile()
         print(" \nnew_tile function" + str(a))
-        self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), tuple)
+        #self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), tuple)
 
     def test_set_tile(self):
-        self.assertIsInstance(TwentyFortyEight(5, 5).set_tile(3, 1, 5), list)
+        #self.assertIsInstance(TwentyFortyEight(5, 5).set_tile(3, 1, 5), list)
         a = TwentyFortyEight(5, 5)
         a.set_tile(3, 1, 5)
         self.assertEqual(a.board[3][1], 5)
