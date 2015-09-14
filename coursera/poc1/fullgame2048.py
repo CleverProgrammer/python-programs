@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 12 01:41:42 2015
-
+Clone of 2048 game.
 @author: rafeh
 """
-
-"""
-Clone of 2048 game.
-"""
-
-from random import randint
+# import poc_2048_gui
 import unittest
-#import poc_2048_gui
+from random import choice
+from random import randint
 
 # Directions, DO NOT MODIFY
 UP = 1
@@ -25,7 +21,6 @@ OFFSETS = {UP: (1, 0),
            DOWN: (-1, 0),
            LEFT: (0, 1),
            RIGHT: (0, -1)}
-
 
 def merge(line):
     """
@@ -43,13 +38,13 @@ def merge(line):
     """
     slide = [num for num in line if num]
     pairs = []
-    for i, num in enumerate(slide):
-        if i == len(slide)-1:
+    for idx, num in enumerate(slide):
+        if idx == len(slide)-1:
             pairs.append(num)
             break
-        elif num == slide[i+1]:
+        elif num == slide[idx+1]:
             pairs.append(num*2)
-            slide[i+1] = None
+            slide[idx+1] = None
         else:
             pairs.append(num)
     slide = [pair for pair in pairs if pair]
@@ -69,14 +64,13 @@ class TwentyFortyEight:
         self._columns = grid_width
         self.reset()
 
-
     def reset(self):
         """
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        self.board = [[0 for col in range(self._columns)] \
-                        for row in range(self._rows)]
+        self._board = [[0 for dummy_col in range(self._columns)] \
+                        for dummy_row in range(self._rows)]
         self.new_tile()
         self.new_tile()
 
@@ -84,9 +78,16 @@ class TwentyFortyEight:
         """
         Return a string representation of the grid for debugging.
         """
-        title = "\n\n A %s x %s board" %(self._rows,self._columns)
-        return title + "".join(["\n" + str(col) for col in self.board])
+        counter = 0
+        string_grid = '['
+        for idx in self._board:
+            if counter < len(self._board) - 1:
+                string_grid += str(idx) + "\n"
+                counter += 1
+            else:
+                string_grid += str(idx) + "]"
 
+        return string_grid
 
     def get_grid_height(self):
         """
@@ -106,20 +107,21 @@ class TwentyFortyEight:
         a new tile if any tiles moved.
         """
         if direction == LEFT:
-            self.board = [merge(row) for row in self.board]
+            self._board = [merge(row) for row in self._board]
+
         elif direction == RIGHT:
-            self.board = [merge(row[::-1])[::-1] for row in self.board]
+            self._board = [merge(row[::-1])[::-1] for row in self._board]
+
         else:
-            for i in range(self._columns):
-                column = [row[i] for row in self.board]  # 0th column
+            for idx in range(self._columns):
+                column = [row[idx] for row in self._board]  # 0th column
                 if direction == DOWN:
                     merged_column = merge(column[::-1])[::-1]
                 else:
                     merged_column = merge(column)
-                for row, value in zip(self.board, merged_column):
-                    row[i] = value
-
-
+                for row, value in zip(self._board, merged_column):
+                    row[idx] = value
+        self.new_tile()
 
     def new_tile(self):
         """
@@ -127,27 +129,26 @@ class TwentyFortyEight:
         square.  The tile should be 2 90% of the time and
         4 10% of the time.
         """
-        tile_row = randint(0, self._rows-1)
-        tile_col = randint(0, self._columns-1)
+        zeros_indices = [(r, c) for r, row in enumerate(self._board) \
+                         for c, cell in enumerate(row) if not cell]
         value = 2
         if randint(1, 10) == 10:  # 10% chance of being 4.
             value = 4
-        if self.board[tile_row][tile_col] == 0:
-            self.board[tile_row][tile_col] = value
-        #return value  #self.board
+        if zeros_indices:
+            random_zero_index = choice(zeros_indices)
+            self._board[random_zero_index[0]][random_zero_index[1]] = value
 
     def set_tile(self, row, col, value):
         """
         Set the tile at position row, col to have the given value.
         """
-        self.board[row][col] = value
+        self._board[row][col] = value
 
     def get_tile(self, row, col):
         """
         Return the value of the tile at position row, col.
         """
-        return self.board[row][col]
-
+        return self._board[row][col]
 
 # poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
 class TestFullGame2048(unittest.TestCase):
