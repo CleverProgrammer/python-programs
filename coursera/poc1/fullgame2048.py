@@ -27,16 +27,6 @@ OFFSETS = {UP: (1, 0),
 def merge(line):
     """
     Helper function that merges a single row or column in 2048
-    >>> merge([2, 0, 2, 4])
-    [4, 4, 0, 0]
-    >>> merge([0, 0, 2, 2])
-    [4, 0, 0, 0]
-    >>> merge([2, 2, 0, 0])
-    [4, 0, 0, 0]
-    >>> merge([2, 2, 2, 2, 2])
-    [4, 4, 2, 0, 0]
-    >>> merge([8, 16, 16, 8])
-    [8, 32, 8, 0]
     """
     slide = [num for num in line if num]
     pairs = []
