@@ -3,7 +3,7 @@
 Created on Sat Sep 12 01:41:42 2015
 Clone of 2048 game.
 The code skulptor link to the full game:
-http://www.codeskulptor.org/#user40_vlzFutJJ5c_31.py
+http://www.codeskulptor.org/#user40_vlzFutJJ5c_32.py
 @author: rafeh
 """
 # import poc_2048_gui
