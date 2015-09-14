@@ -67,19 +67,18 @@ class TwentyFortyEight:
         """
         self._rows = grid_height
         self._columns = grid_width
-        self.board = self.reset()
-        self.new_tile()
+        self.reset()
+
 
     def reset(self):
         """
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        self.grid = [[0 for col in range(self._columns)] \
+        self.board = [[0 for col in range(self._columns)] \
                         for row in range(self._rows)]
-
-
-        return self.grid
+        self.new_tile()
+        self.new_tile()
 
     def __str__(self):
         """
@@ -106,10 +105,16 @@ class TwentyFortyEight:
         Move all tiles in the given direction and add
         a new tile if any tiles moved.
         """
-        if direction == UP:
-            for i in range(self._rows*self._columns):
-                pass
-        pass
+        if direction == LEFT:
+            self.board = [merge(row) for row in self.board]
+        elif direction == RIGHT:
+            self.board = [merge(row[::-1])[::-1] for row in self.board]
+        elif direction == UP:
+            column0 = [row[0] for row in self.board]  # 0th column
+            m_column0 = merge(column0)
+            for row, value in zip(self.board, m_column0):
+
+            pass
 
     def new_tile(self):
         """
@@ -186,6 +191,22 @@ class TestFullGame2048(unittest.TestCase):
         a = TwentyFortyEight(5, 5)
         a.set_tile(3, 1, 5)
         self.assertEqual(a.get_tile(3, 1), 5)
+
+    def test_move_left(self):
+        obj = TwentyFortyEight(5, 5)
+        for _ in range(6):
+            obj.new_tile()
+        print("\ntest move" + str(obj))
+        obj.move(LEFT)
+        print("\ntest move" + str(obj))
+
+    def test_move_right(self):
+        obj = TwentyFortyEight(5, 5)
+        for _ in range(6):
+            obj.new_tile()
+        print("\ntest move" + str(obj))
+        obj.move(RIGHT)
+        print("\ntest move" + str(obj))
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestFullGame2048)
 unittest.TextTestRunner(verbosity=2).run(suite)
