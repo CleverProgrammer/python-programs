@@ -109,12 +109,17 @@ class TwentyFortyEight:
             self.board = [merge(row) for row in self.board]
         elif direction == RIGHT:
             self.board = [merge(row[::-1])[::-1] for row in self.board]
-        elif direction == UP:
-            column0 = [row[0] for row in self.board]  # 0th column
-            m_column0 = merge(column0)
-            for row, value in zip(self.board, m_column0):
+        else:
+            for i in range(self._columns):
+                column = [row[i] for row in self.board]  # 0th column
+                if direction == DOWN:
+                    merged_column = merge(column[::-1])[::-1]
+                else:
+                    merged_column = merge(column)
+                for row, value in zip(self.board, merged_column):
+                    row[i] = value
 
-            pass
+
 
     def new_tile(self):
         """
@@ -206,6 +211,14 @@ class TestFullGame2048(unittest.TestCase):
             obj.new_tile()
         print("\ntest move" + str(obj))
         obj.move(RIGHT)
+        print("\ntest move" + str(obj))
+
+    def test_move_down(self):
+        obj = TwentyFortyEight(5, 5)
+        for _ in range(30):
+            obj.new_tile()
+        print("\ntest move" + str(obj))
+        obj.move(DOWN)
         print("\ntest move" + str(obj))
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestFullGame2048)
