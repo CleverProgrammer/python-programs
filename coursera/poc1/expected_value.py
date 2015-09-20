@@ -1,4 +1,9 @@
 def expected_value(range_start,range_end, total_outcomes):
     sample_space = sum(range(range_start, range_end+1)) 
+    list_of_tuples = [] 
+    for first in range(range_start, range_end):
+     for second in range(range_start, range_end):
+      list_of_tuples.append( (first, second) )
+    print(list_of_tuples)
     #arithmetic_sum_formula = .5*(sample_space)*(sample_space+1)
     return sample_space * (1.0/total_outcomes)
