@@ -8,9 +8,9 @@ def prime_checker(number):
 
 def largest_prime_factor(number):
  for i in range(2, number//2+1)[::-1]:
-  if prime_checker(i):
-   if number % i == 0:
+  if number % i == 0:
+   if prime_checker(i):
     return i
  return False
 
-print(largest_prime_factor(200000))
+print(largest_prime_factor(600851475143))
