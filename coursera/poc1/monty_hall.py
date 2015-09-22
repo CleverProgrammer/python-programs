@@ -3,7 +3,6 @@
 # @Date    : 2015-09-22 06:24:38
 # @Author  : Rafeh Qazi (rafehqazi1@gmail.com)
 # @Link    : rafeh01.github.io/data-science
-# @Version : $Id$
 
 import unittest
 
@@ -16,9 +15,6 @@ class ClassName(unittest.TestCase):
 
     def test_add(self):
         self.assertEqual(add(4, 3), 7)
-        print("Ran Test Rafeh")
-
-        
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(ClassName)
