@@ -1,0 +1,440 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"tes",
+				"loadTestsFromTestCase"
+			],
+			[
+				"i",
+				"if	If Condition"
+			],
+			[
+				"inpu",
+				"input_as_list"
+			],
+			[
+				"int",
+				"integer"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n# @Date    : 2015-09-22 07:45:56\n# @Author  : Rafeh Qazi (rafehqazi1@gmail.com)\n# @Link    : http://www.codeskulptor.org/#poc_nim_mc_template.py\n# Shortcuts: |Multiple_cursor: cmd+ctrl+g| |Build: cmd+b| |Doc: ctrl+alt+d|\nimport unittest\n\nMAX_REMOVE = 3\nTRIALS = 10000\n\n\ndef evaluate_position(num_items):\n    \"\"\"\n    Monte Carlo evalation method for Nim\n    \"\"\"\n    for i in range(1, MAX_REMOVE + 1):\n        wins = 0\n    for i in range(10000):\n\n        pass\n\n    return 0\n\n\ndef play_game(start_items):\n    \"\"\"\n    Play game of Nim against Monte Carlo bot\n    \"\"\"\n\n    current_items = start_items\n    print(\"Starting game with value\", current_items)\n    while True:\n        comp_move = evaluate_position(current_items)\n        current_items -= comp_move\n        print(\"Computer choose\", comp_move,\n              \", current value is\", current_items)\n        if current_items <= 0:\n            print(\"Computer wins\")\n            break\n        player_move = int(eval(input(\"Enter your current move\")))\n        current_items -= player_move\n        print(\"Player choose\", player_move,\n              \", current value is\", current_items)\n        if current_items <= 0:\n            print(\"Player wins\")\n            break\n\nplay_game(21)\n\n\nclass ClassName(unittest.TestCase):\n\n    def test_function_name(self):\n        # self.assertEqual(function_name([0, 0, 2, 2]), [4, 0, 0, 0])\n        pass\n\nsuite = unittest.TestLoader().loadTestsFromTestCase(ClassName)\nunittest.TextTestRunner(verbosity=2).run(suite)\n",
+			"file": "nim_monte_carlo.py",
+			"file_size": 1547,
+			"file_write_time": 130874052440000000,
+			"settings":
+			{
+				"buffer_size": 1541,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/SublimeTmpl/templates/python.tmpl",
+			"settings":
+			{
+				"buffer_size": 472,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/SublimeREPL/sublimerepl_build_system_hack.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"terminal",
+				"Terminal: Open"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"tmp",
+				"Tmpl: Create python"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"quick",
+				"Git: Quick Add"
+			],
+			[
+				"git add",
+				"Git: Add Remote"
+			],
+			[
+				"interpre",
+				"Anaconda: Set Python interpreter"
+			],
+			[
+				"build py",
+				"Build With: sublimerepl_build_system_hack"
+			],
+			[
+				"tmpl",
+				"Tmpl: Create python"
+			],
+			[
+				"jeky",
+				"Jekyll: New draft"
+			],
+			[
+				"python",
+				"SublimeREPL: Python - IPython"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"sublimerepl",
+				"Build With: sublimerepl_build_system_hack"
+			],
+			[
+				"Package Control: Install Package",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Build With: Python - Syntax Check"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 116.0,
+		"history":
+		[
+			"print(sys.version)",
+			"import sys",
+			"print 5",
+			"python",
+			"print(5)",
+			"print 5",
+			"5+5",
+			"stdin(1,2)",
+			"5+5",
+			"5_5",
+			"5+5"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": true,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/ChessTastic/Dropbox/github/python-programs/coursera/poc1"
+	],
+	"file_history":
+	[
+		"/Users/ChessTastic/Dropbox/github/python-programs/coursera/poc1/monty_hall.py",
+		"/Users/ChessTastic/Dropbox/github/python-programs/coursera/poc1/poc1.sublime-project",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/anaconda/Default (OSX).sublime-keymap",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/anaconda/Anaconda.sublime-settings",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/User/SublimeTmpl.sublime-settings",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/SublimeTmpl/SublimeTmpl.sublime-settings",
+		"/Users/ChessTastic/Dropbox/github/websites/data-science/_posts/2015-08-15-a-split-test-analysis.md",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/User/Jekyll.sublime-settings",
+		"/Users/ChessTastic/Dropbox/github/websites/data-science/_config.yml",
+		"/Users/ChessTastic/Dropbox/github/websites/data-science/_posts/2014-08-24-science-has-not-yet-mastered-prophecy.markdown",
+		"/Users/ChessTastic/Downloads/subl3_test.py",
+		"/Users/ChessTastic/Anaconda/lib/python3.4/site-packages/sqlite_browser/sqlite_browser.py",
+		"/Users/ChessTastic/Dropbox/github/Github_Tips_Tricks/Github_Tips_Tricks.txt",
+		"/Users/ChessTastic/dropbox/github/custom/example.zsh",
+		"/Users/ChessTastic/Dropbox/github/custom/example.zsh",
+		"/Users/ChessTastic/Dropbox/github/Thinkful/exercises/recipe.py",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/User/SublimeREPL.sublime-settings",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/Users/ChessTastic/Dropbox/github/Python-programming-exercises/my_solutions/Solution3problem.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"autoformat",
+			"ClassName",
+			"space",
+			"indent",
+			"StringIO",
+			"stringio",
+			"/users/chesstastic",
+			"my_game",
+			"here",
+			"enter",
+			"Input",
+			"been",
+			"introductory",
+			"in1",
+			"stdin",
+			"b",
+			"section",
+			"c",
+			"section",
+			"python",
+			"github",
+			"git",
+			"users",
+			"chesstastic",
+			"sta",
+			"git",
+			"rafeh"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "nim_monte_carlo.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1541,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								283,
+								283
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/SublimeTmpl/templates/python.tmpl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 472,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								306,
+								306
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 230.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git-commit":
+	{
+		"height": 118.0
+	},
+	"output.git-push":
+	{
+		"height": 118.0
+	},
+	"pinned_build_system": "",
+	"project": "poc1.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Dropbox/github/Python-programming-exercises/my_solutions/Solution3problem.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Dropbox/github/python-programs/coursera/poc1/poc1.sublime-project"
+			],
+			[
+				"sol",
+				"~/Dropbox/github/Python-programming-exercises/Solutions.sublime-project"
+			],
+			[
+				"solution",
+				"~/Dropbox/github/Python-programming-exercises/Solutions.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 197.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
