@@ -24,21 +24,18 @@
 	"buffers":
 	[
 		{
-			"contents": "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n# @Date    : 2015-09-22 07:45:56\n# @Author  : Rafeh Qazi (rafehqazi1@gmail.com)\n# @Link    : http://www.codeskulptor.org/#poc_nim_mc_template.py\n# Shortcuts: |Multiple_cursor: cmd+ctrl+g| |Build: cmd+b| |Doc: ctrl+alt+d|\nimport unittest\n\nMAX_REMOVE = 3\nTRIALS = 10000\n\n\ndef evaluate_position(num_items):\n    \"\"\"\n    Monte Carlo evalation method for Nim\n    \"\"\"\n    for i in range(1, MAX_REMOVE + 1):\n        wins = 0\n    for i in range(10000):\n\n        pass\n\n    return 0\n\n\ndef play_game(start_items):\n    \"\"\"\n    Play game of Nim against Monte Carlo bot\n    \"\"\"\n\n    current_items = start_items\n    print(\"Starting game with value\", current_items)\n    while True:\n        comp_move = evaluate_position(current_items)\n        current_items -= comp_move\n        print(\"Computer choose\", comp_move,\n              \", current value is\", current_items)\n        if current_items <= 0:\n            print(\"Computer wins\")\n            break\n        player_move = int(eval(input(\"Enter your current move\")))\n        current_items -= player_move\n        print(\"Player choose\", player_move,\n              \", current value is\", current_items)\n        if current_items <= 0:\n            print(\"Player wins\")\n            break\n\nplay_game(21)\n\n\nclass ClassName(unittest.TestCase):\n\n    def test_function_name(self):\n        # self.assertEqual(function_name([0, 0, 2, 2]), [4, 0, 0, 0])\n        pass\n\nsuite = unittest.TestLoader().loadTestsFromTestCase(ClassName)\nunittest.TextTestRunner(verbosity=2).run(suite)\n",
 			"file": "nim_monte_carlo.py",
-			"file_size": 1547,
-			"file_write_time": 130874052440000000,
 			"settings":
 			{
-				"buffer_size": 1541,
+				"buffer_size": 1962,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/SublimeTmpl/templates/python.tmpl",
+			"file": "poc1.sublime-project",
 			"settings":
 			{
-				"buffer_size": 472,
+				"buffer_size": 243,
 				"line_ending": "Unix"
 			}
 		}
@@ -71,9 +68,21 @@
 	"command_palette":
 	{
 		"height": 392.0,
-		"last_filter": "",
+		"last_filter": "ter",
 		"selected_items":
 		[
+			[
+				"ter",
+				"Open in terminal"
+			],
+			[
+				"te",
+				"Open in terminal"
+			],
+			[
+				"open",
+				"Open in terminal"
+			],
 			[
 				"terminal",
 				"Terminal: Open"
@@ -174,10 +183,12 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/ChessTastic/Dropbox/github/python-programs/coursera/poc1"
+		"/Users/Rafeh/Dropbox/github/python-programs/coursera/poc1"
 	],
 	"file_history":
 	[
+		"/Users/Rafeh/Dropbox/github/python-programs/coursera/poc1/poc1 (Rafeh’s MacBook Pro's conflicted copy 2015-09-23).sublime-project",
+		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/SublimeTmpl/templates/python.tmpl",
 		"/Users/ChessTastic/Dropbox/github/python-programs/coursera/poc1/monty_hall.py",
 		"/Users/ChessTastic/Dropbox/github/python-programs/coursera/poc1/poc1.sublime-project",
 		"/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
@@ -272,15 +283,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1541,
+						"buffer_size": 1962,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								283,
-								283
+								523,
+								523
 							]
 						],
 						"settings":
@@ -298,24 +309,25 @@
 				},
 				{
 					"buffer": 1,
-					"file": "/Users/ChessTastic/Library/Application Support/Sublime Text 3/Packages/SublimeTmpl/templates/python.tmpl",
-					"semi_transient": false,
+					"file": "poc1.sublime-project",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 472,
+						"buffer_size": 243,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								306,
-								306
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -402,7 +414,7 @@
 		[
 			[
 				"",
-				"~/Dropbox/github/python-programs/coursera/poc1/poc1.sublime-project"
+				"~/Dropbox/github/websites/snipcart-jekyll-demo/storejekyll.sublime-project"
 			],
 			[
 				"sol",
