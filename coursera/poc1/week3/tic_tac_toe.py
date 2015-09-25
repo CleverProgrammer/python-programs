@@ -6,6 +6,7 @@ import poc_simpletest
 import poc_ttt_gui
 import poc_ttt_provided as provided
 
+
 # Constants for Monte Carlo simulator
 # You may change the values of these constants as desired, but
 #  do not change their names.
@@ -18,17 +19,31 @@ DRAW = provided.DRAW
 EMPTY = provided.EMPTY
     
 # ------------------------ FUNCTIONS --------------------------- #
+def mc_trial(board, player):
+    '''
+    This function takes a current board and the next player to move.
+    The function should play a game starting with the given player by making random moves,
+    alternating between players. The function should return when the game is over.
+    '''
+    in_progress = lambda: not board.check_win()
+    while in_progress():
+        row, col = random.choice(board.get_empty_squares())
+        board.move(row, col, player)
+        provided.switch_player(player)
+
 def mc_update_scores(scores, board, player):
     '''
     Update the game score
     '''
     # Scores probably looks like: [ [0,0,0], [0,0,0], [0,0,0] ]
-    if player == board.check_win():
+    
+    if board.check_win() == provided.DRAW:
+        return
+    elif player == board.check_win():
         sign = 1
     elif player != board.check_win():
         sign = -1
-    elif board.check_win() == provided.DRAW:
-        return
+    
     print("sign: %s" %sign)
     for row in range(len(scores[0])):
         for col in range(len(scores[0])):
@@ -45,13 +60,35 @@ def get_best_move(board, scores):
     Take board and scores. Return a randomly picked tuple of best moves
     '''
     nrow = ncol = board.get_dim()
-    best_move_tuples = [(row,col) for row in range(nrow)
-                        for col in range(ncol)
-                       if board.square(row,col) == board.check_win()]
+    #best_move_tuples = [(row,col) for row in range(nrow)
+    #                    for col in range(ncol)
+    #                   if board.square(row,col) == board.check_win()]
+    max_value = 0
+    for number_list in scores:
+        if 1 in number_list:
+            max_value = 1
+            break
+    print("scores: %s" %str(scores))
+    print("max value: %s" %max_value)
+    best_move_tuples = []
+    for row in range(nrow):
+        for col in range(ncol):
+            if scores[row][col] == max_value:
+                best_move_tuples.append( (row, col) )
+                print((row, col))
     return random.choice(best_move_tuples)
 
-def 
-
+def mc_move(board, player, trials):
+    '''
+    This function takes a current board, 
+    which player the machine player is, 
+    and the number of trials to run. 
+    The function should use the Monte Carlo simulation 
+    described above to return a move for the 
+    machine player in the form of a (row, column) tuple. 
+    Be sure to use the other functions you have written!
+    '''
+    pass
 
 
 # ------------------------ PLAYGROUND --------------------------- #
