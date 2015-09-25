@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Sep 12 01:41:42 2015
-
+Clone of 2048 game.
+The code skulptor link to the full game:
+http://www.codeskulptor.org/#user40_vlzFutJJ5c_32.py
 @author: rafeh
 """
-
-"""
-Clone of 2048 game.
-"""
-
-from random import randint
+# import poc_2048_gui
 import unittest
-#import poc_2048_gui
+from random import choice
+from random import randint
 
 # Directions, DO NOT MODIFY
 UP = 1
@@ -30,33 +28,25 @@ OFFSETS = {UP: (1, 0),
 def merge(line):
     """
     Helper function that merges a single row or column in 2048
-    >>> merge([2, 0, 2, 4])
-    [4, 4, 0, 0]
-    >>> merge([0, 0, 2, 2])
-    [4, 0, 0, 0]
-    >>> merge([2, 2, 0, 0])
-    [4, 0, 0, 0]
-    >>> merge([2, 2, 2, 2, 2])
-    [4, 4, 2, 0, 0]
-    >>> merge([8, 16, 16, 8])
-    [8, 32, 8, 0]
     """
     slide = [num for num in line if num]
     pairs = []
-    for i, num in enumerate(slide):
-        if i == len(slide)-1:
+    for idx, num in enumerate(slide):
+        if idx == len(slide) - 1:
             pairs.append(num)
             break
-        elif num == slide[i+1]:
-            pairs.append(num*2)
-            slide[i+1] = None
+        elif num == slide[idx + 1]:
+            pairs.append(num * 2)
+            slide[idx + 1] = None
         else:
             pairs.append(num)
     slide = [pair for pair in pairs if pair]
     slide.extend([0] * (len(line) - len(slide)))
     return slide
 
+
 class TwentyFortyEight:
+
     """
     Class to run the game logic.
     """
@@ -69,14 +59,13 @@ class TwentyFortyEight:
         self._columns = grid_width
         self.reset()
 
-
     def reset(self):
         """
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        self.board = [[0 for col in range(self._columns)] \
-                        for row in range(self._rows)]
+        self._board = [[0 for dummy_col in range(self._columns)]
+                       for dummy_row in range(self._rows)]
         self.new_tile()
         self.new_tile()
 
@@ -84,9 +73,16 @@ class TwentyFortyEight:
         """
         Return a string representation of the grid for debugging.
         """
-        title = "\n\n A %s x %s board" %(self._rows,self._columns)
-        return title + "".join(["\n" + str(col) for col in self.board])
+        counter = 0
+        string_grid = '['
+        for idx in self._board:
+            if counter < len(self._board) - 1:
+                string_grid += str(idx) + "\n"
+                counter += 1
+            else:
+                string_grid += str(idx) + "]"
 
+        return string_grid
 
     def get_grid_height(self):
         """
@@ -106,20 +102,21 @@ class TwentyFortyEight:
         a new tile if any tiles moved.
         """
         if direction == LEFT:
-            self.board = [merge(row) for row in self.board]
+            self._board = [merge(row) for row in self._board]
+
         elif direction == RIGHT:
-            self.board = [merge(row[::-1])[::-1] for row in self.board]
+            self._board = [merge(row[::-1])[::-1] for row in self._board]
+
         else:
-            for i in range(self._columns):
-                column = [row[i] for row in self.board]  # 0th column
+            for idx in range(self._columns):
+                column = [row[idx] for row in self._board]  # 0th column
                 if direction == DOWN:
                     merged_column = merge(column[::-1])[::-1]
                 else:
                     merged_column = merge(column)
-                for row, value in zip(self.board, merged_column):
-                    row[i] = value
-
-
+                for row, value in zip(self._board, merged_column):
+                    row[idx] = value
+        self.new_tile()
 
     def new_tile(self):
         """
@@ -127,29 +124,30 @@ class TwentyFortyEight:
         square.  The tile should be 2 90% of the time and
         4 10% of the time.
         """
-        tile_row = randint(0, self._rows-1)
-        tile_col = randint(0, self._columns-1)
+        zeros_indices = [(r, c) for r, row in enumerate(self._board)
+                         for c, cell in enumerate(row) if not cell]
         value = 2
         if randint(1, 10) == 10:  # 10% chance of being 4.
             value = 4
-        if self.board[tile_row][tile_col] == 0:
-            self.board[tile_row][tile_col] = value
-        #return value  #self.board
+        if zeros_indices:
+            random_zero_index = choice(zeros_indices)
+            self._board[random_zero_index[0]][random_zero_index[1]] = value
 
     def set_tile(self, row, col, value):
         """
         Set the tile at position row, col to have the given value.
         """
-        self.board[row][col] = value
+        self._board[row][col] = value
 
     def get_tile(self, row, col):
         """
         Return the value of the tile at position row, col.
         """
-        return self.board[row][col]
-
+        return self._board[row][col]
 
 # poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
+
+
 class TestFullGame2048(unittest.TestCase):
 
     def testMerge(self):
@@ -179,17 +177,17 @@ class TestFullGame2048(unittest.TestCase):
 
     def test_new_tile(self):
         probability = [TwentyFortyEight(5, 5).new_tile() for i in range(1000)]
-        self.assertLess(probability.count(4), len(probability)*.15)
+        self.assertLess(probability.count(4), len(probability) * .15)
         a = TwentyFortyEight(5, 5)
         a.new_tile()
         print(" \nnew_tile function" + str(a))
-        #self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), tuple)
+        # self.assertIsInstance(TwentyFortyEight(5, 5).new_tile(), tuple)
 
     def test_set_tile(self):
-        #self.assertIsInstance(TwentyFortyEight(5, 5).set_tile(3, 1, 5), list)
+        # self.assertIsInstance(TwentyFortyEight(5, 5).set_tile(3, 1, 5), list)
         a = TwentyFortyEight(5, 5)
         a.set_tile(3, 1, 5)
-        self.assertEqual(a.board[3][1], 5)
+        # self.assertEqual(a.board[3][1], 5)
         print(" \nset_tile function" + str(a))
 
     def test_get_tile(self):

@@ -18,7 +18,7 @@ def turtle_on_steroids():
         for i in range (1,5):
             brad.forward(180)
             brad.right(90)
-        brad.right(11)
+        brad.right(10)
 
 def angie_circle():
     angie = turtle.Turtle()
