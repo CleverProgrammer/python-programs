@@ -1,7 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
 import os
-
+'''
+This program will take in as input a search term and scrape craigslist, write the results
+to a file, check for new results, and send a text to alert about new results.
+'''
 
 BASE_URL = 'http://chicago.craigslist.org/search/sss?query={0}'
 
