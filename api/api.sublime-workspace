@@ -1,0 +1,487 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fina",
+				"final_url	statement"
+			],
+			[
+				"loca",
+				"locality"
+			],
+			[
+				"ap",
+				"api_key	statement"
+			],
+			[
+				"sys",
+				"SystemExit	class"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "locu.py",
+			"settings":
+			{
+				"buffer_size": 586,
+				"line_ending": "Unix",
+				"name": "api_key = 2d40e5a0c19390618e88f8dbff61cc50ec4e8a8b"
+			}
+		},
+		{
+			"file": "yelp.py",
+			"settings":
+			{
+				"buffer_size": 4485,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "my_dict = {'objects':1}",
+			"settings":
+			{
+				"buffer_size": 23,
+				"line_ending": "Unix",
+				"name": "my_dict = {'objects':1}"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Anaconda Python Builder",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				],
+				[
+					"Packages/Python 3/Python3.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Python 3/Python3.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 87.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"ter",
+				"Open in terminal"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"python",
+				"Build With: Anaconda Python Builder"
+			],
+			[
+				"tm",
+				"Tmpl: Create python"
+			],
+			[
+				"tmpl",
+				"Tmpl: Create python"
+			],
+			[
+				"anaconda",
+				"Anaconda: Set Python interpreter"
+			],
+			[
+				"install pac",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Anaconda: Set Python interpreter"
+			],
+			[
+				"glue",
+				"Glue - Launch"
+			],
+			[
+				"git",
+				"Git: Diff"
+			],
+			[
+				"git branch",
+				"Git: Checkout New Branch"
+			],
+			[
+				"git chec",
+				"Git: Checkout"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git quc",
+				"Git: Quick Commit"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"git commit",
+				"Git: Quick Commit"
+			],
+			[
+				"git add",
+				"Git: Quick Add"
+			],
+			[
+				"c",
+				"Anaconda: McCabe complexity check"
+			],
+			[
+				"b",
+				"Build With: Python3"
+			],
+			[
+				"comm",
+				"Anaconda: McCabe complexity check"
+			],
+			[
+				"buid",
+				"Build With: Python3"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"print 5",
+			"import requests",
+			"ls",
+			"import requests",
+			"print(5)",
+			"print 5",
+			"ls",
+			"print(5)",
+			"print 5",
+			"print(5)",
+			"for i in range(5):",
+			"sys.version_info",
+			"print(sys.version)",
+			"import sys",
+			"python version",
+			"print(5)",
+			"print 5",
+			"x"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/Rafeh/Dropbox/github/api"
+	],
+	"file_history":
+	[
+		"/Users/Rafeh/Library/Application Support/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/Users/Rafeh/Library/Application Support/Sublime Text 3/Packages/MacTerminal/MacTerminal.sublime-settings",
+		"/Users/Rafeh/Dropbox/github/api/yelp.py",
+		"/Users/Rafeh/Dropbox/github/websites/data-science/index.html",
+		"/Users/Rafeh/Library/Application Support/Sublime Text 3/Packages/SublimeTmpl/Main.sublime-menu",
+		"/Users/Rafeh/Library/Application Support/Sublime Text 3/Packages/SublimeTmpl/SublimeTmpl.sublime-settings",
+		"/Users/Rafeh/Library/Application Support/Sublime Text 3/Packages/Glue/Glue.sublime-settings"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"max",
+			"line",
+			"long",
+			"pep",
+			"tenzin_ate_a_banana",
+			"bro",
+			"porn",
+			"list",
+			"1",
+			"interpreter"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "locu.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 586,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								71,
+								71
+							]
+						],
+						"settings":
+						{
+							"auto_name": "api_key = 2d40e5a0c19390618e88f8dbff61cc50ec4e8a8b",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "yelp.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4485,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 127.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								21,
+								21
+							]
+						],
+						"settings":
+						{
+							"auto_name": "my_dict = {'objects':1}",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 112.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git-checkout":
+	{
+		"height": 112.0
+	},
+	"output.git-commit":
+	{
+		"height": 112.0
+	},
+	"output.git-push":
+	{
+		"height": 112.0
+	},
+	"pinned_build_system": "",
+	"project": "api.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Dropbox/github/python-programs/coursera/poc1/monty_hall.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/Dropbox/github/websites/snipcart-jekyll-demo/storejekyll.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
