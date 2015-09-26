@@ -64,19 +64,22 @@ def get_best_move(board, scores):
     #                    for col in range(ncol)
     #                   if board.square(row,col) == board.check_win()]
     max_value = 0
-    for number_list in scores:
-        if 1 in number_list:
-            max_value = 1
-            break
-    print("scores: %s" %str(scores))
-    print("max value: %s" %max_value)
-    best_move_tuples = []
-    for row in range(nrow):
-        for col in range(ncol):
-            if scores[row][col] == max_value:
-                best_move_tuples.append( (row, col) )
-                print((row, col))
-    return random.choice(best_move_tuples)
+    score_index = {}
+    print ('emptys', board.get_empty_squares())
+    for row in range(len(scores)):
+        for col in range(len(scores[row])):
+            print ('index', score_index)
+            if (row,col) not in board.get_empty_squares(): # need to define thse
+                continue
+            print ('scores', scores)
+            print (row, col)
+            score = scores[row][col]
+            if score not in score_index:
+                score_index[score] = [(row,col)]
+            else:
+                score_index[score].append((row,col))
+    best_score = max(score_index)
+    return random.choice(score_index[best_score])
 
 def mc_move(board, player, trials):
     '''
@@ -108,6 +111,7 @@ board.move(2, 2, provided.PLAYERO)
 print(board)
 print("check_win: %s" %board.check_win())
 print("provided.switch_player(O): %s" %provided.switch_player(O))
+print("empty_squares: %s" %str(board.get_empty_squares()))
     
 # ------------------------ FUNCTION TESTS --------------------------- #
 def test_mc_update_scores():
