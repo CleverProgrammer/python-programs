@@ -47,12 +47,19 @@ def expected_value(held_dice, num_die_sides, num_free_dice):
     Compute the expected value based on held_dice given that there
     are num_free_dice to be rolled, each with num_die_sides.
 
-    held_dice: dice that you will hold
+    held_dice:     dice that you will hold (tuple)
     num_die_sides: number of sides on each die
     num_free_dice: number of dice to be rolled
 
     Returns a floating point expected value
     """
+    #  (1,2,3,4,5,6) / 6  ==> 3.5
+    held_dice = (2, 2)
+    num_die_sides = 6
+    num_free_dice = 5
+    enumerations = gen_all_sequences(num_die_sides, num_free_dice)  #
+    possible_hands = []
+    
     return 0.0
 
 
@@ -99,6 +106,9 @@ class Yahtzee(unittest.TestCase):
         self.assertEqual(score([6, 4, 4, 2, 2, 2]), 8)
         self.assertEqual(score([6, 4, 4, 2, 2, 6]), 12)
         self.assertEqual(score([1, 1, 1, 1, 1, 5]), 5)
+
+    def test_expected_value(self):
+        self.assertAlmostEqual(expected_value((2, 2), 6, 2), 5.8333333333)
 
 
 suite = unittest.TestLoader().loadTestsFromTestCase(Yahtzee)
