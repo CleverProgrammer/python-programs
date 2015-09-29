@@ -1,6 +1,10 @@
 from bs4 import BeautifulSoup
+from datetime import datetime
 import requests
+import csv
+import sys
 import os
+import smtplib 
 '''
 This program will take in as input a search term and scrape craigslist, write the results
 to a file, check for new results, and send a text to alert about new results.
@@ -19,8 +23,8 @@ def craigslist(search_term, max_price=0):
      try:
       if int(row.span.string[1:]) < max_price or max_price == 0:
        url = 'http://chicago.craigslist.org' + row.a['href']
-       price = row.span.string[1:]
-       date = row.time.string
+       price = row.span.string.strip('$')
+       date = row.find('time').get('datetime')
        title = row.find_all('a')[1].get_text()
        results.append({'price': int(price), 'url': url, 'date': date, 'title': title})
      except TypeError:
@@ -71,3 +75,5 @@ def send_text(phone_number, msg):
     server.login(config.email['username'], config.email['password'])
     server.sendmail(fromaddr, toaddrs, msg)
     server.quit()
+
+

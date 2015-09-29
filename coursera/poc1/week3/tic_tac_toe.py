@@ -1,5 +1,9 @@
 """
+Author: Rafeh Qazi
 Monte Carlo Tic-Tac-Toe Player
+Date: 09/27/2015
+Link for Testing: http://www.codeskulptor.org/#user40_b7MoftHwHl_0.py
+Link for Program: http://www.codeskulptor.org/#user40_rBVyJW3zdp_11.py
 """
 import random
 import poc_simpletest
@@ -92,5 +96,5 @@ def mc_move(board, player, trials):
         i += 1
     return best_move
 
-# provided.play_game(mc_move, NTRIALS, False)        
-poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
+# provided.play_game(mc_move, NTRIALS, False)
+# poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
