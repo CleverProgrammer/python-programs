@@ -1,5 +1,7 @@
 
 """
+Author: Rafeh Qazi
+Date: 09/27/2015
 Planner for Yahtzee
 Simplifications:  only allow discard and roll, only score against upper level
 """

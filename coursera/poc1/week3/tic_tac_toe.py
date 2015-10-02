@@ -10,7 +10,6 @@ import poc_simpletest
 import poc_ttt_gui
 import poc_ttt_provided as provided
 
-
 # Constants for Monte Carlo simulator
 # You may change the values of these constants as desired, but
 #  do not change their names.
