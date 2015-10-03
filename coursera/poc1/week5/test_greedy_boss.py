@@ -40,7 +40,6 @@ def greedy_boss(days_in_simulation, bribe_cost_increment, plot_type=STANDARD):
             current_money -= current_bribe_cost  # hand boss $1000
             days_vs_earnings.append((current_day, total_salary))
             if current_day == days_in_simulation:
-                print(days_vs_earnings)
                 return days_vs_earnings
             current_salary += SALARY_INCREMENT
             current_bribe_cost += bribe_cost_increment
