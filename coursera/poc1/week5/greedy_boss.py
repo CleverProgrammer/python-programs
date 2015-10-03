@@ -28,24 +28,30 @@ def greedy_boss(days_in_simulation, bribe_cost_increment, plot_type=STANDARD):
     total_salary = 0
     current_bribe_cost = INITIAL_BRIBE_COST
     current_money = 0
+    days_till_next_bribe = 0
     # initialize list consisting of days vs. total salary earned for analysis
     days_vs_earnings = [(0, 0)]
 
     # Each iteration of this while loop simulates one bribe
     while current_day <= days_in_simulation:
-        print(current_money)
+
+        print("before current_day: %s" % str(current_day))
+        print("before current_money: %s" % current_money)
+        days_till_next_bribe = math.ceil((current_bribe_cost - current_money) / current_salary)
+        current_day += days_till_next_bribe
+        current_money += current_salary * days_till_next_bribe
+        total_salary += current_salary * days_till_next_bribe
         print("current_day: %s" % str(current_day))
-        current_day += current_bribe_cost / current_salary
-        current_money += current_salary * (current_bribe_cost / current_salary)
-        total_salary += current_salary * (current_bribe_cost / current_salary)
-
-        print(current_money)
+        print("current_bribe_cost: %s" % current_bribe_cost)
+        print("current_salary: %s" % current_salary)
+        print("current_money: %s" % current_money)
+        print("total_salary: %s" % str(total_salary))
+        print()
         while current_money >= current_bribe_cost:
+            if current_day > days_in_simulation:
+                return days_vs_earnings
             current_money -= current_bribe_cost
-
             days_vs_earnings.append((current_day, total_salary))
-            print(days_vs_earnings)
-            print()
             current_salary += SALARY_INCREMENT
             current_bribe_cost += bribe_cost_increment
         # current_day += days_vs_earnings[-1][0]
@@ -59,8 +65,6 @@ def greedy_boss(days_in_simulation, bribe_cost_increment, plot_type=STANDARD):
         # use plot_type to control whether regular or log/log plot
 
     return days_vs_earnings
-
-print(greedy_boss(35, 0))
 
 
 def run_simulations():
@@ -81,10 +85,10 @@ def run_simulations():
 # run_simulations()
 
 
-# print greedy_boss(35, 100)
+print(greedy_boss(35, 100))
 # should print [(0, 0), (10, 1000), (16, 2200), (20, 3400), (23, 4600), (26, 6100), (29, 7900), (31, 9300), (33, 10900), (35, 12700)]
 
-# print greedy_boss(35, 0)
+# print(greedy_boss(35, 0))
 # should print [(0, 0), (10, 1000), (15, 2000), (19, 3200), (21, 4000),
 # (23, 5000), (25, 6200), (27, 7600), (28, 8400), (29, 9300), (30, 10300),
 # (31, 11400), (32, 12600), (33, 13900), (34, 15300), (34, 15300), (35,
