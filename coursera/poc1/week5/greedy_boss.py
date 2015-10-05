@@ -4,6 +4,8 @@ Program: Simulator for greedy boss scenario
 Class: Coursera POC 1 Week 5
 Date: 10/03/2015
 Link: http://www.codeskulptor.org/#user40_hEhvJIG1CB_2.py
+Graph Link: http://www.codeskulptor.org/#user40_hEhvJIG1CB_15.py
+Coursera Imports: https://class.coursera.org/principlescomputing1-004/wiki/=view?page=imports
 """
 import unittest
 # import simpleplot
@@ -74,7 +76,7 @@ def run_simulations():
                           ["Bribe increment = 0", "Bribe increment = 500",
                            "Bribe increment = 1000", "Bribe increment = 2000"])
 
-#run_simulations()
+# run_simulations()
 
 
 class GreedyBoss(unittest.TestCase):
