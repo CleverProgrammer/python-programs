@@ -4,6 +4,8 @@ Author: Rafeh Qazi
 Date: 09/27/2015
 Planner for Yahtzee
 Simplifications:  only allow discard and roll, only score against upper level
+Link: http://www.codeskulptor.org/#user40_eBVtEjoX06_21.py
+test_link: https://class.coursera.org/principlescomputing1-004/wiki/=view?page=imports
 """
 
 ALL_HANDS = range(1, 7)
@@ -109,7 +111,6 @@ def gen_all_holds(hand):
     # Remove impossible indexes from hold_choice
     for impossible_hold_idx in hold_choices_indices_to_remove[::-1]:
         hold_choices.pop(impossible_hold_idx)
-    print(len(hold_choices))
     return set(hold_choices)
 
 
