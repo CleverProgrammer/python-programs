@@ -6,7 +6,7 @@
 Cookie Clicker Simulator
 """
 
-import user40_lbarkGzPKK_6 as cookie_clicker_tests 
+import user40_lbarkGzPKK_16 as cookie_clicker_testsuite
 import simpleplot
 import math
 # Used to increase the timeout, if necessary
@@ -229,40 +229,4 @@ print("Grandma COST: %s" % obj.get_cost('Grandma'))
 
 
 # -------------------------------TESTS----------------------------------------
-cookie_clicker_tests.run_suite(ClickerState)
-
-
-
-
-
-# -----------------------------------GREEDYBOSS-------------------------------------------
-# Greedy boss function. Need to use later to help in cookie_clicker
-def greedy_boss(days_in_simulation, bribe_cost_increment):
-    """
-    Simulation of greedy boss
-    """
-
-    # initialize necessary local variables
-    current_day = 0
-    current_salary = INITIAL_SALARY
-    total_salary = 0
-    current_bribe_cost = INITIAL_BRIBE_COST
-    current_money = 0
-    days_till_next_bribe = 0
-    # initialize list consisting of days vs. total salary earned for analysis
-    days_vs_earnings = [(0, 0)]
-
-    # Each iteration of this while loop simulates one bribe
-    while current_day <= days_in_simulation:
-        days_till_next_bribe = math.ceil((current_bribe_cost - current_money) / current_salary)
-        current_day += days_till_next_bribe
-        current_money += current_salary * days_till_next_bribe
-        total_salary += current_salary * days_till_next_bribe
-        # check whether we have enough savings to bribe without waiting
-        while current_money >= current_bribe_cost:
-            if current_day > days_in_simulation:
-                return days_vs_earnings
-            current_money -= current_bribe_cost
-            days_vs_earnings.append((current_day, total_salary))
-            current_salary += SALARY_INCREMENT
-            current_bribe_cost += bribe_cost_increment
+cookie_clicker_testsuite.run_suite(ClickerState)
