@@ -6,8 +6,9 @@
 Cookie Clicker Simulator
 """
 
+import user40_lbarkGzPKK_6 as cookie_clicker_tests 
 import simpleplot
-
+import math
 # Used to increase the timeout, if necessary
 import codeskulptor
 codeskulptor.set_timeout(20)
@@ -31,19 +32,21 @@ class ClickerState:
         self.current_cookies = 0.0
         self.current_seconds = 0.0
         self.current_cps = 1.0
-        pass
+        self.history = [(0.0, None, 0.0, 0.0)]
 
     def __str__(self):
         """
         Return human readable state
         """
-        items = {'total_cookies': self.total_cookies, 
-        'current_cookies': self.current_cookies,
-         'current_seconds': self.current_seconds,
-          'current_cps': self.current_cps}
-        string = ""
-        for item in items:
-            string += str(item) + "\n"
+        history_dict = {'total_cookies': self.total_cookies,
+                        'current_cookies': self.current_cookies,
+                        'current_seconds': self.current_seconds,
+                        'current_cps': self.current_cps}
+        string = "\n----------------------------\n"
+        for name, item in history_dict.items():
+            space_length = 28 - len(str(name) + ": " + str(item))
+            string += str(name) + ": " + str(item) + "|".rjust(space_length) + "\n"
+        return string + "----------------------------"
 
     # def print_history(self):
     #    pass
@@ -55,7 +58,7 @@ class ClickerState:
 
         Should return a float
         """
-        return 0.0
+        return self.current_cookies
 
     def get_cps(self):
         """
@@ -63,29 +66,28 @@ class ClickerState:
 
         Should return a float
         """
-        return 0.0
+        return self.current_cps
 
     def get_time(self):
         """
         Get current time
-
+        
         Should return a float
         """
-        return 0.0
+        return self.current_seconds
 
     def get_history(self):
         """
         Return history list
-
         History list should be a list of tuples of the form:
         (time, item, cost of item, total total_cookies)
-
         For example: [(0.0, None, 0.0, 0.0)]
 
         Should return a copy of any internal data structures,
         so that they will not be modified outside of the class.
         """
-        return []
+        history_copy = self.history[:]
+        return history_copy
 
     def time_until(self, total_cookies):
         """
@@ -94,7 +96,7 @@ class ClickerState:
 
         Should return a float with no fractional part
         """
-        return 0.0
+        return math.ceil(total_cookies / self.current_cps)
 
     def wait(self, time):
         """
@@ -102,15 +104,19 @@ class ClickerState:
 
         Should do nothing if time <= 0.0
         """
+        
         pass
 
     def buy_item(self, item_name, cost, additional_cps):
         """
         Buy an item and update state
-
         Should do nothing if you cannot afford the item
         """
-        pass
+        item = (self.current_seconds, item_name, cost, self.total_cookies)
+        self.current_cookies -= cost
+        self.current_cps += additional_cps
+        self.history.append(item)
+        return 
 
 # -----------------------------------Simulation Functions-------------------------------------------
 
@@ -176,7 +182,7 @@ def run_strategy(strategy_name, time, strategy):
     Run a simulation for the given time with one strategy.
     """
     state = simulate_clicker(provided.BuildInfo(), time, strategy)
-    print strategy_name, ":", state
+    print("Chosen Strategy: " + strategy_name.upper() + str(state))
 
     # Plot total total_cookies over time
 
@@ -202,6 +208,16 @@ def run():
 
 # -----------------------------------PLAYGROUND-------------------------------------------
 run()
+clicker_state_obj = ClickerState()
+clicker_state_obj.buy_item('Grandma', 100, 0.6)
+clicker_state_obj.buy_item('Grandma', 115, 0.6)
+print(clicker_state_obj.get_history())
+x = clicker_state_obj.get_history()
+x.append('bullshit')
+print(clicker_state_obj.get_history())
+
+obj2 = ClickerState()
+print(obj2.time_until(50))
 
 obj = provided.BuildInfo()
 obj.clone()
@@ -210,6 +226,13 @@ print("Grandma COST: %s" % obj.get_cost('Grandma'))
 print("Grandma CPS: %s" % obj.get_cps('Grandma'))
 obj.update_item('Grandma')
 print("Grandma COST: %s" % obj.get_cost('Grandma'))
+
+
+# -------------------------------TESTS----------------------------------------
+cookie_clicker_tests.run_suite(ClickerState)
+
+
+
 
 
 # -----------------------------------GREEDYBOSS-------------------------------------------
