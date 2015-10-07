@@ -1,11 +1,7 @@
 
 """
-Author: Rafeh Qazi
-Date: 09/27/2015
 Planner for Yahtzee
 Simplifications:  only allow discard and roll, only score against upper level
-Link: http://www.codeskulptor.org/#user40_eBVtEjoX06_21.py
-test_link: https://class.coursera.org/principlescomputing1-004/wiki/=view?page=imports
 """
 
 ALL_HANDS = range(1, 7)
@@ -71,7 +67,6 @@ def expected_value(held_dice, num_die_sides, num_free_dice):
 
     for possibility in all_possibilities_for_free_dice:
         new_hand = possibility + held_dice
-        print (new_hand, "-->", score(new_hand))
         new_score = score(new_hand)
         total_score += new_score
     return total_score / len(all_possibilities_for_free_dice)
@@ -111,6 +106,7 @@ def gen_all_holds(hand):
     # Remove impossible indexes from hold_choice
     for impossible_hold_idx in hold_choices_indices_to_remove[::-1]:
         hold_choices.pop(impossible_hold_idx)
+    print(len(hold_choices))
     return set(hold_choices)
 
 
@@ -127,10 +123,11 @@ def strategy(hand, num_die_sides):
     max_hand = None
     max_length = len(hand)
     for hand in gen_all_holds(hand):
-        expected_valuE = expected_value(hand, num_die_sides, max_length - len(hand))
-        if expected_valuE > max_expected:
-            max_expected = expected_valuE
+        expected_val = expected_value(hand, num_die_sides, max_length - len(hand))
+        if expected_val > max_expected:
+            max_expected = expected_val
             max_hand = hand
-            return (max_expected, max_hand)
+    return (max_expected, max_hand)
 
-# Strategy( (2,1), 6)
+
+print(strategy((4, 4, 5, 1, 6), 6))
