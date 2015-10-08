@@ -28,7 +28,7 @@ class TestSuite:
         if computed != expected:
             msg = message + " Computed: " + str(computed)
             msg += " Expected: " + str(expected)
-            print msg
+            print(msg)
             self.failures += 1
 
     def report_results(self):
@@ -38,4 +38,4 @@ class TestSuite:
         """
         msg = "Ran " + str(self.total_tests) + " tests. "
         msg += str(self.failures) + " failures."
-        print msg
+        print (msg)
