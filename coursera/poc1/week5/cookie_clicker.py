@@ -10,6 +10,7 @@ Cookie Clicker Simulator
 # import user40_lbarkGzPKK_46 as cookie_clicker_testsuite
 import simpleplot
 import math
+import random
 # Used to increase the timeout, if necessary
 import codeskulptor
 codeskulptor.set_timeout(20)
@@ -271,24 +272,17 @@ def strategy_best(total_cookies, cps, history, time_left, build_info):
     """
     The best strategy that you are able to implement.
     """
+    # Find all items that are purchasable
     obj = ClickerState()
     obj.current_cps = cps
     obj.wait(time_left)
     total_cookies += obj.get_cookies()
-    maximum = build_info.build_items()[0]
-    for item in build_info.build_items():
-        if total_cookies >= build_info.get_cost(item):
-            maximum = item
-            break
-        else:
-            return None
-    
-    # Start searching for the cheapest item
-    for item in build_info.build_items():
-        if total_cookies >= build_info.get_cost(item) > build_info.get_cost(maximum):
-            maximum = item
-
-    return maximum
+    purchasable_items = filter(lambda x: build_info.get_cost(x) < total_cookies, build_info.build_items())
+    if not purchasable_items:
+        item_to_buy = None
+    else:
+        item_to_buy = random.choice(purchasable_items)
+    return item_to_buy
 
 
 def run_strategy(strategy_name, time, strategy):
@@ -303,23 +297,24 @@ def run_strategy(strategy_name, time, strategy):
     # Uncomment out the lines below to see a plot of total total_cookies vs. time
     # Be sure to allow popups, if you do want to see it
 
-    # history = state.get_history()
-    # history = [(item[0], item[3]) for item in history]
-    # simpleplot.plot_lines(strategy_name, 1000, 400, 'Time', 'Total total_cookies', [history], True)
+    #history = state.get_history()
+    #history = [(item[0], item[3]) for item in history]
+    #simpleplot.plot_lines(strategy_name, 1000, 400, 'Time', 'Total total_cookies', [history], True)
 
 
 def run():
     """
     Run the simulator.
     """
-    run_strategy("Cursor", SIM_TIME, strategy_cursor_broken)
+    # run_strategy("Cursor", SIM_TIME, strategy_cursor_broken)
 
     # Add calls to run_strategy to run additional strategies
-    # run_strategy("Cheap", SIM_TIME, strategy_cheap)
+    run_strategy("Cheap", SIM_TIME, strategy_cheap)
     # run_strategy("Expensive", SIM_TIME, strategy_expensive)
-    # run_strategy("Best", SIM_TIME, strategy_best)
+    run_strategy("Best", SIM_TIME, strategy_best)
+    # ans1 = run_strategy("Cheap", SIM_TIME, strategy_cheap)
+    # ans2 = run_strategy("Expensive", SIM_TIME, strategy_expensive)
 
-    
 #print(strategy_cheap(500000.0, 1.0, [(0.0, None, 0.0, 0.0)], 5.0, 
 #               provided.BuildInfo({'A': [5.0, 1.0], 
 #                                   'C': [50000.0, 3.0], 
@@ -348,7 +343,7 @@ def run():
 # print(min(provided.BuildInfo().build_items(), key=lambda x: provided.BuildInfo().get_cost(x)))
 # min(build_info.build_items(), key=lambda x: build_info.get_cost(x))
 # -----------------------------------PLAYGROUND-------------------------------------------
-# run()
+run()
 # print(simulate_clicker(provided.BuildInfo(), SIM_TIME, strategy_cursor_broken))
 
 
