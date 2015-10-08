@@ -2,8 +2,9 @@
  -*- coding: utf-8 -*-
 @Date    : 2015-10-05 01:28:26
 @Author  : Rafeh Qazi (rafehqazi1@gmail.com)
-@Link    : http://www.codeskulptor.org/#user40_T5hWZdwpqP_0.py
+@Link    : http://www.codeskulptor.org/#user40_T5hWZdwpqP_5.py
 @TestLink: http://www.codeskulptor.org/#user40_lbarkGzPKK_44.py
+@100/100 Scoring Link: http://www.codeskulptor.org/#user40_T5hWZdwpqP_5.py
 Cookie Clicker Simulator
 """
 
@@ -29,11 +30,11 @@ class ClickerState:
     Simple class to keep track of the game state.
     """
 
-    def __init__(self):
-        self._total_cookies = 0.0
-        self._current_cookies = 0.0
-        self._current_seconds = 0.0
-        self._current_cps = 1.0
+    def __init__(self, total_cookies=0, current_cookies=0, current_seconds=0, current_cps=1):
+        self._total_cookies = total_cookies
+        self._current_cookies = current_cookies
+        self._current_seconds = current_seconds
+        self._current_cps = current_cps
         self._history = [(0.0, None, 0.0, 0.0)]
 
     def __str__(self):
@@ -229,8 +230,8 @@ def strategy_cheap(total_cookies, cps, history, time_left, build_info):
     """
 
     # Check if I have enough money to purchase any item
-    obj = ClickerState()
-    obj.get_cps = cps
+    # (self, total_cookies=0,current_cookies=0,current_seconds=0,current_cps=1):
+    obj = ClickerState(total_cookies, 0, 0, cps)
     obj.wait(time_left)
     total_cookies += obj.get_cookies()
     cheapest = build_info.build_items()[0]
@@ -253,8 +254,7 @@ def strategy_expensive(total_cookies, cps, history, time_left, build_info):
     """
     Always buy the most expensive item you can afford in the time left.
     """
-    obj = ClickerState()
-    obj.get_cps() = cps
+    obj = ClickerState(total_cookies, 0, 0, cps)
     obj.wait(time_left)
     total_cookies += obj.get_cookies()
     maximum = build_info.build_items()[0]
@@ -278,8 +278,7 @@ def strategy_best(total_cookies, cps, history, time_left, build_info):
     The best strategy that you are able to implement.
     """
     # Find all items that are purchasable
-    obj = ClickerState()
-    obj.get_cps() = cps
+    obj = ClickerState(total_cookies, 0, 0, cps)
     obj.wait(time_left)
     total_cookies += obj.get_cookies()
     purchasable_items = filter(
