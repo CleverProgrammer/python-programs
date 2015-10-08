@@ -2,7 +2,7 @@
  -*- coding: utf-8 -*-
 @Date    : 2015-10-05 01:28:26
 @Author  : Rafeh Qazi (rafehqazi1@gmail.com)
-@Link    : http://www.codeskulptor.org/#user40_z5Pd9GiYA8_44.py
+@Link    : http://www.codeskulptor.org/#user40_T5hWZdwpqP_0.py
 @TestLink: http://www.codeskulptor.org/#user40_lbarkGzPKK_44.py
 Cookie Clicker Simulator
 """
@@ -20,7 +20,7 @@ import poc_clicker_provided as provided
 # Constants
 SIM_TIME = 10000000000.0
 
-# -----------------------------------ClickerState Class-------------------------------------------
+# -----------------------------------ClickerState Class-------------------
 
 
 class ClickerState:
@@ -30,37 +30,38 @@ class ClickerState:
     """
 
     def __init__(self):
-        self.total_cookies = 0.0
-        self.current_cookies = 0.0
-        self.current_seconds = 0.0
-        self.current_cps = 1.0
-        self.history = [(0.0, None, 0.0, 0.0)]
+        self._total_cookies = 0.0
+        self._current_cookies = 0.0
+        self._current_seconds = 0.0
+        self._current_cps = 1.0
+        self._history = [(0.0, None, 0.0, 0.0)]
 
     def __str__(self):
         """
         Return human readable state
         """
-        history_dict = {'total_cookies': self.total_cookies,
-                        'current_cookies': self.current_cookies,
-                        'current_seconds': self.current_seconds,
-                        'current_cps': self.current_cps}
+        history_dict = {'total_cookies': self._total_cookies,
+                        'current_cookies': self._current_cookies,
+                        'current_seconds': self._current_seconds,
+                        'current_cps': self._current_cps}
         string = ""
         for name, value in history_dict.items():
             string += name + ": " + str(value) + " "
-        return string + str(self.history)
+        return string + str(self._history)
 
     def print_history(self):
         """
         human readable print history
         """
-        history_dict = {'total_cookies': self.total_cookies,
-                        'current_cookies': self.current_cookies,
-                        'current_seconds': self.current_seconds,
-                        'current_cps': self.current_cps}
+        history_dict = {'total_cookies': self._total_cookies,
+                        'current_cookies': self._current_cookies,
+                        'current_seconds': self._current_seconds,
+                        'current_cps': self._current_cps}
         string = "\n----------------------------\n"
         for name, item in history_dict.items():
             space_length = 28 - len(str(name) + ": " + str(item))
-            string += str(name) + ": " + str(item) + "|".rjust(space_length) + "\n"
+            string += str(name) + ": " + str(item) + \
+                "|".rjust(space_length) + "\n"
         return string + "----------------------------"
 
     def get_cookies(self):
@@ -70,7 +71,7 @@ class ClickerState:
 
         Should return a float
         """
-        return self.current_cookies
+        return self._current_cookies
 
     def get_cps(self):
         """
@@ -78,7 +79,7 @@ class ClickerState:
 
         Should return a float
         """
-        return self.current_cps
+        return self._current_cps
 
     def get_time(self):
         """
@@ -86,7 +87,7 @@ class ClickerState:
 
         Should return a float
         """
-        return self.current_seconds
+        return self._current_seconds
 
     def get_history(self):
         """
@@ -98,7 +99,7 @@ class ClickerState:
         Should return a copy of any internal data structures,
         so that they will not be modified outside of the class.
         """
-        history_copy = self.history[:]
+        history_copy = self._history[:]
         return history_copy
 
     def time_until(self, total_cookies):
@@ -108,11 +109,11 @@ class ClickerState:
 
         Should return a float with no fractional part
         """
-        if self.current_cookies >= total_cookies:
+        if self._current_cookies >= total_cookies:
             result = 0.0
         else:
-            current_cookies = total_cookies - self.current_cookies
-            result = math.ceil(current_cookies / self.current_cps)
+            current_cookies = total_cookies - self._current_cookies
+            result = math.ceil(current_cookies / self._current_cps)
         return result
 
     def wait(self, time):
@@ -123,23 +124,25 @@ class ClickerState:
         """
         if time <= 0.0:
             return
-        self.current_seconds += time  # time should increase
-        self.current_cookies += time * self.current_cps  # cookies made in given time
-        self.total_cookies += time * self.current_cps  # cookies made in given time
+        self._current_seconds += time  # time should increase
+        # cookies made in given time
+        self._current_cookies += time * self._current_cps
+        # cookies made in given time
+        self._total_cookies += time * self._current_cps
 
     def buy_item(self, item_name, cost, additional_cps):
         """
         Buy an item and update state
         Should do nothing if you cannot afford the item
         """
-        if cost > self.current_cookies:
+        if cost > self._current_cookies:
             return
-        item = (self.current_seconds, item_name, cost, self.total_cookies)
-        self.current_cookies -= cost
-        self.current_cps += additional_cps
-        self.history.append(item)
+        item = (self._current_seconds, item_name, cost, self._total_cookies)
+        self._current_cookies -= cost
+        self._current_cps += additional_cps
+        self._history.append(item)
 
-# -----------------------------------Simulation Functions-------------------------------------------
+# -----------------------------------Simulation Functions-----------------
 
 
 def simulate_clicker(build_info, duration, strategy):
@@ -168,18 +171,20 @@ def simulate_clicker(build_info, duration, strategy):
         return None
     build_info_clone = build_info.clone()
     clicker_state = ClickerState()
-    while duration >= clicker_state.current_seconds:
+    while duration >= clicker_state.get_time():
         total_cookies = clicker_state.get_cookies()
         cps = clicker_state.get_cps()
         history = clicker_state.get_history()
-        time_left = duration - clicker_state.current_seconds
-        item_to_buy = strategy(total_cookies, cps, history, time_left, build_info_clone)
+        time_left = duration - clicker_state.get_time()
+        item_to_buy = strategy(
+            total_cookies, cps, history, time_left, build_info_clone)
         if item_to_buy is None:
             break
-        secs_left_to_buy = clicker_state.time_until(build_info_clone.get_cost(item_to_buy))
-        if duration < clicker_state.current_seconds + secs_left_to_buy:
+        secs_left_to_buy = clicker_state.time_until(
+            build_info_clone.get_cost(item_to_buy))
+        if duration < clicker_state.get_time() + secs_left_to_buy:
             break
-        
+
         # 4. Wait until that time
         clicker_state.wait(secs_left_to_buy)
         # 5. Buy the item.
@@ -189,8 +194,8 @@ def simulate_clicker(build_info, duration, strategy):
         # 6. Update the build information.
         build_info_clone.update_item(item_to_buy)
 
-    clicker_state.wait(duration-clicker_state.current_seconds)
-    
+    clicker_state.wait(duration - clicker_state.get_time())
+
     return clicker_state
 
 
@@ -222,10 +227,10 @@ def strategy_cheap(total_cookies, cps, history, time_left, build_info):
     """
     Always buy the cheapest item you can afford in the time left.
     """
-    
+
     # Check if I have enough money to purchase any item
     obj = ClickerState()
-    obj.current_cps = cps
+    obj.get_cps = cps
     obj.wait(time_left)
     total_cookies += obj.get_cookies()
     cheapest = build_info.build_items()[0]
@@ -235,7 +240,7 @@ def strategy_cheap(total_cookies, cps, history, time_left, build_info):
             break
         else:
             return None
-    
+
     # Start searching for the cheapest item
     for item in build_info.build_items():
         if total_cookies >= build_info.get_cost(item) < build_info.get_cost(cheapest):
@@ -249,7 +254,7 @@ def strategy_expensive(total_cookies, cps, history, time_left, build_info):
     Always buy the most expensive item you can afford in the time left.
     """
     obj = ClickerState()
-    obj.current_cps = cps
+    obj.get_cps() = cps
     obj.wait(time_left)
     total_cookies += obj.get_cookies()
     maximum = build_info.build_items()[0]
@@ -259,7 +264,7 @@ def strategy_expensive(total_cookies, cps, history, time_left, build_info):
             break
         else:
             return None
-    
+
     # Start searching for the cheapest item
     for item in build_info.build_items():
         if total_cookies >= build_info.get_cost(item) > build_info.get_cost(maximum):
@@ -274,10 +279,11 @@ def strategy_best(total_cookies, cps, history, time_left, build_info):
     """
     # Find all items that are purchasable
     obj = ClickerState()
-    obj.current_cps = cps
+    obj.get_cps() = cps
     obj.wait(time_left)
     total_cookies += obj.get_cookies()
-    purchasable_items = filter(lambda x: build_info.get_cost(x) < total_cookies, build_info.build_items())
+    purchasable_items = filter(
+        lambda x: build_info.get_cost(x) < total_cookies, build_info.build_items())
     if not purchasable_items:
         item_to_buy = None
     else:
@@ -315,28 +321,28 @@ def run():
     # ans1 = run_strategy("Cheap", SIM_TIME, strategy_cheap)
     # ans2 = run_strategy("Expensive", SIM_TIME, strategy_expensive)
 
-#print(strategy_cheap(500000.0, 1.0, [(0.0, None, 0.0, 0.0)], 5.0, 
-#               provided.BuildInfo({'A': [5.0, 1.0], 
-#                                   'C': [50000.0, 3.0], 
-#                                   'B': [500.0, 2.0]}, 
+# print(strategy_cheap(500000.0, 1.0, [(0.0, None, 0.0, 0.0)], 5.0,
+#               provided.BuildInfo({'A': [5.0, 1.0],
+#                                   'C': [50000.0, 3.0],
+#                                   'B': [500.0, 2.0]},
 #                                  1.15)))
-#print(provided.BuildInfo({'A': [5.0, 1.0], 
-#                          'C': [50000.0, 3.0], 
-#                          'B': [500.0, 2.0]}, 
+# print(provided.BuildInfo({'A': [5.0, 1.0],
+#                          'C': [50000.0, 3.0],
+#                          'B': [500.0, 2.0]},
 #                         1.15).get_cost('A'))
-#print(strategy_expensive(500000.0, 1.0, [(0.0, None, 0.0, 0.0)], 5.0, 
-#                   provided.BuildInfo({'A': [5.0, 1.0], 
-#                                       'C': [50000.0, 3.0], 
+# print(strategy_expensive(500000.0, 1.0, [(0.0, None, 0.0, 0.0)], 5.0,
+#                   provided.BuildInfo({'A': [5.0, 1.0],
+#                                       'C': [50000.0, 3.0],
 #                                       'B': [500.0, 2.0]}, 1.15)))
 
-#print(strategy_expensive(3.0, 100.0, [(0.0, None, 0.0, 0.0)], 600.0, 
-#                   provided.BuildInfo({'A': [5.0, 1.0], 
-#                                       'C': [50000.0, 3.0], 
-#                                       'B': [500.0, 2.0]}, 
+# print(strategy_expensive(3.0, 100.0, [(0.0, None, 0.0, 0.0)], 600.0,
+#                   provided.BuildInfo({'A': [5.0, 1.0],
+#                                       'C': [50000.0, 3.0],
+#                                       'B': [500.0, 2.0]},
 #                                      1.15)))
 # == > C
 
-# print(simulate_clicker(provided.BuildInfo({'Cursor': [15.0, 0.10000000000000001]}, 1.15), 
+# print(simulate_clicker(provided.BuildInfo({'Cursor': [15.0, 0.10000000000000001]}, 1.15),
 #      5000.0, strategy_none))
 
 # provided.BuildInfo()
