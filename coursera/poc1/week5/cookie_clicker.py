@@ -2,7 +2,7 @@
  -*- coding: utf-8 -*-
 @Date    : 2015-10-05 01:28:26
 @Author  : Rafeh Qazi (rafehqazi1@gmail.com)
-@Link    : http://www.codeskulptor.org/#user40_z5Pd9GiYA8_44.py
+@Link    : http://www.codeskulptor.org/#user40_z5Pd9GiYA8_59.py
 @TestLink: http://www.codeskulptor.org/#user40_lbarkGzPKK_41.py
 Cookie Clicker Simulator
 """
