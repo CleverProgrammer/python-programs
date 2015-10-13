@@ -23,7 +23,7 @@ def order_by_letter(string_list, letter_pos):
         buckets[char_index] += [string]  # place in list based on how far is the given string's 2nd pos letter is from 'a'
 
     answer = []
-    for char_index in range(NUM_CHARS):
+    for char_index in range(NUM_CHARS):  # 26 buckets. Sorted based on each letter
         answer += buckets[char_index]
     return answer
 
