@@ -19,8 +19,8 @@ def order_by_letter(string_list, letter_pos):
     """
     buckets = [[] for dummy_idx in range(NUM_CHARS)]
     for string in string_list:
-        char_index = ord(string[letter_pos]) - ord("a")
-        buckets[char_index] += [string]
+        char_index = ord(string[letter_pos]) - ord("a")  # distance between 2nd positioned letter and the letter a
+        buckets[char_index] += [string]  # place in list based on how far is the given string's 2nd pos letter is from 'a'
 
     answer = []
     for char_index in range(NUM_CHARS):
@@ -42,7 +42,7 @@ def run_example():
     string_length = 3
     test_list = ["".join([random.choice(CHARACTERS) for _ in range(string_length)])
                  for dummy_index in range (50)]
-    print("Unsorted string list is", test_list)
-    print("Sorted string list is", string_sort(test_list, string_length))
+    print("\n\nUnsorted string list is", test_list)
+    print("\n\nSorted string list is", string_sort(test_list, string_length))
 
 run_example()
