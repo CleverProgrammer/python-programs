@@ -4,10 +4,10 @@ __author__ = 'Rafeh'
 Student portion of Zombie Apocalypse mini-project
 """
 
-import random
+# import random
 import poc_grid
-import poc_queue
-import poc_zombie_gui
+# import poc_queue
+# import poc_zombie_gui
 
 # global constants
 EMPTY = 0
@@ -77,6 +77,7 @@ class Apocalypse(poc_grid.Grid):
         added.
         """
         # replace with an actual generator
+        yield from self._zombie_list
         return
 
     def add_human(self, row, col):
@@ -104,7 +105,13 @@ class Apocalypse(poc_grid.Grid):
         Distance at member of entity_list is zero
         Shortest paths avoid obstacles and use four-way distances
         """
-
+        distance_field = [ [GRID_HEIGHT+GRID_WIDTH for dummy_col in range(GRID_WIDTH)] for dummy_row in range(GRID_WIDTH) ]
+        # Now I need to access each element and get it's distance field from the entity list
+        for row in range(GRID_HEIGHT):
+            for col in range(GRID_WIDTH):
+                distance = min([manhattan_distance(entity[0], entity[1], row, col) for entity in entity_list])
+                distance_field[row][col] = distance
+        return distance_field
         return
 
     def move_humans(self, zombie_distance_field):
@@ -127,7 +134,7 @@ class Apocalypse(poc_grid.Grid):
 # poc_zombie_gui.run_gui(Apocalypse(30, 40))
 
 
-obj = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)],)
+obj = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)])
 # obj.clear()
 print(obj)
 print(obj._zombie_list)
@@ -142,3 +149,12 @@ print(obj._zombie_list)
 print(obj.num_zombies())
 obj.add_human(3,1)
 print(obj.num_humans())
+print("\n\n")
+for i in range(5):
+	print(obj.zombies())
+
+def get_zombie():
+	obj = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)])
+	return obj.zombies()
+
+print(get_zombie())
