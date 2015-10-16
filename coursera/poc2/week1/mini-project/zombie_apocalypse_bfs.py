@@ -6,7 +6,7 @@ Student portion of Zombie Apocalypse mini-project
 
 # import random
 import poc_grid
-# import poc_queue
+import poc_queue
 # import poc_zombie_gui
 
 # global constants
@@ -35,8 +35,8 @@ class Apocalypse(poc_grid.Grid):
         Create a simulation of given size with given obstacles,
         humans, and zombies
         """
-        self.height = grid_height
-        self.width = grid_width
+        self._height = grid_height
+        self._width = grid_width
         poc_grid.Grid.__init__(self, grid_height, grid_width)
         if obstacle_list != None:
             for cell in obstacle_list:
@@ -57,7 +57,7 @@ class Apocalypse(poc_grid.Grid):
         """
         self._zombie_list = []
         self._human_list = []
-        poc_grid.Grid.__init__(self, self.height, self.width)
+        poc_grid.Grid.__init__(self, self._height, self._width)
 
     def add_zombie(self, row, col):
         """
@@ -78,7 +78,7 @@ class Apocalypse(poc_grid.Grid):
         """
         # replace with an actual generator
         for zombie in self._zombie_list:
-	        yield zombie
+            yield zombie
 
     def add_human(self, row, col):
         """
@@ -98,7 +98,7 @@ class Apocalypse(poc_grid.Grid):
         """
         # replace with an actual generator
         for human in self._human_list:
-	        yield human
+            yield human
 
     def compute_distance_field(self, entity_type):
         """
@@ -106,14 +106,16 @@ class Apocalypse(poc_grid.Grid):
         Distance at member of entity_list is zero
         Shortest paths avoid obstacles and use four-way distances
         """
-        distance_field = [ [GRID_HEIGHT+GRID_WIDTH for dummy_col in range(GRID_WIDTH)] for dummy_row in range(GRID_WIDTH) ]
-        # Now I need to access each element and get it's distance field from the entity list
-        for row in range(GRID_HEIGHT):
-            for col in range(GRID_WIDTH):
-                distance = min([manhattan_distance(entity[0], entity[1], row, col) for entity in entity_list])
-                distance_field[row][col] = distance
-        return distance_field
-        return
+        distance_field = poc_grid.Grid(self._height, self._width)
+        for row in range(distance_field):
+
+        queue = [self._zombie_list]
+        for row, col in self._zombie_list:
+            distance_field[row][col] = 0
+        while queue:
+            current_row, current_col = queue.pop(0)
+
+
 
     def move_humans(self, zombie_distance_field):
         """
