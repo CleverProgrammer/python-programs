@@ -77,8 +77,8 @@ class Apocalypse(poc_grid.Grid):
         added.
         """
         # replace with an actual generator
-        yield from self._zombie_list
-        return
+        for zombie in self._zombie_list:
+	        yield zombie
 
     def add_human(self, row, col):
         """
@@ -97,7 +97,8 @@ class Apocalypse(poc_grid.Grid):
         Generator that yields the humans in the order they were added.
         """
         # replace with an actual generator
-        return
+        for human in self._human_list:
+	        yield human
 
     def compute_distance_field(self, entity_type):
         """
@@ -134,27 +135,29 @@ class Apocalypse(poc_grid.Grid):
 # poc_zombie_gui.run_gui(Apocalypse(30, 40))
 
 
-obj = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)])
+apocalypse = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)])
 # obj.clear()
-print(obj)
-print(obj._zombie_list)
-obj.clear()
-print("\n\n%s"  %str(obj))
-print(obj._zombie_list)
+print(apocalypse)
+print(apocalypse._zombie_list)
+apocalypse.clear()
+print("\n\n%s"  %str(apocalypse))
+print(apocalypse._zombie_list)
 
 print("--------------adding zombies----------------------")
-obj = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)],)
-obj.add_zombie(3,4)
-print(obj._zombie_list)
-print(obj.num_zombies())
-obj.add_human(3,1)
-print(obj.num_humans())
+apocalypse = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)],)
+apocalypse.add_zombie(3,4)
+print(apocalypse._zombie_list)
+print(apocalypse.num_zombies())
+apocalypse.add_human(3,1)
+print(apocalypse.num_humans())
 print("\n\n")
-for i in range(5):
-	print(obj.zombies())
+zombie_gen = apocalypse.zombies()
+print(next(zombie_gen))
+print(next(zombie_gen))
 
-def get_zombie():
-	obj = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)])
-	return obj.zombies()
-
-print(get_zombie())
+# ------- human generator --------
+apocalypse.add_human(3,3)
+apocalypse.add_human(3,2)
+human_gen = apocalypse.humans()
+print(next(human_gen))
+print(next(human_gen))
