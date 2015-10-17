@@ -4,7 +4,7 @@ __author__ = 'Rafeh'
 Student portion of Zombie Apocalypse mini-project
 """
 
-# import random
+import random
 import poc_grid
 import poc_queue
 # import poc_zombie_gui
@@ -106,15 +106,9 @@ class Apocalypse(poc_grid.Grid):
         Distance at member of entity_list is zero
         Shortest paths avoid obstacles and use four-way distances
         """
-        distance_field = poc_grid.Grid(self._height, self._width)
-        for row in range(distance_field):
-
-        queue = [self._zombie_list]
-        for row, col in self._zombie_list:
-            distance_field[row][col] = 0
-        while queue:
-            current_row, current_col = queue.pop(0)
-
+        self.distance_field = poc_grid.Grid(5, 5)
+        for i in self._zombie_list:
+            self.distance_field.set_full(i[0], i[1])
 
 
     def move_humans(self, zombie_distance_field):
@@ -136,30 +130,44 @@ class Apocalypse(poc_grid.Grid):
 
 # poc_zombie_gui.run_gui(Apocalypse(30, 40))
 
+def print_stuff():
+    apocalypse = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)])
+    # obj.clear()
+    print(apocalypse)
+    print(apocalypse._zombie_list)
+    apocalypse.clear()
+    print("\n\n%s"  %str(apocalypse))
+    print(apocalypse._zombie_list)
 
-apocalypse = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)])
-# obj.clear()
-print(apocalypse)
-print(apocalypse._zombie_list)
-apocalypse.clear()
-print("\n\n%s"  %str(apocalypse))
-print(apocalypse._zombie_list)
+    print("--------------adding zombies----------------------")
+    apocalypse = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)],)
+    apocalypse.add_zombie(3,4)
+    print(apocalypse._zombie_list)
+    print(apocalypse.num_zombies())
+    apocalypse.add_human(3,1)
+    print(apocalypse.num_humans())
+    print("\n\n")
+    zombie_gen = apocalypse.zombies()
+    print(next(zombie_gen))
+    print(next(zombie_gen))
 
-print("--------------adding zombies----------------------")
-apocalypse = Apocalypse(5,5, [(1,1),(1,2)], [(1,4),(2,4)],)
-apocalypse.add_zombie(3,4)
-print(apocalypse._zombie_list)
-print(apocalypse.num_zombies())
-apocalypse.add_human(3,1)
-print(apocalypse.num_humans())
-print("\n\n")
-zombie_gen = apocalypse.zombies()
-print(next(zombie_gen))
-print(next(zombie_gen))
+    # ------- human generator --------
+    apocalypse.add_human(3,3)
+    apocalypse.add_human(3,2)
+    human_gen = apocalypse.humans()
+    print(next(human_gen))
+    print(next(human_gen))
 
-# ------- human generator --------
-apocalypse.add_human(3,3)
-apocalypse.add_human(3,2)
-human_gen = apocalypse.humans()
-print(next(human_gen))
-print(next(human_gen))
+
+# ------ checking BFS ---------
+def print_zombies_on_grid():
+    apocalypse = Apocalypse(5,5)
+    zombies = [ (random.randrange(0,5), random.randrange(0,5)) for i in range(10)]
+    for row, col in zombies:
+        apocalypse.add_zombie(row, col )
+    print(apocalypse._zombie_list)
+    print(apocalypse._zombie_list[0][0])
+    apocalypse.compute_distance_field('anything can go here for now')
+    print(apocalypse.distance_field)
+
+print_zombies_on_grid()
