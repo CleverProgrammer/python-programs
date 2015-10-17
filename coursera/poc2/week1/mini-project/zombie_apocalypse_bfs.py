@@ -107,9 +107,11 @@ class Apocalypse(poc_grid.Grid):
         Shortest paths avoid obstacles and use four-way distances
         """
         self.visited = poc_grid.Grid(self._height, self._width)  # empty grid
-        self.distance_field = poc_grid.Grid(self._height, self._width)
+        self.distance_field = [ [ self._height * self._width] * self._width for dummy_idx in range(self._width) ]
+        self.boundary = poc_queue.Queue
+        self.hold_distance_field = poc_grid.Grid(self._height, self._width)
         for row, col in self._zombie_list:
-            self.distance_field.set_full(row, col)
+            self.hold_distance_field.set_full(row, col)
 
 
     def move_humans(self, zombie_distance_field):
@@ -173,9 +175,10 @@ def print_zombies_grid_but_human_distance_field():
     print(apocalypse._zombie_list)
     print(apocalypse._zombie_list[0][0])
     apocalypse.compute_distance_field('anything can go here for now')
-    print(apocalypse.distance_field)
+    print(apocalypse.hold_distance_field)
     print("My four neighbors:", apocalypse.four_neighbors(0,0))
     print("My eight neighbors:", apocalypse.eight_neighbors(0,0))
     print("Visited: \n%s" %str(apocalypse.visited))
+    print(apocalypse.distance_field)
 
 print_zombies_grid_but_human_distance_field()
