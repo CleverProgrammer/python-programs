@@ -106,9 +106,10 @@ class Apocalypse(poc_grid.Grid):
         Distance at member of entity_list is zero
         Shortest paths avoid obstacles and use four-way distances
         """
-        self.distance_field = poc_grid.Grid(5, 5)
-        for i in self._zombie_list:
-            self.distance_field.set_full(i[0], i[1])
+        self.visited = poc_grid.Grid(self._height, self._width)  # empty grid
+        self.distance_field = poc_grid.Grid(self._height, self._width)
+        for row, col in self._zombie_list:
+            self.distance_field.set_full(row, col)
 
 
     def move_humans(self, zombie_distance_field):
@@ -160,7 +161,11 @@ def print_stuff():
 
 
 # ------ checking BFS ---------
-def print_zombies_on_grid():
+def print_zombies_grid_but_human_distance_field():
+    """
+    Just used to scope out the random print statements and put them all in one place
+    :rtype : printed objects
+    """
     apocalypse = Apocalypse(5,5)
     zombies = [ (random.randrange(0,5), random.randrange(0,5)) for i in range(10)]
     for row, col in zombies:
@@ -169,5 +174,8 @@ def print_zombies_on_grid():
     print(apocalypse._zombie_list[0][0])
     apocalypse.compute_distance_field('anything can go here for now')
     print(apocalypse.distance_field)
+    print("My four neighbors:", apocalypse.four_neighbors(0,0))
+    print("My eight neighbors:", apocalypse.eight_neighbors(0,0))
+    print("Visited: \n%s" %str(apocalypse.visited))
 
-print_zombies_on_grid()
+print_zombies_grid_but_human_distance_field()
