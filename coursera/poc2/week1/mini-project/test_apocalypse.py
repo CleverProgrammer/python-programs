@@ -36,9 +36,14 @@ class TestApocalypse(TestCase):
         state.add_human(0, 3)
         state.add_zombie(1, 3)
         state.add_zombie(3, 3)
-        human_generator = ''
-        self.assertEqual(next(state.humans()), (2,3), "test human generator")
-        self.assertEqual(next(state.humans()), (2,3), "test human generator")
+        # test human generator
+        human_generator = state.humans()
+        self.assertEqual(next(human_generator), (2,3), "test human generator")
+        self.assertEqual(next(human_generator), (0,3), "test human generator")
+        # test zombie generator
+        zombie_generator = state.zombies()
+        self.assertEqual(next(zombie_generator), (1,3), "test zombie generator")
+        self.assertEqual(next(zombie_generator), (3,3), "test zombie generator")
 
     def test_compute_distance_field(self):
         state = Apocalypse(5, 5)
