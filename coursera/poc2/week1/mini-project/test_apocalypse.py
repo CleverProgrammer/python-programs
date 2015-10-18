@@ -86,5 +86,18 @@ class TestApocalypse(TestCase):
         human_generator = state.humans()
         human = next(human_generator)
         self.assertEqual(human, (2,2), "test human generator")
-        neighbors = zombie_distance_field[human[0]][human[1]]
-
+        neighbors = state.four_neighbors(human[0], human[1])
+        self.assertEqual(neighbors, [(1, 2), (3, 2), (2, 1), (2, 3)], "testing human's neighbors")
+        human_distance = zombie_distance_field[human[0]][human[1]]
+        print(neighbors[0][0])
+        print(zombie_distance_field[neighbors[0][0]][neighbors[0][1]])
+        print(human_distance)
+        safest_distance = 10
+        safest_location = 0
+        for neighbor in neighbors:
+            print(neighbor)
+            print(zombie_distance_field[neighbor[0]][neighbor[1]])
+            if zombie_distance_field[neighbor[0]][neighbor[1]] < safest_distance:
+                safest_distance = zombie_distance_field[neighbor[0]][neighbor[1]]
+                safest_location = neighbor
+        print("neighbor:", neighbor)
