@@ -127,6 +127,8 @@ class Apocalypse(poc_grid.Grid):
             humans_or_zombies = self._zombie_list
         elif entity_type == HUMAN:
             humans_or_zombies = self._human_list
+        else:
+            return  # should return nothing if entity_type is None
 
         # Update boundary and mark each human_or_zombie (row, col) tuple as visited. Also, set the human_or_zombie
         # tuple to be zero on the distance field grid.
@@ -139,9 +141,10 @@ class Apocalypse(poc_grid.Grid):
             current_cell = self.boundary.dequeue()
             neighbors = self.visited.four_neighbors(current_cell[0], current_cell[1])
             for neighbor in neighbors:
-                if self.visited.is_empty(current_cell[0], current_cell[1]):  # can't use `not in` because no such method
+                if self.visited.is_empty(neighbor[0], neighbor[1]):  # can't use `not in` because no such method
                     self.visited.set_full(neighbor[0], neighbor[1])  # add neighbor cell to visited
-                    distance_field[neighbor[0]][neighbor[1]] = 0
+                    distance_field[neighbor[0]][neighbor[1]] = distance_field[current_cell[0]][current_cell[1]] + 1
+                    self.boundary.enqueue(neighbor)
 
         return distance_field
 
@@ -150,6 +153,7 @@ class Apocalypse(poc_grid.Grid):
         Function that moves humans away from zombies, diagonal moves
         are allowed
         """
+        pass
         pass
 
     def move_zombies(self, human_distance_field):
