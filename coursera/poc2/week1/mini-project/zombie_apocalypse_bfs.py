@@ -117,12 +117,12 @@ class Apocalypse(poc_grid.Grid):
         distance_field = [[self._height * self._width] * self._width for dummy_idx in range(self._width)]
 
         # grid visited is initialized to be empty
-        visited = poc_grid.Grid(self._height, self._width)
+        self.visited = poc_grid.Grid(self._height, self._width)
         for row, col in self.obstacle():
-            visited.set_full(row, col)
+            self.visited.set_full(row, col)
 
         # initializing boundary queue and the humans_or_zombies list type.
-        boundary = poc_queue.Queue()
+        self.boundary = poc_queue.Queue()
         if entity_type == ZOMBIE:
             humans_or_zombies = self._zombie_list
         elif entity_type == HUMAN:
@@ -131,18 +131,19 @@ class Apocalypse(poc_grid.Grid):
         # Update boundary and mark each human_or_zombie (row, col) tuple as visited. Also, set the human_or_zombie
         # tuple to be zero on the distance field grid.
         for human_or_zombie in humans_or_zombies:
-            boundary.enqueue(human_or_zombie)
-            visited.set_full(human_or_zombie[0], human_or_zombie[1])
+            self.boundary.enqueue(human_or_zombie)
+            self.visited.set_full(human_or_zombie[0], human_or_zombie[1])
             distance_field[human_or_zombie[0]][human_or_zombie[1]] = 0
 
-        while boundary:
-            current_cell = boundary.dequeue()
-            neighbors = visited.four_neighbors(current_cell[0], current_cell[1])
+        while self.boundary:
+            current_cell = self.boundary.dequeue()
+            neighbors = self.visited.four_neighbors(current_cell[0], current_cell[1])
             for neighbor in neighbors:
-                if visited.is_empty(current_cell[0], current_cell[1]):  # can't use `not in` because no such method
-                    visited.set_full(neighbor[0], neighbor[1])  # add neighbor cell to visited
+                if self.visited.is_empty(current_cell[0], current_cell[1]):  # can't use `not in` because no such method
+                    self.visited.set_full(neighbor[0], neighbor[1])  # add neighbor cell to visited
                     distance_field[neighbor[0]][neighbor[1]] = 0
 
+        return distance_field
 
     def move_humans(self, zombie_distance_field):
         """
