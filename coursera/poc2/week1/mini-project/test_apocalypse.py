@@ -32,6 +32,7 @@ class TestApocalypse(TestCase):
 
     def test_human_and_zombie_generators(self):
         state = Apocalypse(5, 5)
+        print('tenzin')
 
     def test_compute_distance_field(self):
         state = Apocalypse(5, 5)
