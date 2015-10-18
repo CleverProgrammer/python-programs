@@ -20,11 +20,6 @@ HUMAN = 6
 ZOMBIE = 7
 
 
-# print(poc_grid.Grid(5,5))
-# grid = poc_grid.Grid(5,5)
-# print(grid.eight_neighbors(2,1))
-# grid.clear()
-# print(grid)
 class Apocalypse(poc_grid.Grid):
     """
     Class for simulating zombie pursuit of human on grid with
@@ -44,6 +39,8 @@ class Apocalypse(poc_grid.Grid):
             for cell in obstacle_list:
                 self.set_full(cell[0], cell[1])
             self._obstacle_list = obstacle_list
+        else:
+            self._obstacle_list = []
         if zombie_list is not None:
             self._zombie_list = list(zombie_list)
         else:
@@ -117,27 +114,35 @@ class Apocalypse(poc_grid.Grid):
         Shortest paths avoid obstacles and use four-way distances
         """
         # same size as grid but initialized with impossibly high values
-        self.distance_field = [[self._height * self._width] * self._width for dummy_idx in range(self._width)]
+        distance_field = [[self._height * self._width] * self._width for dummy_idx in range(self._width)]
 
         # grid visited is initialized to be empty
-        self.visited = poc_grid.Grid(self._height, self._width)
-        for row, col in self._obstacle_list:
-            self.visited.set_full(row, col)
+        visited = poc_grid.Grid(self._height, self._width)
+        for row, col in self.obstacle():
+            visited.set_full(row, col)
 
-        # initializing boundary queue and the humans_or_zombies_list list type.
-        self.boundary = poc_queue.Queue()
+        # initializing boundary queue and the humans_or_zombies list type.
+        boundary = poc_queue.Queue()
         if entity_type == ZOMBIE:
-            humans_or_zombies_list = self._zombie_list
+            humans_or_zombies = self._zombie_list
         elif entity_type == HUMAN:
-            humans_or_zombies_list = self._human_list
+            humans_or_zombies = self._human_list
 
-        # mark obstacles as impassible in visited
+        # Update boundary and mark each human_or_zombie (row, col) tuple as visited. Also, set the human_or_zombie
+        # tuple to be zero on the distance field grid.
+        for human_or_zombie in humans_or_zombies:
+            boundary.enqueue(human_or_zombie)
+            visited.set_full(human_or_zombie[0], human_or_zombie[1])
+            distance_field[human_or_zombie[0]][human_or_zombie[1]] = 0
 
+        while boundary:
+            current_cell = boundary.dequeue()
+            neighbors = visited.four_neighbors(current_cell[0], current_cell[1])
+            for neighbor in neighbors:
+                if visited.is_empty(current_cell[0], current_cell[1]):  # can't use `not in` because no such method
+                    visited.set_full(neighbor[0], neighbor[1])  # add neighbor cell to visited
+                    distance_field[neighbor[0]][neighbor[1]] = 0
 
-
-        self.hold_distance_field = poc_grid.Grid(self._height, self._width)
-        for row, col in self._zombie_list:
-            self.hold_distance_field.set_full(row, col)
 
     def move_humans(self, zombie_distance_field):
         """
@@ -208,4 +213,4 @@ def print_zombies_grid_but_human_distance_field():
     print(apocalypse.distance_field)
 
 
-print_zombies_grid_but_human_distance_field()
+# print_zombies_grid_but_human_distance_field()
