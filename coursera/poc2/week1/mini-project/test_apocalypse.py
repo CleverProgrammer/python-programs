@@ -28,7 +28,6 @@ class TestApocalypse(TestCase):
         # test the clear method
         state.clear()
         self.assertEqual(state.num_humans(), 0, "test clear")
-        print(state)
 
     def test_num_zombies(self):
         state = Apocalypse(5, 5)

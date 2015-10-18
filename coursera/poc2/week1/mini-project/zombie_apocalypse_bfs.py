@@ -154,7 +154,6 @@ class Apocalypse(poc_grid.Grid):
         are allowed
         """
         pass
-        pass
 
     def move_zombies(self, human_distance_field):
         """
@@ -169,53 +168,5 @@ class Apocalypse(poc_grid.Grid):
 
 # poc_zombie_gui.run_gui(Apocalypse(30, 40))
 
-def print_stuff():
-    apocalypse = Apocalypse(5, 5, [(1, 1), (1, 2)], [(1, 4), (2, 4)])
-    # obj.clear()
-    print(apocalypse)
-    print(apocalypse._zombie_list)
-    apocalypse.clear()
-    print("\n\n%s" % str(apocalypse))
-    print(apocalypse._zombie_list)
-
-    print("--------------adding zombies----------------------")
-    apocalypse = Apocalypse(5, 5, [(1, 1), (1, 2)], [(1, 4), (2, 4)], )
-    apocalypse.add_zombie(3, 4)
-    print(apocalypse._zombie_list)
-    print(apocalypse.num_zombies())
-    apocalypse.add_human(3, 1)
-    print(apocalypse.num_humans())
-    print("\n\n")
-    zombie_gen = apocalypse.zombies()
-    print(next(zombie_gen))
-    print(next(zombie_gen))
-
-    # ------- human generator --------
-    apocalypse.add_human(3, 3)
-    apocalypse.add_human(3, 2)
-    human_gen = apocalypse.humans()
-    print(next(human_gen))
-    print(next(human_gen))
 
 
-# ------ checking BFS ---------
-def print_zombies_grid_but_human_distance_field():
-    """
-    Just used to scope out the random print statements and put them all in one place
-    :rtype : printed objects
-    """
-    apocalypse = Apocalypse(5, 5)
-    zombies = [(random.randrange(0, 5), random.randrange(0, 5)) for i in range(10)]
-    for row, col in zombies:
-        apocalypse.add_zombie(row, col)
-    print(apocalypse._zombie_list)
-    print(apocalypse._zombie_list[0][0])
-    apocalypse.compute_distance_field('anything can go here for now')
-    print(apocalypse.hold_distance_field)
-    print("My hold_distance_field four neighbors:", apocalypse.hold_distance_field.four_neighbors(0, 0))
-    print("My eight neighbors:", apocalypse.eight_neighbors(0, 0))
-    print("Visited: \n%s" % str(apocalypse.visited))
-    print(apocalypse.distance_field)
-
-
-# print_zombies_grid_but_human_distance_field()
