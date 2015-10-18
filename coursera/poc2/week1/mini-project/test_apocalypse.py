@@ -5,6 +5,10 @@ __author__ = 'ChessTastic'
 
 
 class TestApocalypse(TestCase):
+  """
+  test cases for the zombie apocalypse class
+  """
+
   def test_num_humans(self):
     state = Apocalypse(5, 5)
     state.add_human(2, 3)
@@ -17,5 +21,8 @@ class TestApocalypse(TestCase):
       self.assertEqual(state.num_humans(), 2)
       state.clear()
       self.assertEqual(state.num_humans(), 0)
+
+  def test_compute_distance_field(self):
+      state = Apocalypse(5, 5)
 
 
