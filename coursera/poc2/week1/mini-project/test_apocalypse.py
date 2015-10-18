@@ -32,7 +32,13 @@ class TestApocalypse(TestCase):
 
     def test_human_and_zombie_generators(self):
         state = Apocalypse(5, 5)
-        print('tenzin')
+        state.add_human(2, 3)
+        state.add_human(0, 3)
+        state.add_zombie(1, 3)
+        state.add_zombie(3, 3)
+        human_generator = ''
+        self.assertEqual(next(state.humans()), (2,3), "test human generator")
+        self.assertEqual(next(state.humans()), (2,3), "test human generator")
 
     def test_compute_distance_field(self):
         state = Apocalypse(5, 5)
