@@ -10,12 +10,22 @@ class TestApocalypse(TestCase):
   test cases for the zombie apocalypse class
   """
 
+    def test_init(self):
+        state = Apocalypse(5, 5,
+                           obstacle_list = [(1, 2), (3,4)],
+                           zombie_list = [(2,2)],
+                           human_list = [(0,4), (4,3)]
+                           )
+        self.assertEqual(len(state._obstacle_list), 2, "test obstacles list length")
+        self.assertEqual(len(state._zombie_list), 1, "test zombies list length")
+        self.assertEqual(len(state._human_list), 2, "test humans list length")
+
     def test_clear(self):
         state = Apocalypse(5, 5)
         state.add_human(2, 3)
         state.add_human(1, 2)
         self.assertEqual(state.num_humans(), 2)
-
+        # test the clear method
         state.clear()
         self.assertEqual(state.num_humans(), 0, "test clear")
         print(state)
@@ -30,8 +40,8 @@ class TestApocalypse(TestCase):
         state.add_human(2, 3)
         self.assertEqual(state.num_humans(), 1, "test num humans and add humans")
 
-    def test_human_and_zombie_generators(self):
-        state = Apocalypse(5, 5)
+    def test_human_and_zombie_and_obstacle_generators(self):
+        state = Apocalypse(5, 5, obstacle_list = [(1,2), (3,4), (1,3)])
         state.add_human(2, 3)
         state.add_human(0, 3)
         state.add_zombie(1, 3)
@@ -44,6 +54,11 @@ class TestApocalypse(TestCase):
         zombie_generator = state.zombies()
         self.assertEqual(next(zombie_generator), (1,3), "test zombie generator")
         self.assertEqual(next(zombie_generator), (3,3), "test zombie generator")
+        # test obstacle generator
+        obstacle_generator = state.obstacle()
+        self.assertEqual(next(obstacle_generator), (1,2), "test obstacle generator")
+        self.assertEqual(next(obstacle_generator), (3,4), "test obstacle generator")
+        self.assertEqual(next(obstacle_generator), (1,3), "test obstacle generator")
 
     def test_compute_distance_field(self):
         state = Apocalypse(5, 5)
