@@ -147,14 +147,19 @@ class Apocalypse(poc_grid.Grid):
                     distance_field[neighbor[0]][neighbor[1]] = distance_field[current_cell[0]][current_cell[1]] + 1
                     boundary.enqueue(neighbor)
 
+
         return distance_field
 
     def move_humans(self, zombie_distance_field):
         """
         Function that moves humans away from zombies, diagonal moves
         are allowed
-
         """
+        for human in self.humans():
+            neighbors = self.four_neighbors(human[0], human[1])
+            human_distance = zombie_distance_field[human[0]][human[1]]
+            safest = neighbors.index(max(neighbors))
+
         pass
 
     def move_zombies(self, human_distance_field):

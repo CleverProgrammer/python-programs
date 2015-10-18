@@ -73,3 +73,18 @@ class TestApocalypse(TestCase):
             print(row)
         print()
         print("human_list:", state._human_list)
+
+    def test_move_humans(self):
+        state = Apocalypse(5, 5, zombie_list = [(1,2), (2,3)], human_list = [(2,2), (4,4)])
+        zombie_distance_field = state.compute_distance_field(zombie_apocalypse_bfs.ZOMBIE)
+        print()
+        print("-------------------------------")
+        print("Zombie Distance Field:")
+        for row in zombie_distance_field:
+            print(row)
+        print()
+        human_generator = state.humans()
+        human = next(human_generator)
+        self.assertEqual(human, (2,2), "test human generator")
+        neighbors = zombie_distance_field[human[0]][human[1]]
+
