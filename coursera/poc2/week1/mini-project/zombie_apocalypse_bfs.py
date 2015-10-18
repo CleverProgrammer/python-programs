@@ -114,15 +114,16 @@ class Apocalypse(poc_grid.Grid):
         Shortest paths avoid obstacles and use four-way distances
         """
         # same size as grid but initialized with impossibly high values
-        distance_field = [[self._height * self._width] * self._width for dummy_idx in range(self._width)]
+        distance_field =[[self._grid_height * self._grid_width for dummy_col in range(self._grid_width)]
+                         for dummy_row in range(self._grid_height)]
 
         # grid visited is initialized to be empty
-        self.visited = poc_grid.Grid(self._height, self._width)
+        visited = poc_grid.Grid(self._height, self._width)
         for row, col in self.obstacle():
-            self.visited.set_full(row, col)
+            visited.set_full(row, col)
 
         # initializing boundary queue and the humans_or_zombies list type.
-        self.boundary = poc_queue.Queue()
+        boundary = poc_queue.Queue()
         if entity_type == ZOMBIE:
             humans_or_zombies = self._zombie_list
         elif entity_type == HUMAN:
@@ -133,18 +134,18 @@ class Apocalypse(poc_grid.Grid):
         # Update boundary and mark each human_or_zombie (row, col) tuple as visited. Also, set the human_or_zombie
         # tuple to be zero on the distance field grid.
         for human_or_zombie in humans_or_zombies:
-            self.boundary.enqueue(human_or_zombie)
-            self.visited.set_full(human_or_zombie[0], human_or_zombie[1])
+            boundary.enqueue(human_or_zombie)
+            visited.set_full(human_or_zombie[0], human_or_zombie[1])
             distance_field[human_or_zombie[0]][human_or_zombie[1]] = 0
 
-        while self.boundary:
-            current_cell = self.boundary.dequeue()
-            neighbors = self.visited.four_neighbors(current_cell[0], current_cell[1])
+        while boundary:
+            current_cell = boundary.dequeue()
+            neighbors = visited.four_neighbors(current_cell[0], current_cell[1])
             for neighbor in neighbors:
-                if self.visited.is_empty(neighbor[0], neighbor[1]):  # can't use `not in` because no such method
-                    self.visited.set_full(neighbor[0], neighbor[1])  # add neighbor cell to visited
+                if visited.is_empty(neighbor[0], neighbor[1]):  # can't use `not in` because no such method
+                    visited.set_full(neighbor[0], neighbor[1])  # add neighbor cell to visited
                     distance_field[neighbor[0]][neighbor[1]] = distance_field[current_cell[0]][current_cell[1]] + 1
-                    self.boundary.enqueue(neighbor)
+                    boundary.enqueue(neighbor)
 
         return distance_field
 
