@@ -153,6 +153,7 @@ class Apocalypse(poc_grid.Grid):
         """
         Function that moves humans away from zombies, diagonal moves
         are allowed
+
         """
         pass
 
