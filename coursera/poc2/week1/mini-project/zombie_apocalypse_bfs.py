@@ -155,10 +155,12 @@ class Apocalypse(poc_grid.Grid):
         Function that moves humans away from zombies, diagonal moves
         are allowed
         """
-        for human in self.humans():
-            neighbors = self.four_neighbors(human[0], human[1])
-            human_distance = zombie_distance_field[human[0]][human[1]]
-            safest = neighbors.index(max(neighbors))
+        for neighbor in neighbors:
+            print(neighbor)
+            print(zombie_distance_field[neighbor[0]][neighbor[1]])
+            if zombie_distance_field[neighbor[0]][neighbor[1]] > safest_distance:
+                safest_distance = zombie_distance_field[neighbor[0]][neighbor[1]]  # distance value
+                safest_location = neighbor  # coordinate (row, col)
 
         pass
 

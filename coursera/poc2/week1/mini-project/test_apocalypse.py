@@ -75,7 +75,7 @@ class TestApocalypse(TestCase):
         print("human_list:", state._human_list)
 
     def test_move_humans(self):
-        state = Apocalypse(5, 5, zombie_list = [(1,2), (2,3)], human_list = [(2,2), (4,4)])
+        state = Apocalypse(5, 5, zombie_list = [(1,2), (2,3)], human_list = [(0,0), (4,4)])
         zombie_distance_field = state.compute_distance_field(zombie_apocalypse_bfs.ZOMBIE)
         print()
         print("-------------------------------")
@@ -85,17 +85,18 @@ class TestApocalypse(TestCase):
         print()
         human_generator = state.humans()
         human = next(human_generator)
-        self.assertEqual(human, (2,2), "test human generator")
+        self.assertEqual(human, (0,0), "test human generator")
         neighbors = state.eight_neighbors(human[0], human[1])
-        self.assertEqual(neighbors, [(1, 2), (3, 2), (2, 1), (2, 3), (1, 1), (1, 3), (3, 1), (3, 3)],
-                         "testing human's neighbors")
+        print("neighbors:", neighbors)
+        self.assertEqual(neighbors, [(1, 0), (0, 1), (1, 1)], "testing human's neighbors")
         human_distance = zombie_distance_field[human[0]][human[1]]
-        safest_distance = 10
-        safest_location = 0
+        safest_distance = human_distance
+        safest_location = human
         for neighbor in neighbors:
             print(neighbor)
             print(zombie_distance_field[neighbor[0]][neighbor[1]])
-            if zombie_distance_field[neighbor[0]][neighbor[1]] < safest_distance:
-                safest_distance = zombie_distance_field[neighbor[0]][neighbor[1]]
-                safest_location = neighbor
+            if zombie_distance_field[neighbor[0]][neighbor[1]] > safest_distance:
+                safest_distance = zombie_distance_field[neighbor[0]][neighbor[1]]  # distance value
+                safest_location = neighbor  # coordinate (row, col)
         print("safest_location:", safest_location)
+        print()
