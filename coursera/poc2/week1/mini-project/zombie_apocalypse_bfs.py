@@ -1,11 +1,10 @@
 __author__ = 'Rafeh'
 
 """
+http://www.codeskulptor.org/#user40_HFYBBvbkJb_6.py
 Student portion of Zombie Apocalypse mini-project
 """
 
-import unittest
-import random
 import poc_grid
 import poc_queue
 # import poc_zombie_gui
@@ -22,7 +21,7 @@ ZOMBIE = 7
 
 class Apocalypse(poc_grid.Grid):
     """
-    Class for simulating zombie pursuit of human on grid with
+    Class for simulating zombie pursuit of zombie on grid with
     obstacles
     """
 
@@ -53,7 +52,7 @@ class Apocalypse(poc_grid.Grid):
     def clear(self):
         """
         Set cells in obstacle grid to be empty
-        Reset zombie and human lists to be empty
+        Reset zombie and zombie lists to be empty
         """
         self._zombie_list = []
         self._human_list = []
@@ -82,7 +81,7 @@ class Apocalypse(poc_grid.Grid):
 
     def add_human(self, row, col):
         """
-        Add human to the human list
+        Add zombie to the zombie list
         """
         self._human_list.append((row, col))
 
@@ -97,8 +96,8 @@ class Apocalypse(poc_grid.Grid):
         Generator that yields the humans in the order they were added.
         """
         # replace with an actual generator
-        for human in self._human_list:
-            yield human
+        for zombie in self._human_list:
+            yield zombie
 
     def obstacle(self):
         '''
@@ -155,21 +154,42 @@ class Apocalypse(poc_grid.Grid):
         Function that moves humans away from zombies, diagonal moves
         are allowed
         """
-        for neighbor in neighbors:
-            print(neighbor)
-            print(zombie_distance_field[neighbor[0]][neighbor[1]])
-            if zombie_distance_field[neighbor[0]][neighbor[1]] > safest_distance:
-                safest_distance = zombie_distance_field[neighbor[0]][neighbor[1]]  # distance value
-                safest_location = neighbor  # coordinate (row, col)
+        new_human_list = []
+        for zombie in self.humans():
+            neighbors = self.eight_neighbors(zombie[0], zombie[1])
+            human_distance = zombie_distance_field[zombie[0]][zombie[1]]
+            farthest_distance = human_distance  #initialized as human_distance until it finds a farther distance from zombie
+            safest_location = zombie  # initialized as zombie until it finds a better coordinate on the grid
+            for neighbor in neighbors:
+                if neighbor in self._obstacle_list:
+                    continue
+                if zombie_distance_field[neighbor[0]][neighbor[1]] > farthest_distance:
+                    farthest_distance = zombie_distance_field[neighbor[0]][neighbor[1]]  # distance value
+                    safest_location = neighbor  # coordinate (row, col)
+            new_human_list.append(safest_location)
 
-        pass
+        self._human_list = new_human_list
 
     def move_zombies(self, human_distance_field):
         """
         Function that moves zombies towards humans, no diagonal moves
         are allowed
         """
-        pass
+        new_zombie_list = []
+        for zombie in self.zombies():
+            neighbors = self.four_neighbors(zombie[0], zombie[1])
+            zombie_distance = human_distance_field[zombie[0]][zombie[1]]
+            farthest_distance = zombie_distance  #initialized as human_distance until it finds a farther distance from zombie
+            safest_location = zombie  # initialized as zombie until it finds a better coordinate on the grid
+            for neighbor in neighbors:
+                if neighbor in self._obstacle_list:
+                    continue
+                if human_distance_field[neighbor[0]][neighbor[1]] < farthest_distance:
+                    farthest_distance = human_distance_field[neighbor[0]][neighbor[1]]  # distance value
+                    safest_location = neighbor  # coordinate (row, col)
+            new_zombie_list.append(safest_location)
+
+        self._zombie_list = new_zombie_list
 
 
 # Start up gui for simulation - You will need to write some code above
