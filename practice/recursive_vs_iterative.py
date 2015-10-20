@@ -183,6 +183,15 @@ def recursive_insert_x(my_string):
     return recursive_insert_x(my_string[:-1]) + 'x' + my_string[-1]
 
 
+def iterative_list_reverse(my_list):
+    """
+    iterative solution that takes in a list and returns the list in a reversed order.
+    :param my_list: list
+    :return: list
+    """
+    return my_list[::-1]
+
+
 def recursive_list_reverse(my_list):
     """
     recursive solution that takes in a list and returns the list in a reversed order.

@@ -52,6 +52,10 @@ class TestRecursiveVsIterativeFunctions(TestCase):
         self.assertEqual(recursive_insert_x('hel'), 'hxexl', "test recursive insert x")
         self.assertEqual(recursive_insert_x('catdog'), 'cxaxtxdxoxg', "test recursive insert x")
 
+    def test_iterative_list_reverse(self):
+        self.assertEqual(iterative_list_reverse([2, 3, 1]), [1, 3, 2], "test iterative list reverse")
+        self.assertEqual(iterative_list_reverse([5, 2, 7, 6]), [6, 7, 2, 5], "test iterative list reverse")
+
     def test_recursive_list_reverse(self):
         self.assertEqual(recursive_list_reverse([2, 3, 1]), [1, 3, 2], "test recursive list reverse")
         self.assertEqual(recursive_list_reverse([5, 2, 7, 6]), [6, 7, 2, 5], "test recursive list reverse")
