@@ -111,8 +111,8 @@ def recursive_is_member(my_list, elem):
     :return: True or False
     """
     # base case
-    if len(my_list) == 1:
-        return elem == my_list[0]  # return True if elem is in my_list else return False.
+    if not my_list:
+        return False  # if there are no elements in the list. Return False.
 
     # condition
     if my_list[-1] == elem:
@@ -120,3 +120,32 @@ def recursive_is_member(my_list, elem):
 
     # recursive case
     return recursive_is_member(my_list[:-1], elem)  # shorten list by removing the last element each time
+
+
+def iterative_remove_x(my_string):
+    """
+    iterative solution that takes in a string and returns it with all instances of 'x' removed.
+    :param my_string: string
+    :return: string
+    """
+    new_string = ''
+    for i in my_string:
+        if i is not 'x':
+            new_string += i
+    return new_string
+
+
+def recursive_remove_x(my_string):
+    """
+    iterative solution that takes in a string and returns it with all instances of 'x' removed.
+    :param my_string: string
+    :return: string
+    """
+    # base case
+    if not my_string:  # check if string is empty
+        return my_string  # returns ''
+
+    # recursive case
+    if my_string[-1] is not 'x':
+        return recursive_remove_x(my_string[:-1]) + my_string[-1]
+    return recursive_remove_x(my_string[:-1])
