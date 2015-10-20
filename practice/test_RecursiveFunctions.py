@@ -24,3 +24,11 @@ class TestRecursiveFunctions(TestCase):
     def test_recursive_number_of_threes(self):
         self.assertEqual(recursive_number_of_threes(3567333), 4, "test recursive number of threes")
         self.assertEqual(recursive_number_of_threes(35465793367333), 6, "test recursive number of threes")
+
+    def test_iterative_is_member(self):
+        self.assertEqual(iterative_is_member(['hello','cat','bob'], 'bob'), True, "test iterative is member")
+        self.assertEqual(iterative_is_member(['hello','cat','bob'], 'dog'), False, "test iterative is member")
+
+    def test_recursive_is_member(self):
+        self.assertEqual(recursive_is_member(['hello','cat','bob'], 'bob'), True, "test iterative is member")
+        self.assertEqual(recursive_is_member(['hello','cat','bob'], 'dog'), False, "test iterative is member")

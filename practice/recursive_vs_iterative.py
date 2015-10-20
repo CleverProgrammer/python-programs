@@ -28,6 +28,8 @@ def recursive_double(x):
     # base case
     if x == 0:
         return 0
+
+    # recursive case
     return recursive_double(x - 1) + 2  # double every number
 
 
@@ -49,8 +51,11 @@ def recursive_sum_up_to(x):
     :param x: number
     :return: number that is summed up to x
     """
+    # base case
     if x == 0:
         return 0
+
+    # recursive case
     return recursive_sum_up_to(x - 1) + x
 
 
@@ -74,8 +79,11 @@ def recursive_number_of_threes(num):
     :param num: number
     :return: number of times 3 occurred
     """
+    # base case
     if num == 0:
         return 0
+
+    # recursive case
     if num % 10 == 3:
         return recursive_number_of_threes(num // 10) + 1  # if last digit is three then add 1
     return recursive_number_of_threes(num // 10)  # if last digit is three then add 0
@@ -88,3 +96,27 @@ def iterative_is_member(my_list, elem):
     :param elem: string or number
     :return: True or False
     """
+    for i in my_list:
+        if i == elem:
+            return True
+    return False
+
+
+def recursive_is_member(my_list, elem):
+    """
+    recursive solution that takes a list and an element as input. It returns True if the elem exists in my_list.
+    It returns False if the elem does not exist in my_list.
+    :param my_list: list
+    :param elem: string or number
+    :return: True or False
+    """
+    # base case
+    if len(my_list) == 1:
+        return elem == my_list[0]  # return True if elem is in my_list else return False.
+
+    # condition
+    if my_list[-1] == elem:
+        return True
+
+    # recursive case
+    return recursive_is_member(my_list[:-1], elem)  # shorten list by removing the last element each time
