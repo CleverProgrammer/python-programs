@@ -88,6 +88,7 @@ def recursive_number_of_threes(num):
         return recursive_number_of_threes(num // 10) + 1  # if last digit is three then add 1
     return recursive_number_of_threes(num // 10)  # if last digit is three then add 0
 
+
 def iterative_is_member(my_list, elem):
     """
     iterative solution that takes a list and an element as input. It returns True if the elem exists in my_list.
@@ -163,9 +164,10 @@ def iterative_insert_x(my_string):
     new_string += my_string[-1]
     return new_string
 
+
 def recursive_insert_x(my_string):
     """
-    recursive solution that takes in a string and returns the string with 'x' added in between every character
+    recursive solution that takes in a string and returns the string with 'x' added in between every character.
     :param my_string: string
     :return: string
     """
@@ -179,3 +181,17 @@ def recursive_insert_x(my_string):
 
     # recursive case
     return recursive_insert_x(my_string[:-1]) + 'x' + my_string[-1]
+
+
+def recursive_list_reverse(my_list):
+    """
+    recursive solution that takes in a list and returns the list in a reversed order.
+    :param my_list: list
+    :return: list
+    """
+    # base case
+    if not my_list:
+        return []
+
+    # recursive case
+    return [my_list[-1]] + recursive_list_reverse(my_list[:-1])

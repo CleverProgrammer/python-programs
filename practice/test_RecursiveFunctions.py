@@ -2,12 +2,15 @@ __author__ = 'Rafeh'
 from unittest import TestCase
 from recursive_vs_iterative import *
 
-class TestRecursiveFunctions(TestCase):
+
+class TestRecursiveVsIterativeFunctions(TestCase):
     def test_iterative_double(self):
-        self.assertEqual(iterative_double(4), 8, "test iterative double" )
+        self.assertEqual(iterative_double(4), 8, "test iterative double")
+        self.assertEqual(iterative_double(10), 20, "test iterative double")
 
     def test_recursive_double(self):
-        self.assertEqual(recursive_double(4), 8, "test recursive double" )
+        self.assertEqual(recursive_double(4), 8, "test recursive double")
+        self.assertEqual(recursive_double(10), 20, "test recursive double")
 
     def test_iterative_sum_up_to(self):
         self.assertEqual(iterative_sum_up_to(3), 6, "test iterative sum up to")
@@ -26,12 +29,12 @@ class TestRecursiveFunctions(TestCase):
         self.assertEqual(recursive_number_of_threes(35465793367333), 6, "test recursive number of threes")
 
     def test_iterative_is_member(self):
-        self.assertEqual(iterative_is_member(['hello','cat','bob'], 'bob'), True, "test iterative is member")
-        self.assertEqual(iterative_is_member(['hello','cat','bob'], 'dog'), False, "test iterative is member")
+        self.assertEqual(iterative_is_member(['hello', 'cat', 'bob'], 'bob'), True, "test iterative is member")
+        self.assertEqual(iterative_is_member(['hello', 'cat', 'bob'], 'dog'), False, "test iterative is member")
 
     def test_recursive_is_member(self):
-        self.assertEqual(recursive_is_member(['hello','cat','bob'], 'bob'), True, "test recursive is member")
-        self.assertEqual(recursive_is_member(['hello','cat','bob'], 'dog'), False, "test recursive is member")
+        self.assertEqual(recursive_is_member(['hello', 'cat', 'bob'], 'bob'), True, "test recursive is member")
+        self.assertEqual(recursive_is_member(['hello', 'cat', 'bob'], 'dog'), False, "test recursive is member")
 
     def test_iterative_remove_x(self):
         self.assertEqual(iterative_remove_x('catxxdogx'), 'catdog', "test iterative remove x")
@@ -48,3 +51,7 @@ class TestRecursiveFunctions(TestCase):
     def test_recursive_insert_x(self):
         self.assertEqual(recursive_insert_x('hel'), 'hxexl', "test recursive insert x")
         self.assertEqual(recursive_insert_x('catdog'), 'cxaxtxdxoxg', "test recursive insert x")
+
+    def test_recursive_list_reverse(self):
+        self.assertEqual(recursive_list_reverse([2, 3, 1]), [1, 3, 2], "test recursive list reverse")
+        self.assertEqual(recursive_list_reverse([5, 2, 7, 6]), [6, 7, 2, 5], "test recursive list reverse")
