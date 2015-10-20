@@ -30,11 +30,21 @@ class TestRecursiveFunctions(TestCase):
         self.assertEqual(iterative_is_member(['hello','cat','bob'], 'dog'), False, "test iterative is member")
 
     def test_recursive_is_member(self):
-        self.assertEqual(recursive_is_member(['hello','cat','bob'], 'bob'), True, "test iterative is member")
-        self.assertEqual(recursive_is_member(['hello','cat','bob'], 'dog'), False, "test iterative is member")
+        self.assertEqual(recursive_is_member(['hello','cat','bob'], 'bob'), True, "test recursive is member")
+        self.assertEqual(recursive_is_member(['hello','cat','bob'], 'dog'), False, "test recursive is member")
 
     def test_iterative_remove_x(self):
         self.assertEqual(iterative_remove_x('catxxdogx'), 'catdog', "test iterative remove x")
+        self.assertEqual(iterative_remove_x('xxx'), '', "test iterative remove x")
 
     def test_recursive_remove_x(self):
-        self.assertEqual(recursive_remove_x('catxxdogx'), 'catdog', "test iterative remove x")
+        self.assertEqual(recursive_remove_x('catxxdogx'), 'catdog', "test recursive remove x")
+        self.assertEqual(recursive_remove_x('xxx'), '', "test recursive remove x")
+
+    def test_iterative_insert_x(self):
+        self.assertEqual(iterative_insert_x('hel'), 'hxexl', "test iterative insert x")
+        self.assertEqual(iterative_insert_x('catdog'), 'cxaxtxdxoxg', "test iterative insert x")
+
+    def test_recursive_insert_x(self):
+        self.assertEqual(recursive_insert_x('hel'), 'hxexl', "test recursive insert x")
+        self.assertEqual(recursive_insert_x('catdog'), 'cxaxtxdxoxg', "test recursive insert x")

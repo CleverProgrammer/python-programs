@@ -143,9 +143,39 @@ def recursive_remove_x(my_string):
     """
     # base case
     if not my_string:  # check if string is empty
-        return my_string  # returns ''
+        return ''
 
     # recursive case
-    if my_string[-1] is not 'x':
+    if my_string[-1] != 'x':
         return recursive_remove_x(my_string[:-1]) + my_string[-1]
     return recursive_remove_x(my_string[:-1])
+
+
+def iterative_insert_x(my_string):
+    """
+    iterative recursive solution that takes in a string and returns the string with 'x' added in between every character
+    :param my_string: string
+    :return: string
+    """
+    new_string = ''
+    for i in my_string[:-1]:
+        new_string += i + 'x'
+    new_string += my_string[-1]
+    return new_string
+
+def recursive_insert_x(my_string):
+    """
+    recursive solution that takes in a string and returns the string with 'x' added in between every character
+    :param my_string: string
+    :return: string
+    """
+    # base case
+    if not my_string:
+        return ''
+
+    # base case 2
+    if len(my_string) == 1:
+        return my_string[0]
+
+    # recursive case
+    return recursive_insert_x(my_string[:-1]) + 'x' + my_string[-1]
