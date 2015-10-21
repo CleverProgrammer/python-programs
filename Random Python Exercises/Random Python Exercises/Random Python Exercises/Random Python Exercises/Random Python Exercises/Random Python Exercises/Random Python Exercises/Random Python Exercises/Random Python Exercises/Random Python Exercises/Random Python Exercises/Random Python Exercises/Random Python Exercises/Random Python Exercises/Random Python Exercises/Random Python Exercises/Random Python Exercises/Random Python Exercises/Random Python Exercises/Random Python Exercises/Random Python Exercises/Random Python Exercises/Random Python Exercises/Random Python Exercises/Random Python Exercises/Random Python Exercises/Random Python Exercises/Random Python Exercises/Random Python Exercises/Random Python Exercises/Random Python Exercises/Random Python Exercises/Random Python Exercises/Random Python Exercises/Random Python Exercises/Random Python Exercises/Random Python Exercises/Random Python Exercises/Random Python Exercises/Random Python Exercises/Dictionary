@@ -1,9 +1,0 @@
-prices = {'apple': 0.40, 'banana': 0.50, 'milk': 4, 'tandoori naan': 1}
-my_purchase = {
-    'apple': 2,
-    'banana': 10,
-    'milk': 2,
-    'tandoori naan': 8}
-grocery_bill = sum(prices[fruit] * my_purchase[fruit]
-                   for fruit in my_purchase)
-print 'I owe the grocer $%.2f' % grocery_bill

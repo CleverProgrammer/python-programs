@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import cProfile 
+=======
+#import cProfile 
+>>>>>>> problems
 
 def is_prime(number):
  for i in range(2, number//4+1):
@@ -18,7 +22,11 @@ def largest_prime_factor(number):
 
 
 #(is_prime(786))
+<<<<<<< HEAD
 largest_prime_factor(2477238317)
+=======
+#largest_prime_factor(2477238317)
+>>>>>>> problems
 #print(largest_prime_factor(200000))
 #print(largest_prime_factor(600851475143))
 

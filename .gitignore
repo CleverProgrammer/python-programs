@@ -1,0 +1,5 @@
+*.pyc
+*.xml
+**/.idea/workspace.xml
+*.idea/
+*.sublime*

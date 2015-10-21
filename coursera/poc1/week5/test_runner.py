@@ -1,0 +1,5 @@
+import poc_simpletest
+import cookie_clicker_testsuite
+from cookie_clicker import ClickerState
+
+cookie_clicker_testsuite.run_suite(ClickerState)
