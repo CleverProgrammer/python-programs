@@ -204,3 +204,39 @@ def recursive_list_reverse(my_list):
 
     # recursive case
     return [my_list[-1]] + recursive_list_reverse(my_list[:-1])
+
+
+def recursive_gcd(num1, num2):
+    """
+    recursive solution that takes in two numbers and returns their greatest common divisor
+    :param num1: number
+    :param num2: number
+    :return: number
+    """
+    pass
+
+
+def recursive_anagrams(word):
+    """
+    recursive solution that takes in a word and spits back all the possible permutations of that word.
+    :param word: string
+    :return: list
+    """
+    if not word:
+        return ['']
+    else:
+        ans = []
+        for w in recursive_anagrams(word[1:]):
+            for pos in range(len(w) + 1):
+                ans.append(w[:pos] + word[0] + w[pos:])
+        return ans
+
+
+# 'abc'
+# w in 'abc'[1:]
+# w = 'b'
+#     pos in range(len('b') + 1)
+#     pos in range([0, 1])
+#     pos = 0
+#          w[:pos] + 'abc'[0] + w[pos:]
+#          ''      + 'a'      + 'bc'

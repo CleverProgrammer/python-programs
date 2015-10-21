@@ -59,3 +59,20 @@ class TestRecursiveVsIterativeFunctions(TestCase):
     def test_recursive_list_reverse(self):
         self.assertEqual(recursive_list_reverse([2, 3, 1]), [1, 3, 2], "test recursive list reverse")
         self.assertEqual(recursive_list_reverse([5, 2, 7, 6]), [6, 7, 2, 5], "test recursive list reverse")
+
+    def test_recursive_anagrams(self):
+        word = 'hello'
+        expected = ['hello', 'ehllo', 'elhlo', 'ellho', 'elloh', 'hlelo', 'lhelo', 'lehlo', 'lelho', 'leloh',
+                    'hlleo', 'lhleo', 'llheo', 'lleho', 'lleoh', 'hlloe', 'lhloe', 'llhoe', 'llohe', 'lloeh',
+                    'hello', 'ehllo', 'elhlo', 'ellho', 'elloh', 'hlelo', 'lhelo', 'lehlo', 'lelho', 'leloh',
+                    'hlleo', 'lhleo', 'llheo', 'lleho', 'lleoh', 'hlloe', 'lhloe', 'llhoe', 'llohe', 'lloeh',
+                    'helol', 'ehlol', 'elhol', 'elohl', 'elolh', 'hleol', 'lheol', 'lehol', 'leohl', 'leolh',
+                    'hloel', 'lhoel', 'lohel', 'loehl', 'loelh', 'hlole', 'lhole', 'lohle', 'lolhe', 'loleh',
+                    'helol', 'ehlol', 'elhol', 'elohl', 'elolh', 'hleol', 'lheol', 'lehol', 'leohl', 'leolh',
+                    'hloel', 'lhoel', 'lohel', 'loehl', 'loelh', 'hlole', 'lhole', 'lohle', 'lolhe', 'loleh',
+                    'heoll', 'eholl', 'eohll', 'eolhl', 'eollh', 'hoell', 'ohell', 'oehll', 'oelhl', 'oellh',
+                    'holel', 'ohlel', 'olhel', 'olehl', 'olelh', 'holle', 'ohlle', 'olhle', 'ollhe', 'olleh',
+                    'heoll', 'eholl', 'eohll', 'eolhl', 'eollh', 'hoell', 'ohell', 'oehll', 'oelhl', 'oellh',
+                    'holel', 'ohlel', 'olhel', 'olehl', 'olelh', 'holle', 'ohlle', 'olhle', 'ollhe', 'olleh']
+        self.assertEqual(recursive_anagrams(word), expected, "test recursive anagrams")
+
