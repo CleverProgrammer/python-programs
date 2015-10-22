@@ -280,6 +280,20 @@ def recursive_fibonacci(n):
         return recursive_fibonacci(n-1) + recursive_fibonacci(n-2)
 
 
+def selection_sort(my_list):
+    """
+    recursive solution that takes in a list and returns it a non-decreasing order (ascending)
+    :param my_list: list
+    :return: list
+    """
+    # base case
+    if not my_list:
+        return []
+
+    # recursive case
+
+
+
 def recursive_gcd(num1, num2):
     """
     recursive solution that takes in two numbers and returns their greatest common divisor
@@ -287,5 +301,4 @@ def recursive_gcd(num1, num2):
     :param num2: number
     :return: number
     """
-    pass
     pass
