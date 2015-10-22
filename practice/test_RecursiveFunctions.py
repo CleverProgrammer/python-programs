@@ -76,3 +76,10 @@ class TestRecursiveVsIterativeFunctions(TestCase):
                     'holel', 'ohlel', 'olhel', 'olehl', 'olelh', 'holle', 'ohlle', 'olhle', 'ollhe', 'olleh']
         self.assertEqual(recursive_anagrams(word), expected, "test recursive anagrams")
 
+    def test_iterative_fast_exponentiation(self):
+        self.assertEqual(iterative_fast_exponentiation(4, 2), 16, 'test iterative fast exponentiation')
+        self.assertEqual(iterative_fast_exponentiation(8, 2), 64, 'test iterative fast exponentiation')
+
+    def test_recursive_fast_exponentiation(self):
+        self.assertEqual(recursive_fast_exponentiation(4, 2), 16, 'test iterative fast exponentiation')
+        self.assertEqual(recursive_fast_exponentiation(8, 2), 64, 'test iterative fast exponentiation')

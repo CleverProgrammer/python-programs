@@ -221,22 +221,55 @@ def recursive_anagrams(word):
     recursive solution that takes in a word and spits back all the possible permutations of that word.
     :param word: string
     :return: list
+    # 'abc'
+    # w in 'abc'[1:]
+    # w = 'b'
+    #     pos in range(len('b') + 1)
+    #     pos in range([0, 1])
+    #     pos = 0
+    #          w[:pos] + 'abc'[0] + w[pos:]
+    #          ''      + 'a'      + 'bc'
     """
     if not word:
         return ['']
     else:
         ans = []
-        for w in recursive_anagrams(word[1:]):
-            for pos in range(len(w) + 1):
-                ans.append(w[:pos] + word[0] + w[pos:])
+        for ch in recursive_anagrams(word[1:]):
+            for pos in range(len(ch) + 1):
+                ans.append(ch[:pos] + word[0] + ch[pos:])
         return ans
 
 
-# 'abc'
-# w in 'abc'[1:]
-# w = 'b'
-#     pos in range(len('b') + 1)
-#     pos in range([0, 1])
-#     pos = 0
-#          w[:pos] + 'abc'[0] + w[pos:]
-#          ''      + 'a'      + 'bc'
+def iterative_fast_exponentiation(number, power):
+    """
+    iterutive solution that takes a number and an its exponent power and returns its result.
+    :param number: number
+    :param power: number
+    :return: number
+    """
+    result = 1
+    for _ in range(power):
+        result *= number
+    return result
+
+def recursive_fast_exponentiation(number, power):
+    """
+    recursive iterative solution that takes a number and an its exponent power and returns its result.
+    :param number: number
+    :param power: number
+    :return: number
+    """
+    # 2^8  ==> 2^4  ==> 2^2 ==> 2*2
+    # 2*2 = 4 ==> 4*4 = 16 ==> 16*16 = 256
+
+    # base case
+    if power == 0:
+        return 1
+
+    # recursive case
+    else:
+        factor = iterative_fast_exponentiation(number, power//2)
+        if power%2 == 0:
+            return factor * factor
+        else:
+            return factor * factor * number
