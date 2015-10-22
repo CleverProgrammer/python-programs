@@ -290,7 +290,7 @@ def recursive_selection_sort(my_list):
     if not my_list:
         return []
 
-    # recursive case and sorting algorithm
+    # recursive case and sorting algorithm.
     else:
         position = None
         minimum = float('inf')
