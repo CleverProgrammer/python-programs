@@ -242,7 +242,7 @@ def recursive_anagrams(word):
 
 def iterative_fast_exponentiation(number, power):
     """
-    iterutive solution that takes a number and an its exponent power and returns its result.
+    iterative solution that takes a number and an its exponent power and returns its result.
     :param number: number
     :param power: number
     :return: number
@@ -268,7 +268,7 @@ def recursive_fast_exponentiation(number, power):
 
     # recursive case
     else:
-        factor = iterative_fast_exponentiation(number, power//2)
+        factor = recursive_fast_exponentiation(number, power//2)
         if power%2 == 0:
             return factor * factor
         else:
