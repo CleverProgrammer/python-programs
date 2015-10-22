@@ -230,7 +230,7 @@ def recursive_anagrams(word):
         return ans
 
 
-def iterative_fast_exponentiation(number, power):
+def iterative_exponents(number, power):
     """
     iterative solution that takes a number and an its exponent power and returns its result.
     :param number: number
@@ -242,7 +242,7 @@ def iterative_fast_exponentiation(number, power):
         result *= number
     return result
 
-def recursive_fast_exponentiation(number, power):
+def recursive_exponents(number, power):
     """
     recursive iterative solution that takes a number and an its exponent power and returns its result.
     :param number: number
@@ -258,11 +258,26 @@ def recursive_fast_exponentiation(number, power):
 
     # recursive case
     else:
-        factor = recursive_fast_exponentiation(number, power//2)
+        factor = recursive_exponents(number, power//2)
         if power%2 == 0:
             return factor * factor
         else:
             return factor * factor * number
+
+
+def recursive_fibonacci(n):
+    """
+    recursive solution that takes an nth term and returns its fibonacci value
+    :param number: number
+    :return: number
+    """
+    # base case
+    if n in (0, 1, 2):
+        return 1
+
+    # recursive case
+    else:
+        return recursive_fibonacci(n-1) + recursive_fibonacci(n-2)
 
 
 def recursive_gcd(num1, num2):
