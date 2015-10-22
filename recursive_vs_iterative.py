@@ -280,7 +280,7 @@ def recursive_fibonacci(n):
         return recursive_fibonacci(n-1) + recursive_fibonacci(n-2)
 
 
-def selection_sort(my_list):
+def recursive_selection_sort(my_list):
     """
     recursive solution that takes in a list and returns it a non-decreasing order (ascending)
     :param my_list: list
@@ -290,8 +290,16 @@ def selection_sort(my_list):
     if not my_list:
         return []
 
-    # recursive case
-
+    # recursive case and sorting algorithm
+    elif my_list:
+        position = None
+        minimum = float('inf')
+        for index, num in enumerate(my_list):
+            if num < minimum:
+                minimum = num
+                position = index
+        my_list[position], my_list[-1] = my_list[-1], my_list[position]
+        return [my_list[-1]] + recursive_selection_sort(my_list[:-1])
 
 
 def recursive_gcd(num1, num2):

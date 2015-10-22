@@ -86,3 +86,11 @@ class TestRecursiveVsIterativeFunctions(TestCase):
 
     def test_recursive_fibonacci(self):
         self.assertEqual(recursive_fibonacci(6), 8, 'test recursive fibonacci')
+
+    def test_recursive_selection_sort(self):
+        self.assertEqual(recursive_selection_sort([7, 6, 5]), [5, 6, 7], 'test recursive selection sort')
+        from random import randrange
+        unsorted_random_list = [randrange(1, 100) for i in range(100)]
+        sorted_random_list = sorted(unsorted_random_list)
+        self.assertEqual(recursive_selection_sort(unsorted_random_list), sorted_random_list, 'test recursive selection')
+        self.assertEqual(recursive_selection_sort([6, 7, 4, 2]), [2, 4, 6, 7], 'test recursive selection sort')
