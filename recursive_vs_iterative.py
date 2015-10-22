@@ -291,7 +291,7 @@ def recursive_selection_sort(my_list):
         return []
 
     # recursive case and sorting algorithm
-    elif my_list:
+    else:
         position = None
         minimum = float('inf')
         for index, num in enumerate(my_list):
