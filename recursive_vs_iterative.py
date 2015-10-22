@@ -206,16 +206,6 @@ def recursive_list_reverse(my_list):
     return [my_list[-1]] + recursive_list_reverse(my_list[:-1])
 
 
-def recursive_gcd(num1, num2):
-    """
-    recursive solution that takes in two numbers and returns their greatest common divisor
-    :param num1: number
-    :param num2: number
-    :return: number
-    """
-    pass
-
-
 def recursive_anagrams(word):
     """
     recursive solution that takes in a word and spits back all the possible permutations of that word.
@@ -273,3 +263,13 @@ def recursive_fast_exponentiation(number, power):
             return factor * factor
         else:
             return factor * factor * number
+
+
+def recursive_gcd(num1, num2):
+    """
+    recursive solution that takes in two numbers and returns their greatest common divisor
+    :param num1: number
+    :param num2: number
+    :return: number
+    """
+    pass
