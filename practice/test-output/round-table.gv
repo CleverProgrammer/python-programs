@@ -1,0 +1,8 @@
+// The Happy Qazi
+graph {
+	A [label="King Arthur"]
+	B [label=Qazi]
+	C [label=Shivani]
+		A -- B
+		B -- C
+}
