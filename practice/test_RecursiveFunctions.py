@@ -94,3 +94,6 @@ class TestRecursiveVsIterativeFunctions(TestCase):
         sorted_random_list = sorted(unsorted_random_list)
         self.assertEqual(recursive_selection_sort(unsorted_random_list), sorted_random_list, 'test recursive selection')
         self.assertEqual(recursive_selection_sort([6, 7, 4, 2]), [2, 4, 6, 7], 'test recursive selection sort')
+
+    def test_recursive_merge_sort(self):
+        self.assertEqual(recursive_merge_sort([6,7,2,5]), [2,5,6,7], 'test merge')

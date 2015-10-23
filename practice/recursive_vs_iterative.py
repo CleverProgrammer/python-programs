@@ -302,6 +302,68 @@ def recursive_selection_sort(my_list):
         return [my_list[-1]] + recursive_selection_sort(my_list[:-1])
 
 
+def helper_merge(lst1, lst2, lst3):
+    """
+    assumes the 2 lists are already sorted.
+    takes 3 lists as input. Takes lst1 and lst2 and merges them into lst3.
+    :param lst1: list
+    :param lst2: list
+    :param lst3: list
+    :return: list
+    """
+    idx1, idx2, idx3 = 0, 0, 0
+    len1, len2 = len(lst1), len(lst2)
+    while idx1 < len1 and idx2 < len2:  # enough items in both lists?
+        if lst1[idx1] < lst2[idx2]:  # if lst1 is smaller
+            try:
+                lst3[idx3] = lst1[idx1]
+                idx1 += 1  # since item from lst1 was picked, inc idx1
+            except IndexError:
+                print(idx3, idx1, len1, len(lst3))
+                return
+
+        else:
+            lst3[idx3] = lst2[idx2]
+            idx2 += 1  # since item from lst2 was picked, inc idx2
+        idx3 += 1  # since we add 1 item into lst3 regardless, inc idx3
+
+    # either lst1 or lst2 is done.
+
+    # copy remaining lst1 items if any
+    while idx1 < len1:
+        lst3[idx3] = lst1[idx1]
+        idx1 += 1
+        idx3 += 1
+
+    # copy remaining lst 2 items if any
+    while idx2 < len2:
+        lst3[idx3] = lst2[idx2]
+        idx2 += 1
+        idx3 += 1
+
+
+def recursive_merge_sort(nums):
+    """
+    recursive solution that sorts a list using a merge sort algorithm.
+    uses a helper function called merge
+    :helper function: helper_merge
+    :param nums: list
+    :return: list
+    """
+    # split nums into two halves
+    # merge_sort the first half
+    # merge_sort the second half
+    # merge the two halves.
+    if len(nums) > 1:
+        mid = len(nums)//2
+        lst1 = nums[:mid]
+        lst2 = nums[mid:]
+        recursive_merge_sort(lst1)
+        recursive_merge_sort(lst2)
+        helper_merge(lst1, lst2, nums)
+    return nums
+
+
 def recursive_gcd(num1, num2):
     """
     recursive solution that takes in two numbers and returns their greatest common divisor
