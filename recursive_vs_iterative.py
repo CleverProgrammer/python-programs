@@ -315,12 +315,8 @@ def helper_merge(lst1, lst2, lst3):
     len1, len2 = len(lst1), len(lst2)
     while idx1 < len1 and idx2 < len2:  # enough items in both lists?
         if lst1[idx1] < lst2[idx2]:  # if lst1 is smaller
-            try:
-                lst3[idx3] = lst1[idx1]
-                idx1 += 1  # since item from lst1 was picked, inc idx1
-            except IndexError:
-                print(idx3, idx1, len1, len(lst3))
-                return
+            lst3[idx3] = lst1[idx1]
+            idx1 += 1  # since item from lst1 was picked, inc idx1
 
         else:
             lst3[idx3] = lst2[idx2]
@@ -372,3 +368,24 @@ def recursive_gcd(num1, num2):
     :return: number
     """
     pass
+
+
+def towers_of_hanoi(n, source='A', dest='C', temp='B'):
+    """
+    recursive solution to that takes in the number of circular disks in the starting position
+    of towers of hanoi game. It takes in source, destination, and temporary location as
+    optional arguments. It prints out as output the step by step guide on how to solve
+    towers of hanoi.
+    :param n: number
+    :param source: string
+    :param dest: string
+    :param temp: string
+    :return: nothing. Prints output.
+    """
+    if n == 1:
+        print('Move disk from', source, 'to', dest+'.')
+    else:
+        towers_of_hanoi(n-1, source, temp, dest)
+        towers_of_hanoi(1, source, dest)
+        towers_of_hanoi(n-1, temp, dest, source)
+# print(towers_of_hanoi(5))
