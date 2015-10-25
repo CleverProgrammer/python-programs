@@ -222,11 +222,14 @@ def recursive_anagrams(word):
     """
     if not word:
         return ['']
+
     else:
         ans = []
-        for ch in recursive_anagrams(word[1:]):
-            for pos in range(len(ch) + 1):
-                ans.append(ch[:pos] + word[0] + ch[pos:])
+        for string in recursive_anagrams(word[1:]):
+            for pos in range(len(string) + 1):
+                # inserting a string for every possible position
+                print(string)
+                ans.append(string[:pos] + word[0] + string[pos:])
         return ans
 
 
