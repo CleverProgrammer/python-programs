@@ -23,6 +23,27 @@ class Test_Word_Wrangler(TestCase):
         in_out5 = [4, 5, 6, 9, 15, 22]
         self.assertEqual(remove_duplicates(in_out5), in_out5)
 
+    def test_intersection(self):
+        self.assertIs(type(intersect([1], [2])), list)
+        in1a = [1, 3, 5, 7, 99]
+        in1b = [1, 2, 4, 6, 8, 99]
+        out1 = [1, 99]
+        self.assertEqual(intersect(in1a, in1b), out1)
+        in2a = [1, 3, 5, 7, 9, 10]
+        in2b = [9, 10, 11, 99]
+        out2 = [9, 10]
+        self.assertEqual(intersect(in2a, in2b), out2)
+        in3a = ['a', 'c', 'd', 'e', 'f', 'z']
+        in3b = ['b', 'c', 'd', 'e', 'f', 'x']
+        out3 = ['c', 'd', 'e', 'f']
+        self.assertEqual(intersect(in3a, in3b), out3)
+        in4 = [1, 2, 3]
+        self.assertEqual(intersect(in4, in4), in4)
+        in5a = [1, 2, 3]
+        in5b = [5, 6, 7, 8, 9 , 10]
+        self.assertEqual(intersect(in5a, in5b), [])
+        self.assertEqual(intersect([], []), [])
+
     def test_merge(self):
         self.assertEqual(merge([1,2], [3,4]), [1, 2, 3, 4], 'test merge')
         self.assertIs(type(merge([1], [2])), list)

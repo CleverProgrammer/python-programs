@@ -1,10 +1,8 @@
 __author__ = 'Rafeh'
 
-"""
-word_wrangler.py
-Description: Given a word, identify every single possible English
-word that could be made out of the word's letters.
-"""
+# Mini-project 5 for Principles of Computing class
+# Word Wrangler described at: https://class.coursera.org/principlescomputing-001/wiki/view?page=wrangler
+# http://www.codeskulptor.org/#poc_wrangler_template.py
 
 """
 Student code for Word Wrangler game
@@ -50,8 +48,12 @@ def intersect(list1, list2):
 
     This function can be iterative.
     """
-
-    return []
+    intersection = []
+    for first_item in list1:
+        for second_item in list2:
+            if first_item == second_item:
+                intersection.append(first_item)
+    return intersection
 
 # Functions to perform merge sort
 
