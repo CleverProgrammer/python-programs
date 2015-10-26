@@ -2,8 +2,7 @@ __author__ = 'Rafeh'
 
 # Mini-project 5 for Principles of Computing class
 # Word Wrangler described at: https://class.coursera.org/principlescomputing-001/wiki/view?page=wrangler
-# http://www.codeskulptor.org/#poc_wrangler_template.py
-
+# Game Link: http://www.codeskulptor.org/#user40_uzaYAhplxb_10.py
 """
 Student code for Word Wrangler game
 """
@@ -14,6 +13,25 @@ Student code for Word Wrangler game
 
 WORDFILE = "assets_scrabble_words3.txt"
 
+# helper function
+def binary_search(my_list, item):
+    # base case
+    if not my_list:
+        return []
+
+    # base case 2
+    if item > my_list[-1]:
+        return False
+
+    mid = len(my_list) // 2
+
+    if item == my_list[mid]:
+        return True
+
+    elif item < my_list[mid]:
+        return binary_search(my_list[:mid], item)
+    else:
+        return binary_search(my_list[mid:], item)
 
 # Functions to manipulate ordered word lists
 
@@ -49,10 +67,9 @@ def intersect(list1, list2):
     This function can be iterative.
     """
     intersection = []
-    for first_item in list1:
-        for second_item in list2:
-            if first_item == second_item:
-                intersection.append(first_item)
+    for item in list1:
+        if binary_search(list2, item):
+            intersection.append(item)
     return intersection
 
 # Functions to perform merge sort
@@ -146,7 +163,16 @@ def load_words(filename):
 
     Returns a list of strings.
     """
-    return []
+    word_list = []
+
+    url = codeskulptor.file2url(filename)
+    netfile = urllib2.urlopen(url)
+
+    # data = netfile.read()
+
+    for line in netfile.readlines():
+        word_list.append(line[:-1])
+    return word_list
 
 def run():
     """
