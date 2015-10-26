@@ -6,6 +6,23 @@ __author__ = 'Rafeh'
 
 class Test_Word_Wrangler(TestCase):
 
+    def test_remove_duplicates(self):
+        self.assertIs(type(remove_duplicates([1])), list)
+        in1 = [1, 1, 1, 1, 2, 3, 5, 7, 99]
+        out1 = [1, 2, 3, 5, 7, 99]
+        self.assertEqual(remove_duplicates(in1), out1)
+        in2 = ['aa', 'aa', 'ab', 'baf', 'naf', 'kool', 'q', 'q', 'q', 'q', 'zet', 'zet']
+        out2 = ['aa', 'ab', 'baf', 'naf', 'kool', 'q', 'zet']
+        self.assertEqual(remove_duplicates(in2), out2)
+        in3 = []
+        out3 = []
+        self.assertEqual(remove_duplicates(in3), out3)
+        in4 = [6]
+        out4 = [6]
+        self.assertEqual(remove_duplicates(in4), out4)
+        in_out5 = [4, 5, 6, 9, 15, 22]
+        self.assertEqual(remove_duplicates(in_out5), in_out5)
+
     def test_merge(self):
         self.assertEqual(merge([1,2], [3,4]), [1, 2, 3, 4], 'test merge')
         self.assertIs(type(merge([1], [2])), list)

@@ -28,7 +28,18 @@ def remove_duplicates(list1):
 
     This function can be iterative.
     """
-    return []
+    no_duplicates = []
+    for idx, item in enumerate(list1):
+        if idx == len(list1) - 1:
+            break
+        elif list1[idx+1] != item:
+            no_duplicates.append(item)
+
+    # tack on the last item
+    if list1:
+        no_duplicates.append(list1[-1])
+
+    return no_duplicates
 
 def intersect(list1, list2):
     """
