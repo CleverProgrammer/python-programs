@@ -39,6 +39,7 @@ def intersect(list1, list2):
 
     This function can be iterative.
     """
+
     return []
 
 # Functions to perform merge sort
@@ -89,14 +90,17 @@ def merge_sort(list1):
 
     This function should be recursive.
     """
-    if len(list1) > 1:
-        mid = len(list1)//2
-        lst1 = list1[:mid]
-        lst2 = list1[mid:]
-        merge_sort(lst1)
-        merge_sort(lst2)
-        merge(lst1, lst2, list1)
-    return list1
+    # base case
+    if len(list1) <= 1:
+        return list1
+
+    # mid section
+    mid = len(list1)//2
+
+    # recursive case
+    first_half = list1[:mid]
+    second_half = list1[mid:]
+    return merge(merge_sort(first_half), merge_sort(second_half))
 
 # Function to generate all strings for the word wrangler game
 
