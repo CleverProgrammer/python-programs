@@ -1,13 +1,28 @@
-def factorial_(number):
+# number of test cases.
+T = int(input())
+
+
+def find_digits(number):
     """
-    >>> factorial_(5)
-    120
+    takes in a string of number and returns the total count of digits
+    that the number is divisible by.
+    Note: The divisibility is only checked of the digits
+    that are inside number.
+    :param: string
+    :return: number
+    >>> find_digits('122')
+    3
+    >>> find_digits('1012')
+    3
     """
-    import math
-    return math.factorial(number)
+    counter = 0
+    for digit in number:
+        if int(digit) and int(number) % int(digit) == 0:
+            counter += 1
+    return counter
 
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-
-print(5)
+    for _ in range(T):
+        print(find_digits(input()))
