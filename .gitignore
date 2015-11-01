@@ -10,3 +10,6 @@
 
 # pymode rope vim ide misc files
 *.ropeprojects/
+
+# ipython notebook misc files
+*.ipynb_checkpoints/
