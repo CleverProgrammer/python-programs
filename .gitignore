@@ -1,5 +1,15 @@
+# python misc files
 *.pyc
-*.xml
-**/.idea/workspace.xml
+*.swp
+
+# pycharm ide misc files
 *.idea/
+
+# sublime files
 *.sublime*
+
+# pymode rope vim ide misc files
+*.ropeprojects/
+
+# ipython notebook misc files
+*.ipynb_checkpoints/

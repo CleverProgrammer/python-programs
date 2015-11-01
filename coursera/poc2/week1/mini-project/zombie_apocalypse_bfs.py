@@ -1,7 +1,7 @@
 __author__ = 'Rafeh'
 
 """
-http://www.codeskulptor.org/#user40_HFYBBvbkJb_6.py
+http://www.codeskulptor.org/#user40_HFYBBvbkJb_8.py
 Student portion of Zombie Apocalypse mini-project
 """
 
