@@ -17,10 +17,29 @@ MAX_REMOVE = 3
 # how to memoize a function in python3 with decorators
 
 
+
 # @functools.lru_cache(None)
 def evaluate_position(current_num):
     """
     Recursive solver for Nim
+    >>> evaluate_memo_position(21, {0: 'lost'})
+    'won'
+    >>> evaluate_memo_position(20, {0: 'lost'})
+    'lost'
+    >>> evaluate_memo_position(3, {0: 'lost'})
+    'won'
+    >>> evaluate_memo_position(1, {0: 'lost'})
+    'won'
+    >>> evaluate_memo_position(4, {0: 'lost'}) # mult of 4 should lose
+    'lost'
+    >>> evaluate_memo_position(2, {0: 'lost'})
+    'won'
+    >>> evaluate_memo_position(0, {0: 'lost'})
+    'lost'
+    >>> evaluate_memo_position(8, {0: 'lost'}) # mult of 4 should lose
+    'lost'
+    >>> evaluate_memo_position(12, {0: 'lost'}) # mult of 4 should lose
+    'lost'
     """
     global counter
     counter += 1
@@ -31,7 +50,7 @@ def evaluate_position(current_num):
     for remove in range(1, MAX_REMOVE+1):
         # if we take 1 and our opp loses, we win.
         if evaluate_position(current_num - remove) == "lost":
-            return "won", remove
+            return "won"
     return "lost"
 
 
@@ -89,10 +108,13 @@ def evaluate_memo_position(current_num, memo_dict):
                 memo_dict[current_num] = 'won'
                 return 'won'
 
+        # if it is not in the dictionary, check if eval pos is a loss
         elif evaluate_memo_position(current_num - remove, memo_dict) == 'lost':
+            # since it is a loss for the opponent, set it to a win for us
             memo_dict[current_num] = 'won'
             return 'won'
 
+    # since it hasn't satisfied any winning conditions for us, set it as a loss
     memo_dict[current_num] = 'lost'
     return "lost"
 
@@ -111,23 +133,30 @@ def run_memoized(items):
 
 run_memoized(21)
 
+
 # counter = 0
-
-
 # memoized fibonacci for practice
 # simply memorize the function calls each time in the dict so you don't have to
 # remember them later!
-# def fib(n, known={}):
-#     global counter
-#     counter += 1
-#     if n in known:
-#         return known[n]
-#     if n in (0, 1):
-#         return n
-#     value = fib(n-1) + fib(n-2)
-#     known[n] = value
-#     return value
-#
+def fib(num, known={}):
+    """
+    >>> fib(3, {0:0, 1:1})
+    2
+    >>> fib(5, {0:0, 1:1})
+    5
+    >>> fib(17, {0:0, 1:1})
+    1597
+    """
+    global counter
+    counter += 1
+    if num in known:
+        return known[num]
+    if num in (0, 1):
+        return num
+    value = fib(num-1) + fib(num-2)
+    known[num] = value
+    return value
+
 # print(map(fib, list(range(5000))))
 # print(fib(500))
 # print(counter)
