@@ -1,6 +1,11 @@
+import functools
 import poc_ttt_provided as provided
+
 """
 Minimax Tic-Tac-Toe Player
+Author: Rafeh Qazi
+Link: http://www.codeskulptor.org/#user40_UjxCASn634_0.py
+Course: Coursera Principles of Computing Part 2
 """
 
 # import poc_ttt_gui
@@ -16,6 +21,14 @@ SCORES = {provided.PLAYERX: 1,
           provided.PLAYERO: -1}
 
 
+def debug_helper(player):
+    if player == provided.PLAYERX:
+        return 'X'
+    else:
+        return 'O'
+
+
+@functools.lru_cache(None)
 def mm_move(board, player):
     """
     make a move on the board,
@@ -27,11 +40,43 @@ def mm_move(board, player):
     :param board: list
     :param player: number
     :return: tuple
+    Questions: How is the stacking taking taking place within the for loop and the recursive function?
     """
     if board.check_win() is not None:  # if the game is in progress
-        return SCORES[board.check_win()], (-1, -1)  # return which player won. Also return an illegal move.
+        return SCORES[board.check_win()], (-1, -1)  # return which player won. Since board is full, return illegal move.
 
-    #
+    new_score = (-1, (-1, -1))
+    # 1. first find all the available moves from the initial position
+    for move_ in board.get_empty_squares():  # get_empty_squares method returns empty square as (row, col) tuples.
+        print(board.get_empty_squares())
+        # 2. then clone the the original board
+        board_copy = board.clone()  # we do not want to store the result in the original version of the board.
+        # 3. make one of the available moves with the current player
+        board_copy.move(move_[0], move_[1], player)  # now the move has been made but the player needs to be switched.
+        # 4. repeat this process and switch the player each time and store the winner of the game
+        print("Player:", debug_helper(player))
+        print("Move:", move_)
+        print(board_copy)
+        score, _ = mm_move(board_copy, provided.switch_player(player))  # score each game and then swap the player
+        print(score, _)  # _ returns (-1, -1) due to our base case. Also score returns the score for the winner.
+        # the best possible move is found already case so now just simply go no further and return the results.
+        # 5. now that you have all the possibile positions in your stack, go on and score all of them
+        if score * SCORES[player] == 1:  # check if either playerO or playerX has won
+            print("I won early with the following score and move")
+            return score, move_
+
+        # if score is greater than -1, replace new_score with the better score since we are only looking to maximize
+        elif score * SCORES[player] > new_score[0]:
+            new_score = (score, move_)
+            print("\nI am in first elif: {0}".format(new_score))
+            print(board_copy)
+        # if score is -1, or a loss for playerX, then store that score and that move.
+        elif new_score[0] == -1:
+            new_score = (new_score[0], move_)
+            print("\nI am in second elif: {0}".format(new_score))
+            print(board_copy)
+    # return the score and the move
+    return new_score[0] * SCORES[player], new_score[1]  # we will get to this only if it is a loss for us
 
 
 def move_wrapper(board, player, trials):
@@ -48,3 +93,14 @@ def move_wrapper(board, player, trials):
 
     # play_game(move_wrapper, 1, False)
     # poc_ttt_gui.run_gui(3, provided.PLAYERO, move_wrapper, 1, False)
+
+
+def run():
+    board = provided.TTTBoard(3, False, [[provided.EMPTY, provided.EMPTY, provided.EMPTY],
+                                         [provided.EMPTY, provided.EMPTY, provided.EMPTY],
+                                         [provided.PLAYERX, provided.PLAYERO, provided.EMPTY]])
+    # print(provided.PLAYERX, provided.PLAYERO)
+    print("Answer: {0}".format(mm_move(board, provided.PLAYERX)))
+
+
+run()
