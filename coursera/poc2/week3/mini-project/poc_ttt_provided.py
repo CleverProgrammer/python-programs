@@ -31,7 +31,7 @@ class TTTBoard:
     def __init__(self, dim, reverse=False, board=None):
         self._dim = dim
         self._reverse = reverse
-        if board == None:
+        if board is None:
             # Create empty board
             self._board = [[EMPTY for dummycol in range(dim)]
                            for dummyrow in range(dim)]

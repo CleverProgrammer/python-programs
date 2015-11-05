@@ -1,4 +1,4 @@
-from poc_ttt_provided import PLAYERX, EMPTY, PLAYERO, DRAW, switch_player
+import poc_ttt_provided as provided
 """
 Minimax Tic-Tac-Toe Player
 """
@@ -11,41 +11,27 @@ Minimax Tic-Tac-Toe Player
 # codeskulptor.set_timeout(60)
 
 # scoring values, DO NOT MODIFY!, for grader add provided.
-SCORES = {PLAYERX: 1,
-          DRAW: 0,
-          PLAYERO: -1}
+SCORES = {provided.PLAYERX: 1,
+          provided.DRAW: 0,
+          provided.PLAYERO: -1}
 
 
 def mm_move(board, player):
     """
     make a move on the board,
-
+    takes the current board and which player should move next.
     returns a tuple with two elements; the first element is the score
     of the given board and the second element is the desired move as a
     tuple, (row, col)
+
+    :param board: list
+    :param player: number
+    :return: tuple
     """
-    # base case, the game is effectively over
-    if board.check_win() is not None:
-        return SCORES[board.check_win()], (-1, -1)
+    if board.check_win() is not None:  # if the game is in progress
+        return SCORES[board.check_win()], (-1, -1)  # return which player won. Also return an illegal move.
 
-    # recursion(s)
-    # worst possible initial values
-    result = (-1, (-1, -1))
-    # depth first search along the tree
-    for move in board.get_empty_squares():
-        copied_board = board.clone()
-        copied_board.move(move[0], move[1], player)
-        score, _ = mm_move(copied_board, switch_player(player))  # for grader add provided.
-        # best possible choice found already
-        if score * SCORES[player] == 1:
-            return score, move
-        # update the initial values
-        elif score * SCORES[player] > result[0]:
-            result = (score, move)
-        elif result[0] == -1:
-            result = (result[0], move)
-
-    return result[0] * SCORES[player], result[1]
+    #
 
 
 def move_wrapper(board, player, trials):

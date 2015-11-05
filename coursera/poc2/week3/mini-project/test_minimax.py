@@ -17,7 +17,7 @@ class TestTTTMinimax(unittest.TestCase):
         score, move = mm_move(board, PLAYERX)  # mm_move returns a score, and a move value
         self.assertIs(type(score), int)  # assert score is an int
         self.assertIs(type(move), tuple)  # assert move is a tuple
-        self.assertEqual(mm_move(board, PLAYERX), (1, (-1, -1)))  # assert
+        self.assertEqual(mm_move(board, PLAYERX), (1, (-1, -1)))  # return an illegal move since the game is over.
         board = TTTBoard(3, False,
                          [[PLAYERO, PLAYERX, PLAYERX], [PLAYERX, PLAYERO, PLAYERO], [PLAYERO, PLAYERX, PLAYERX]])
         self.assertEqual(mm_move(board, DRAW), (0, (-1, -1)))
