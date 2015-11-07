@@ -78,8 +78,16 @@ class Tantrix:
         # tiles in Solitaire Tantrix in one 4x4 corner of grid
         self._tile_value = {}  # models the hexagonal grid
         #outerloop or i should run the same amount of times as the MINIMAL_GRID_SIZE
-        for index_i in range(MINIMAL_GRID_SIZE):
-            for index_j in range(MINIMAL_GRID_SIZE
+        code_idx = 0
+        for idx_i in range(MINIMAL_GRID_SIZE):
+            # after every outer loop iteration, i and j switch powers
+            # meaning that i increases and j decreases
+            for idx_j in range(MINIMAL_GRID_SIZE - idx_i):
+                # now we just take out i and j out of size to get k
+                idx_k = self._tiling_size - (idx_i + idx_j)
+                grid_index = (idx_i, idx_j, idx_k)
+                self.place_tile(grid_index, SOLITAIRE_CODES[code_idx])
+                code_idx += 1
         # the size of the inner loop or j should reduce by 1 every time
         # k should always be decreasing
 
@@ -101,9 +109,11 @@ class Tantrix:
         """
         Return whether a tile with given index exists
         """
-        if self._tiling_size[index]:
-            return True
-        return False
+        try:
+            if self._tile_value[index]:
+                return True
+        except KeyError:
+            return False
 
     def place_tile(self, index, code):
         """
@@ -111,7 +121,7 @@ class Tantrix:
         : param index : tuple
         : param code  : string
         """
-        self._tiling_size[index] = code  # index or key in dictionary
+        self._tile_value[index] = code  # index or key in dictionary
 
     def remove_tile(self, index):
         """
