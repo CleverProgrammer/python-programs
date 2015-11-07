@@ -29,7 +29,7 @@ def debug_helper(player):
 
 
 @functools.lru_cache(None)
-def mm_move(board, player):
+def mm_move(board, player, count):
     """
     make a move on the board,
     takes the current board and which player should move next.
@@ -47,8 +47,10 @@ def mm_move(board, player):
 
     new_score = (-1, (-1, -1))
     # 1. first find all the available moves from the initial position
-    for move_ in board.get_empty_squares():  # get_empty_squares method returns empty square as (row, col) tuples.
+    for idx, move_ in enumerate(board.get_empty_squares()):  # get_empty_squares method returns empty square as (row, col) tuples.
         print(board.get_empty_squares())
+        print("Stack depth:", count)
+        print("Current Index:", idx)
         # 2. then clone the the original board
         board_copy = board.clone()  # we do not want to store the result in the original version of the board.
         # 3. make one of the available moves with the current player
@@ -57,7 +59,7 @@ def mm_move(board, player):
         print("Player:", debug_helper(player))
         print("Move:", move_)
         print(board_copy)
-        score, _ = mm_move(board_copy, provided.switch_player(player))  # score each game and then swap the player
+        score, _ = mm_move(board_copy, provided.switch_player(player), count + 1)  # score each game and then swap the player
         print(score, _)  # _ returns (-1, -1) due to our base case. Also score returns the score for the winner.
         # the best possible move is found already case so now just simply go no further and return the results.
         # 5. now that you have all the possibile positions in your stack, go on and score all of them
@@ -68,12 +70,12 @@ def mm_move(board, player):
         # if score is greater than -1, replace new_score with the better score since we are only looking to maximize
         elif score * SCORES[player] > new_score[0]:
             new_score = (score, move_)
-            print("\nI am in first elif: {0}".format(new_score))
+            print("\nI am in first elif:", new_score)
             print(board_copy)
         # if score is -1, or a loss for playerX, then store that score and that move.
         elif new_score[0] == -1:
             new_score = (new_score[0], move_)
-            print("\nI am in second elif: {0}".format(new_score))
+            print("\nI am in second elif:", new_score)
             print(board_copy)
     # return the score and the move
     return new_score[0] * SCORES[player], new_score[1]  # we will get to this only if it is a loss for us
@@ -100,7 +102,7 @@ def run():
                                          [provided.EMPTY, provided.EMPTY, provided.EMPTY],
                                          [provided.PLAYERX, provided.PLAYERO, provided.EMPTY]])
     # print(provided.PLAYERX, provided.PLAYERO)
-    print("Answer: {0}".format(mm_move(board, provided.PLAYERX)))
+    print("Answer: {0}".format(mm_move(board, provided.PLAYERX, 0)))
 
 
 run()

@@ -7,6 +7,7 @@ Student portion of Zombie Apocalypse mini-project
 
 import poc_grid
 import poc_queue
+import math
 # import poc_zombie_gui
 
 # global constants
