@@ -35,12 +35,12 @@ a yellow, red or  blue loop of length 10
 # intervals
 # directed are given as a tuple of 3 coordinates
 DIRECTIONS = {
-     0: (-1, 0, 1),  # bottom right neighbor [0][3]
-     1: (-1, 1, 0),  # bottom neighbor       [1][-2]
-     2: (0, 1, -1),  # bottom left neighbor  [3][0]
-     3: (1, 0, -1),  # top left neighbor     [2][5]
-     4: (1, -1, 0),  # top neighbor          [-2][1]
-     5: (0, -1, 1),  # top right neighbor    [5][2]
+     0: (-1, 0, 1),  # bottom right neighbor [0][3]  +3
+     1: (-1, 1, 0),  # bottom neighbor       [1][-2] +3
+     2: (0, 1, -1),  # bottom left neighbor  [3][0]  -3
+     3: (1, 0, -1),  # top left neighbor     [2][5]  +3
+     4: (1, -1, 0),  # top neighbor          [-2][1] -3
+     5: (0, -1, 1),  # top right neighbor    [5][2]  -3
 }
 
 
@@ -59,7 +59,7 @@ SOLITAIRE_CODES = ["BBRRYY", "BBRYYR", "BBYRRY", "BRYBYR", "RBYRYB",
 
 
 # Minimal size of grid to allow placement of 10 tiles
-MINIMAL_GRID_SIZE = 4  # effects how many pieces there are on the board
+MINIMAL_GRID_SIZE = 2  # effects how many pieces there are on the board
 
 
 class Tantrix:
@@ -162,11 +162,40 @@ class Tantrix:
         Check whether a tile configuration obeys color matching rules for
         adjacent tiles
         """
-
-        return False
+        for tile_index in self._tile_value:
+            tile_code = self._tile_value[tile_index]
+            for direction in DIRECTIONS:
+                if self.tile_exists(self.get_neighbor(tile_index, direction)):
+                    neighbor_index = self.get_neighbor(tile_index, direction)
+                    neighbor_code = self._tile_value[neighbor_index]
+                    if direction in (0, 1):
+                        if tile_code[direction] == neighbor_code[direction + 3]:
+                            continue
+                        return False
+                    elif direction in (4, 5):
+                        if tile_code[direction] == neighbor_code[direction - 3]:
+                            continue
+                        return False
+                    elif direction == 2:
+                        if tile_code[direction] == neighbor_code[direction + 3]:
+                            continue
+                        return False
+                    elif direction == 3:
+                        if tile_code[direction] == neighbor_code[direction - 3]:
+                            continue
+                        return False
+        # if it passes all the illegal cases, return legal or True.
+        return True
 
     def has_loop(self, color):
         """
         Check whether a tile configuration has a loop of size 10 of given color
         """
         return False
+
+import test_mantrix
+# import unittest
+
+suite = unittest.TestLoader().loadTestsFromTestCase(
+    test_matrix.TestSolitaireTantrix)
+unittest.TextTestRunner(verbosity=2).run(suite)
