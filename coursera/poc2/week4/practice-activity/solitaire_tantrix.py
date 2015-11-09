@@ -35,12 +35,12 @@ a yellow, red or  blue loop of length 10
 # intervals
 # directed are given as a tuple of 3 coordinates
 DIRECTIONS = {
-     0 : (-1, 0, 1),
-     1  : (-1, 1, 0),
-     2 : (0, 1,-1),
-     3 : (1, 0,-1),
-     4 : (1,-1, 0),
-     5 : (0,-1, 1)
+     0: (-1, 0, 1),  # bottom right neighbor [0][3]
+     1: (-1, 1, 0),  # bottom neighbor       [1][-2]
+     2: (0, 1, -1),  # bottom left neighbor  [3][0]
+     3: (1, 0, -1),  # top left neighbor     [2][5]
+     4: (1, -1, 0),  # top neighbor          [-2][1]
+     5: (0, -1, 1),  # top right neighbor    [5][2]
 }
 
 
@@ -76,8 +76,9 @@ class Tantrix:
 
         # Initialize dictionary tile_value to contain codes for ten
         # tiles in Solitaire Tantrix in one 4x4 corner of grid
+        # outerloop or i should run the same amount of times as the
+        # MINIMAL_GRID_SIZE
         self._tile_value = {}  # models the hexagonal grid
-        #outerloop or i should run the same amount of times as the MINIMAL_GRID_SIZE
         code_idx = 0
         for idx_i in range(MINIMAL_GRID_SIZE):
             # after every outer loop iteration, i and j switch powers
@@ -103,17 +104,13 @@ class Tantrix:
         """
         return self._tiling_size
 
-
     def tile_exists(self, index):
-
         """
         Return whether a tile with given index exists
+        : param  : tuple (dictionary key)
+        : return : boolean
         """
-        try:
-            if self._tile_value[index]:
-                return True
-        except KeyError:
-            return False
+        return index in self._tile_value
 
     def place_tile(self, index, code):
         """
@@ -125,10 +122,11 @@ class Tantrix:
 
     def remove_tile(self, index):
         """
-        Remove a tile at cell with given index and return the code value for that tile   
+        Remove a tile at cell with given index and return the code value for
+        that tile
         : param : tuple (dictionary key)
         """
-        self._tile_value.pop(index)
+        return self._tile_value.pop(index)
 
     def rotate_tile(self, index):
         """
@@ -138,14 +136,14 @@ class Tantrix:
         new code      ==> 'YBBRRY'
         """
         original = self._tile_value[index]
-        new  = original[-1] + original[:-1]
+        new = original[-1] + original[:-1]
         self._tile_value[index] = new
 
     def get_code(self, index):
         """
         Return the code of the tile at cell with given index
-        : param  : position tuple (dictionary key)
-        : return : string (6 letter code)
+        : param index : position tuple (dictionary key)
+        : return      : string (6 letter code)
         """
         return self._tile_value[index]  # access the dictionary value
 
@@ -153,14 +151,18 @@ class Tantrix:
         """
         Return the index of the tile neighboring the tile with given index in
         given direction
+        : param index     : tuple (dictonary key of a tile)
+        : param direction : number (dictionary key from DIRECTIONS dict)
+        : return          : tuple (add the params and return as index of neighb)
         """
-        return ()
+        return tuple(map(sum, zip(index, DIRECTIONS[direction])))
 
     def is_legal(self):
         """
         Check whether a tile configuration obeys color matching rules for
         adjacent tiles
         """
+
         return False
 
     def has_loop(self, color):
@@ -168,36 +170,3 @@ class Tantrix:
         Check whether a tile configuration has a loop of size 10 of given color
         """
         return False
-
-    def position_checker(self, hexgrid):
-        """
-        Take in any code from the list SOLITAITE_CODES and check it against
-        self._tile_value that models the hexagonal grid
-        key should be (0, 0, 6)
-        value should be "BBRRYY"
-        : param  : dictionary value
-        : return : tuple (dictionary key)
-        SOLITAIRE_CODES = ["BBRRYY", "BBRYYR", "BBYRRY", "BRYBYR", "RBYRYB",
-                   "YBRYRB", "BBRYRY", "BBYRYR", "YYBRBR", "YYRBRB"]
-        >>> position_checker("BBRRYY")
-        (0, 0, 6)
-        >>> position_checker("BBRYYR")
-        (0, 1, 5)
-        >>> position_checker("BBYRRY")
-        (0, 2, 4)
-        >>> position_checker("BRYBYR")
-        (1, 0, 5)
-        >>> position_checker("RBYRYB")
-        (1, 1, 4)
-        >>> position_checker("YBRYRB")
-        (1, 2, 3)
-        """
-        pass
-
-
-# run GUI for Tantrix
-# import poc_tantrix_gui
-# poc_tantrix_gui.TantrixGUI(Tantrix(6))
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()
