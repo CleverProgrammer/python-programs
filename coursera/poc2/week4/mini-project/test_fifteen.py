@@ -30,6 +30,7 @@ class TestFifteen(unittest.TestCase):
         # 3. lower_row_invariant(i, j-1) == True
         fifteen = Puzzle(4, 4)
         fifteen._grid[0][0] = 4
+        fifteen._grid[0][1] = 13
         fifteen._grid[0][2] = 1
         fifteen._grid[0][3] = 3
         fifteen._grid[1][0] = 5
@@ -65,8 +66,15 @@ class TestFifteen(unittest.TestCase):
         fifteen.solve_interior_tile(3, 1)
         # step 3
         # self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
+        fifteen = Puzzle(4, 4)
+        fifteen._grid[0][0] = 14
+        fifteen._grid[3][2] = 0
+        print('========CURRENTLY UNDER PROGRESS=========')
+        print('\nleft row solution:\n', fifteen)
+        fifteen.solve_interior_tile(3, 2)
+        print('\nstep 1 completed:\n', fifteen)
 
-    def test_solve_interior_tile_solution(self):
+    def test_solve_interior_tile_thirteen(self):
         fifteen = Puzzle(4, 4)
         # fifteen._grid[0][0] = 4
         # fifteen._grid[0][1] = 13
@@ -85,18 +93,21 @@ class TestFifteen(unittest.TestCase):
         # fifteen._grid[3][2] = 14
         # fifteen._grid[3][3] = 15
         fifteen.update_puzzle('dddruldrulurdruulddd')
-        print('before solution call:\n', fifteen)
+        # print('before solution call:\n', fifteen)
+        zero_row, zero_col = fifteen.current_position(0, 0)
+        # print(fifteen.current_position(zero_row, zero_col))
         fifteen.update_puzzle('uuu')
         # print('mid solution call:\n', fifteen)
         fifteen.update_puzzle('lddru')
         # print('still mid solution call:\n', fifteen)
         fifteen.update_puzzle('lddruld')
+        # uuu lddru lddru ld
         # print('final solution call:\n', fifteen)
         self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
 
     def test_two_by_two(self):
         fifteen = Puzzle(2, 2)
-        # # print('2x2:\n', fifteen)
+        # print('2x2:\n', fifteen)
 
     def test_three_by_two(self):
         fifteen = Puzzle(3, 2)
@@ -120,11 +131,12 @@ class TestFifteen(unittest.TestCase):
         fifteen._grid[1][0] = 2
         fifteen._grid[1][1] = 4
         fifteen._grid[1][2] = 5
-        print('2x3:\n', fifteen)
+        # print(fifteen._grid[0].index(3))
+        # print('2x3:\n', fifteen)
         fifteen.update_puzzle('ldl')
-        print('ldl:\n', fifteen)
+        # print('ldl:\n', fifteen)
         fifteen.update_puzzle('urdlurrdluldrruld')
-        print('urdlurrdluldrruld:\n', fifteen)
+        # print('urdlurrdluldrruld:\n', fifteen)
 
 
 if __name__ == '__main__':

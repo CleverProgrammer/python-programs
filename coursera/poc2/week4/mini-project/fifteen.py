@@ -8,7 +8,7 @@ Use the arrows key to swap this tile with its neighbors
 # import poc_fifteen_gui
 
 
-# noinspection PyMethodMayBeStatic
+# noinspection PyMethodMayBeStatic,PyUnreachableCode
 class Puzzle:
     """
     Class representation for the Fifteen puzzle
@@ -168,12 +168,47 @@ class Puzzle:
         Updates puzzle and returns a move string
         """
         assert self.lower_row_invariant(target_row, target_col) is True
-        if target_row <= 1:
-            return ""
-        if target_col == 1:
-            return ""
+        assert target_row > 1 and target_col > 0
+        solved_board = self.solved_board()
+        target_current_row, target_current_col = self.current_position(target_row, target_col)
+        if target_current_row == target_row:
+            assert target_current_col < target_col
+        else:
+            assert target_current_row < target_row
 
-        assert self.lower_row_invariant(target_row, target_col - 1) is True
+        # if the target tile is above me
+        # step 1: get to the row
+        # step 2: do the cyclic motion and bring it my position
+        # step 3: place myself at (target_row, target_col - 1)
+        if target_current_row < target_row:
+            self.update_puzzle('u' * (target_row - target_current_row))
+
+            # if the target tile is above me but to the left
+            if target_current_col < target_col:
+                # go left
+                pass
+            # go right
+
+            # if the target_tile is directly above me
+            if target_current_col == target_col:
+                print(self.current_position(target_row, target_col))
+                # then go one column left
+                self.update_puzzle('l')
+                # what is the current position of the tile that is supposed to be at
+                # target_row, target_col
+                print('ready to execute ddrul COMBO!')
+                current_target_row, _ = self.current_position(target_row, target_col)
+                print('current target row: %d target row: %d' % (current_target_row, target_row))
+                print(self)
+                # then go ddrul (current_target_row - target_row) times
+                self.update_puzzle('ddrul' * (target_row - current_target_row))
+                # then go left and down once
+                self.update_puzzle('d')
+                print('\n', 'completed\n', self)
+
+
+
+        # assert self.lower_row_invariant(target_row, target_col - 1) is True
         return ""
 
     def solve_col0_tile(self, target_row):
