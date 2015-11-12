@@ -129,10 +129,11 @@ class Puzzle:
             else:
                 assert False, "invalid direction: " + direction
 
-    def board_copy(self):
-        copy = [[col + self._width * row for col in range(self._width)] for row in range(self._height)]
-        return copy
-
+    def solved_board(self):
+        solved = [[col + self._width * row
+                   for col in range(self._width)]
+                  for row in range(self._height)]
+        return solved
     ##################################################################
     # Phase one methods
 
@@ -144,13 +145,14 @@ class Puzzle:
         """
         # replace with your code
         assert self._grid[target_row][target_col] is not None
-        board_copy = self.board_copy()
-        zero_row, zero_col = self.current_position(0, 0)  # get the current position of 0
-        # if 0th tile is at (2, 1)
-        for row in range(self._height):
-            for col in range(self._width):
-                self._grid[zero_row + row][zero_col + col]  # access rows and cols after 0 tile
-        return False
+        board_copy = self.solved_board()
+        zero_row, zero_col = self.current_position(0, 0)  # get the current position of 0th tile
+        values_after_zerotile = self._grid[zero_row][1 + zero_col:]
+        solved_values_after_zerotile = board_copy[zero_row][1 + zero_col:]
+        for row in range(1, self._height - target_row):  # restrict search to only rows >= target_row
+            values_after_zerotile += self._grid[zero_row + row]
+            solved_values_after_zerotile += board_copy[zero_row + row]
+        return values_after_zerotile == solved_values_after_zerotile
 
     def solve_interior_tile(self, target_row, target_col):
         """
@@ -227,5 +229,5 @@ class Puzzle:
 # Start interactive simulation
 # poc_fifteen_gui.FifteenGUI(Puzzle(4, 4))
 
-fifteen = Puzzle(4, 4)
-print(fifteen)
+# fifteen = Puzzle(4, 4)
+# print(fifteen)
