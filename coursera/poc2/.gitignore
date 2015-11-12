@@ -119,4 +119,5 @@ crashlytics-build.properties
 Session.vim
 .netrwhist
 *~
+*.ropeprojects/
 
