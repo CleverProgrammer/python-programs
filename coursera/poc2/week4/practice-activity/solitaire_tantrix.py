@@ -1,5 +1,6 @@
 """
 solitaire tantrix: A game containing a grid of colored hexagonal tiles.
+Link: http://www.codeskulptor.org/#user40_1k0MMWM8rp_0.py
 1. Model a hexagonal grid
 2. Implement basic Tantrix methods
 3. Detect whether a position is legal
@@ -49,7 +50,7 @@ def reverse_direction(direction):
     Helper function that returns opposite direction on hexagonal grid
     """
     num_directions = len(DIRECTIONS)
-    return (direction + num_directions / 2) % num_directions
+    return (direction + num_directions // 2) % num_directions
 
 
 # Color codes for ten tiles in Tantrix Solitaire
@@ -161,8 +162,11 @@ class Tantrix:
         all_neighbors = []
         for direction in DIRECTIONS:
             if self.tile_exists(self.get_neighbor(index, direction)):
-                all_neighbors.append(get_neighbor(index, direction))
+                all_neighbors.append(self.get_neighbor(index, direction))
         return all_neighbors
+
+    def edges_match(self, index, color, neighbor_index):
+        pass
 
     def is_legal(self):
         """
@@ -175,14 +179,11 @@ class Tantrix:
                 if self.tile_exists(self.get_neighbor(tile_index, direction)):
                     neighbor_index = self.get_neighbor(tile_index, direction)
                     neighbor_code = self._tile_value[neighbor_index]
-                    if direction in (0, 1, 2):
-                        if tile_code[direction] == neighbor_code[direction + 3]:
-                            continue
-                        return False
-                    elif direction in (3, 4, 5):
-                        if tile_code[direction] == neighbor_code[direction - 3]:
-                            continue
-                        return False
+                    print(reverse_direction(direction))
+                    if tile_code[direction] == neighbor_code[
+                            reverse_direction(direction)]:
+                        continue
+                    return False
         # if it passes all the illegal cases, return legal or True.
         return True
 
@@ -193,4 +194,32 @@ class Tantrix:
         if not self.is_legal():  # check one time if position is illegal
             return False
 
-        return True
+        # start clean, focus.
+        tile_indices = list(self._tile_value.keys())
+        start_index = tile_indices[0]
+        start_code = self._tile_value[start_index]
+        next_direction = start_code.find(color)
+        next_index = self.get_neighbor(start_index, next_direction)
+        current_length = 1
+
+        # loop through
+        # next_index is neighbor
+        while start_index != next_index:
+            # current index is next neighbor's index
+            current_index = next_index
+            # if the next neighbor does not exist, return False
+            if not self.tile_exists(current_index):
+                return False
+            # get the current neighbor's code
+            current_code = self._tile_value[current_index]
+            # if the first color occurrence of neighbor matches with starting
+            if current_code.find(color) == reverse_direction(next_direction):
+                # 2 == 4
+                next_direction = current_code.rfind(color)
+            else:
+                next_direction = current_code.find(color)
+            next_index = self.get_neighbor(current_index, next_direction)
+            current_length += 1
+
+        print(len(SOLITAIRE_CODES[:3]))
+        return current_length == len(SOLITAIRE_CODES)
