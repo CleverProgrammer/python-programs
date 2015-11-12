@@ -4,6 +4,7 @@ Note that solved configuration has the blank (zero) tile in upper left
 Use the arrows key to swap this tile with its neighbors
 """
 
+
 # import poc_fifteen_gui
 
 
@@ -135,6 +136,7 @@ class Puzzle:
                    for col in range(self._width)]
                   for row in range(self._height)]
         return solved
+
     ##################################################################
     # Phase one methods
 
@@ -165,7 +167,13 @@ class Puzzle:
         Place correct tile at target position
         Updates puzzle and returns a move string
         """
-        # replace with your code
+        assert self.lower_row_invariant(target_row, target_col) is True
+        if target_row <= 1:
+            return ""
+        if target_col == 1:
+            return ""
+
+        assert self.lower_row_invariant(target_row, target_col - 1) is True
         return ""
 
     def solve_col0_tile(self, target_row):
