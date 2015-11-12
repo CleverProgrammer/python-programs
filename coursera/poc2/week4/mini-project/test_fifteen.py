@@ -63,63 +63,91 @@ class TestFifteen(unittest.TestCase):
         self.assertEqual(fifteen.lower_row_invariant(3, 2), False)
         self.assertEqual(fifteen.lower_row_invariant(3, 3), False)
         # step 2
-        print('========SOLVE WHEN IT IS ABOVE=========')
+        # # # print('========SOLVE WHEN IT IS ABOVE=========')
         # SOLVE WHEN IT IS ABOVE AND TO THE LEFT
-        print(fifteen)
+        # # # print(fifteen)
         fifteen.solve_interior_tile(3, 1)
-        print(fifteen)
+        # # # print(fifteen)
         # step 3
         self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
-        print('========END SOLVE WHEN IT IS ABOVE=========\n')
+        # # # print('========END SOLVE WHEN IT IS ABOVE=========\n')
         # SOLVE WHEN IT IS DIRECTLY ABOVE
-        print('========SOLVE WHEN IT IS ABOVE AND LEFT=========')
+        # # # print('========SOLVE WHEN IT IS ABOVE AND LEFT=========')
         fifteen = Puzzle(4, 4)
         fifteen._grid[0][0] = 14
         fifteen._grid[3][2] = 0
-        print(fifteen)
-        self.assertEqual(fifteen.lower_row_invariant(3, 2), True)
+        # # # print(fifteen)
         fifteen.solve_interior_tile(3, 2)
-        self.assertEqual(fifteen.lower_row_invariant(3, 1), True)
-        print(fifteen)
+        # # # print(fifteen)
         solved_through_strings = Puzzle(4, 4)
         solved_through_strings._grid[0][0] = 14
         solved_through_strings._grid[3][2] = 0
         solved_through_strings.update_puzzle('uuulldrruldrulddrulddruld')
         for val1, val2 in zip(fifteen._grid, solved_through_strings._grid):
             assert val1 == val2
-        print(solved_through_strings)
-        print('should be same as above:\n', fifteen)
-        print('========END SOLVE WHEN IT IS ABOVE AND LEFT=========\n')
-        print('========SOLVE WHEN IT IS ABOVE AND RIGHT=========')
+        # # # print(solved_through_strings)
+        # # # print('should be same as above:\n', fifteen)
+        # # # print('========END SOLVE WHEN IT IS ABOVE AND LEFT=========\n')
+        # # # print('========SOLVE WHEN IT IS ABOVE AND RIGHT=========')
         fifteen = Puzzle(4, 4)
         fifteen._grid[0][0] = 3
         fifteen._grid[0][-1] = 13
         fifteen._grid[3][1] = 0
-        print(fifteen)
-        self.assertEqual(fifteen.lower_row_invariant(3, 1), True)
+        # # # print(fifteen)
         fifteen.solve_interior_tile(3, 1)
-        print(fifteen)
-        self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
-        # print('========END SOLVE WHEN IT IS ABOVE AND RIGHT=========\n')
-        print('========SOLVE SAME ROW ONE LEFT=========')
+        # # # print(fifteen)
+        # # # print('========END SOLVE WHEN IT IS ABOVE AND RIGHT=========\n')
+        # # print('========SOLVE SAME ROW ONE LEFT=========')
         fifteen = Puzzle(4, 4)
         fifteen._grid[2][1] = 10
         fifteen._grid[2][2] = 0
         fifteen._grid[0][0] = 9
-        print(fifteen)
+        # # print(fifteen)
         fifteen.solve_interior_tile(2, 2)
-        print(fifteen)
-        print('========SOLVE SAME ROW ONE LEFT=========\n')
-        print('========SOLVE WHEN IT IS IN THE SAME ROW=========')
+        # # print(fifteen)
+        # # print('========END SOLVE SAME ROW ONE LEFT=========\n')
+        # # print('========SOLVE WHEN IT IS IN THE SAME ROW=========')
         fifteen = Puzzle(4, 4)
         fifteen._grid[2][1] = 11
         fifteen._grid[2][-1] = 0
         fifteen._grid[0][0] = 9
-        print(fifteen)
+        # # print(fifteen)
         fifteen.solve_interior_tile(2, 3)
-        print(fifteen)
-        print('========SOLVE WHEN IT IS IN THE SAME ROW=========\n')
+        # # print(fifteen)
+        # # print('========END SOLVE WHEN IT IS IN THE SAME ROW=========\n')
 
+    def test_solve_col0_tile(self):
+        # print('========SOLVE TILE IN COLUMN 0=========')
+        fifteen = Puzzle(4, 4)
+        fifteen._grid[3][0] = 0
+        fifteen._grid[2][3] = 11
+        fifteen._grid[0][0] = 12
+        # print(fifteen)
+        fifteen.solve_col0_tile(3)
+        # print(fifteen)
+        # print('========END SOLVE TILE IN COLUMN 0=========\n')
+        # # print('========LUCKY CASE WITH "UR"=========')
+        fifteen = Puzzle(4, 4)
+        fifteen._grid[3][0] = 0
+        fifteen._grid[2][0] = 12
+        fifteen._grid[0][0] = 8
+        # # print(fifteen)
+        # self.assertEqual(fifteen.solve_col0_tile(3), 'urrr', 'Test solve col0')
+        # self.assertEqual(fifteen._grid[2][3], 0, 'should be at end of row-1')
+        # # print(fifteen)
+        # # print('========END LUCKY CASE WITH "UR"========\n')
+        obj = Puzzle(3, 3, [[3, 2, 1], [6, 5, 4], [0, 7, 8]])
+        # print(obj)
+        # self.assertEqual(obj.solve_col0_tile(2), 'urr')
+        # print(obj)
+        print()
+        obj = Puzzle(4, 5, [[12, 11, 10, 9, 15],
+                            [7, 6, 5, 4, 3],
+                            [2, 1, 8, 13, 14],
+                            [0, 16, 17, 18, 19]])
+        print(obj)
+        obj.solve_col0_tile(3)
+        print(obj)
 
     def test_solve_interior_tile_thirteen(self):
         fifteen = Puzzle(4, 4)
