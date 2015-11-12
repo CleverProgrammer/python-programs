@@ -7,6 +7,7 @@ Use the arrows key to swap this tile with its neighbors
 # import poc_fifteen_gui
 
 
+# noinspection PyMethodMayBeStatic
 class Puzzle:
     """
     Class representation for the Fifteen puzzle
@@ -147,6 +148,11 @@ class Puzzle:
         assert self._grid[target_row][target_col] is not None
         board_copy = self.solved_board()
         zero_row, zero_col = self.current_position(0, 0)  # get the current position of 0th tile
+        if zero_row != target_row:
+            return False
+        if zero_col != target_col:
+            return False
+
         values_after_zerotile = self._grid[zero_row][1 + zero_col:]
         solved_values_after_zerotile = board_copy[zero_row][1 + zero_col:]
         for row in range(1, self._height - target_row):  # restrict search to only rows >= target_row
