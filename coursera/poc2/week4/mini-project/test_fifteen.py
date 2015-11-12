@@ -63,16 +63,63 @@ class TestFifteen(unittest.TestCase):
         self.assertEqual(fifteen.lower_row_invariant(3, 2), False)
         self.assertEqual(fifteen.lower_row_invariant(3, 3), False)
         # step 2
+        print('========SOLVE WHEN IT IS ABOVE=========')
+        # SOLVE WHEN IT IS ABOVE AND TO THE LEFT
+        print(fifteen)
         fifteen.solve_interior_tile(3, 1)
+        print(fifteen)
         # step 3
-        # self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
+        self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
+        print('========END SOLVE WHEN IT IS ABOVE=========\n')
+        # SOLVE WHEN IT IS DIRECTLY ABOVE
+        print('========SOLVE WHEN IT IS ABOVE AND LEFT=========')
         fifteen = Puzzle(4, 4)
         fifteen._grid[0][0] = 14
         fifteen._grid[3][2] = 0
-        print('========CURRENTLY UNDER PROGRESS=========')
-        print('\nleft row solution:\n', fifteen)
+        print(fifteen)
+        self.assertEqual(fifteen.lower_row_invariant(3, 2), True)
         fifteen.solve_interior_tile(3, 2)
-        print('\nstep 1 completed:\n', fifteen)
+        self.assertEqual(fifteen.lower_row_invariant(3, 1), True)
+        print(fifteen)
+        solved_through_strings = Puzzle(4, 4)
+        solved_through_strings._grid[0][0] = 14
+        solved_through_strings._grid[3][2] = 0
+        solved_through_strings.update_puzzle('uuulldrruldrulddrulddruld')
+        for val1, val2 in zip(fifteen._grid, solved_through_strings._grid):
+            assert val1 == val2
+        print(solved_through_strings)
+        print('should be same as above:\n', fifteen)
+        print('========END SOLVE WHEN IT IS ABOVE AND LEFT=========\n')
+        print('========SOLVE WHEN IT IS ABOVE AND RIGHT=========')
+        fifteen = Puzzle(4, 4)
+        fifteen._grid[0][0] = 3
+        fifteen._grid[0][-1] = 13
+        fifteen._grid[3][1] = 0
+        print(fifteen)
+        self.assertEqual(fifteen.lower_row_invariant(3, 1), True)
+        fifteen.solve_interior_tile(3, 1)
+        print(fifteen)
+        self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
+        # print('========END SOLVE WHEN IT IS ABOVE AND RIGHT=========\n')
+        print('========SOLVE SAME ROW ONE LEFT=========')
+        fifteen = Puzzle(4, 4)
+        fifteen._grid[2][1] = 10
+        fifteen._grid[2][2] = 0
+        fifteen._grid[0][0] = 9
+        print(fifteen)
+        fifteen.solve_interior_tile(2, 2)
+        print(fifteen)
+        print('========SOLVE SAME ROW ONE LEFT=========\n')
+        print('========SOLVE WHEN IT IS IN THE SAME ROW=========')
+        fifteen = Puzzle(4, 4)
+        fifteen._grid[2][1] = 11
+        fifteen._grid[2][-1] = 0
+        fifteen._grid[0][0] = 9
+        print(fifteen)
+        fifteen.solve_interior_tile(2, 3)
+        print(fifteen)
+        print('========SOLVE WHEN IT IS IN THE SAME ROW=========\n')
+
 
     def test_solve_interior_tile_thirteen(self):
         fifteen = Puzzle(4, 4)
