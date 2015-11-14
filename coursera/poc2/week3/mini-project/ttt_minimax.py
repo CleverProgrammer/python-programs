@@ -54,7 +54,7 @@ def mm_move(board, player, count):
         # 2. then clone the the original board
         board_copy = board.clone()  # we do not want to store the result in the original version of the board.
         # 3. make one of the available moves with the current player
-        board_copy.move(move_[0], move_[1], player)  # now the move has been made but the player needs to be switched.
+        board_copy.stuff_move(move_[0], move_[1], player)  # now the move has been made but the player needs to be switched.
         # 4. repeat this process and switch the player each time and store the winner of the game
         print("Player:", debug_helper(player))
         print("Move:", move_)
