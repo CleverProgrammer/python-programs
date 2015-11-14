@@ -212,15 +212,6 @@ class TestFifteen(unittest.TestCase):
         # # print('final solution call:\n', fifteen)
         self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
 
-    def test_row1_invariant(self):
-        fifteen = Puzzle(4, 4, [[4, 6, 1, 3],
-                                [5, 2, 0, 7],
-                                [8, 9, 10, 11],
-                                [12, 13, 14, 15]]
-                         )
-        # # print('here:\n', fifteen)
-        fifteen.row1_invariant(2)
-
     def test_row0_invariant(self):
         fifteen = Puzzle(4, 4, [[4, 2, 0, 3],
                                 [5, 1, 6, 7],
@@ -229,6 +220,23 @@ class TestFifteen(unittest.TestCase):
                          )
         # print('breh:\n', fifteen)
         self.assertEqual(fifteen.row0_invariant(2), True)
+
+    def test_row1_invariant(self):
+        fifteen = Puzzle(4, 4, [[4, 6, 1, 3],
+                                [5, 2, 0, 7],
+                                [8, 9, 10, 11],
+                                [12, 13, 14, 15]]
+                         )
+        # # print('here:\n', fifteen)
+        self.assertEqual(fifteen.row1_invariant(2), True)
+
+        fifteen1 = Puzzle(4, 4, [[4, 6, 1, 3],
+                                 [0, 2, 5, 7],
+                                 [8, 9, 10, 11],
+                                 [12, 13, 14, 15]]
+                          )
+        # # print('here:\n', fifteen)
+        self.assertEqual(fifteen1.row1_invariant(2), False)
 
     def test_two_by_two(self):
         fifteen = Puzzle(2, 2)

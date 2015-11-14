@@ -205,10 +205,8 @@ class Puzzle:
 
         # print(self.current_location(replace_with))
         # print(self.current_location(want_moved))
-        row1, col1 = self.current_location(replace_with)
-        row2, col2 = self.current_location(want_moved)
-        self.set_number(row1, col1, want_moved)
-        self.set_number(row2, col2, replace_with)
+        self.set_number(*self.current_location(replace_with), value=want_moved)
+        self.set_number(*self.current_location(want_moved), value=replace_with)
         return all_moves
 
     def solve_interior_tile(self, target_row, target_col):
@@ -286,7 +284,7 @@ class Puzzle:
                 # if it is just one column left then just move one left
                 self.update_puzzle('l')
             elif target_col - target_current_col > 1:
-                _, target_current_col = self.current_position(target_row, target_col)
+                # _, target_current_col = self.current_position(target_row, target_col)
                 # ll urrdl
                 # left * (target_col - target_current_col)
                 all_moves += 'l' * (target_col - target_current_col)
@@ -357,8 +355,15 @@ class Puzzle:
         check whether the puzzle satisfies the row zero invariant at the given column (col > 1);
         returns a boolean
         """
-        # if 0 tile is not in expected column, no need to check for more
-        return True
+        board = self.clone()
+        solved_board = self.solved_board()
+        if solved_board[0][target_col + 1:] == self._grid[0][target_col + 1:]:
+            if solved_board[1][target_col] == self._grid[1][target_col]:
+                board.set_number(0, target_col, -1)
+                board.set_number(1, target_col, 0)
+                if board.lower_row_invariant(1, target_col):
+                    return True
+        return False
 
     def row1_invariant(self, target_col):
         """
@@ -366,10 +371,8 @@ class Puzzle:
         at the given column (col > 1)
         Returns a boolean
         """
-        zero_row, zero_col = self.current_position(0, 0)
-        if (zero_row, zero_col) == (1, target_col):
-            if self.lower_row_invariant(1, target_col):
-                return True
+        if self.lower_row_invariant(1, target_col):
+            return True
         return False
 
     def solve_row0_tile(self, target_col):
