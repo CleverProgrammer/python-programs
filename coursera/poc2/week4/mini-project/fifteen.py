@@ -162,86 +162,6 @@ class Puzzle:
             solved_values_after_zerotile += board_copy[zero_row + row]
         return values_after_zerotile == solved_values_after_zerotile
 
-    def position_helper_interior(self, target_row, target_col):
-        board_copy = self.solved_board()
-
-        target_current_row, target_current_col = self.current_position(target_row, target_col)
-        all_moves = ""
-        # if the target tile is above me
-        # step 1: get to the row
-        # step 2: do the cyclic motion and bring it my position
-        # step 3: place myself at (target_row, target_col - 1)
-        if target_current_row < target_row:
-            all_moves += 'u' * (target_row - target_current_row)
-            self.update_puzzle('u' * (target_row - target_current_row))
-
-            # if the target tile is above me but to the left
-            if target_current_col < target_col:
-                # go left (target_col - target_current_col) times
-                all_moves += 'l' * (target_col - target_current_col)
-                self.update_puzzle('l' * (target_col - target_current_col))
-                _, target_current_col = self.current_position(target_row, target_col)
-                # drrul (target_col - target_current_col) times
-                # move it right above target_col
-                all_moves += 'drrul' * (target_col - target_current_col)
-                self.update_puzzle('drrul' * (target_col - target_current_col))
-                all_moves += 'drul'
-                self.update_puzzle('drul')
-                target_current_row, _ = self.current_position(target_row, target_col)
-                # then go ddrul (target_current_row - target_row) times
-                all_moves += 'ddrul' * (target_row - target_current_row)
-                self.update_puzzle('ddrul' * (target_row - target_current_row))
-                # then go left and down once
-                all_moves += 'd'
-                self.update_puzzle('d')
-
-            # if the target_tile is directly above me
-            elif target_current_col == target_col:
-                # then go one column left
-                all_moves += 'l'
-                self.update_puzzle('l')
-                # what is the current position of the tile that is supposed to be at
-                # target_row, target_col
-                target_current_row, _ = self.current_position(target_row, target_col)
-                # then go ddrul (target_current_row - target_row) times
-                all_moves += 'ddrul' * (target_row - target_current_row)
-                self.update_puzzle('ddrul' * (target_row - target_current_row))
-                # then go left and down once
-                all_moves += 'd'
-                self.update_puzzle('d')
-
-            # if the target tile is above me but to the right
-            elif target_current_col > target_col:
-                all_moves += 'r' * (target_current_col - target_col)
-                self.update_puzzle('r' * (target_current_col - target_col))
-                _, target_current_col = self.current_position(target_row, target_col)
-                all_moves += 'dllur' * (target_current_col - target_col)
-                self.update_puzzle('dllur' * (target_current_col - target_col))
-                all_moves += 'dlul'
-                self.update_puzzle('dlul')
-                target_current_row, _ = self.current_position(target_row, target_col)
-                all_moves += 'ddrul' * (target_row - target_current_row)
-                self.update_puzzle('ddrul' * (target_row - target_current_row))
-                all_moves += 'd'
-                self.update_puzzle('d')
-
-        elif target_current_row == target_row:
-            if target_col - target_current_col == 1:
-                all_moves += 'l'
-                # if it is just one column left then just move one left
-                self.update_puzzle('l')
-            elif target_col - target_current_col > 1:
-                _, target_current_col = self.current_position(target_row, target_col)
-                # ll urrdl
-                # left * (target_col - target_current_col)
-                all_moves += 'l' * (target_col - target_current_col)
-                self.update_puzzle('l' * (target_col - target_current_col))
-                _, target_current_col = self.current_position(target_row, target_col)
-                all_moves += 'urrdl' * (target_col - target_current_col)
-                self.update_puzzle('urrdl' * (target_col - target_current_col))
-
-        return all_moves
-
     def solve_interior_tile(self, target_row, target_col):
         """
         Place correct tile at target position
@@ -332,73 +252,47 @@ class Puzzle:
         assert self.lower_row_invariant(target_row, target_col - 1) is True
         return all_moves
 
-    def move(self, target_row, target_col, row, column):
-        """
-        place a tile at target position;
-        target tile's current position must be either above the target position
-        (k < i) or on the same row to the left (i = k and l < j);
-        returns a move string
-        """
-        move_it = ''
-        combo = 'druld'
-
-        # calculate deltas
-        column_delta = target_col - column
-        row_delta = target_row - row
-
-        # always move up at first
-        move_it += row_delta * 'u'
-        # simplest case, both tiles in the same column, combo 'ld' shall go first
-        if column_delta == 0:
-            move_it += 'ld' + (row_delta - 1) * combo
-        else:
-            # tile is on the left form target, specific move first
-            if column_delta > 0:
-                move_it += column_delta * 'l'
-                if row == 0:
-                    move_it += (abs(column_delta) - 1) * 'drrul'
-                else:
-                    move_it += (abs(column_delta) - 1) * 'urrdl'
-            # tile is on the right from target, specific move first
-            elif column_delta < 0:
-                move_it += (abs(column_delta) - 1) * 'r'
-                if row == 0:
-                    move_it += abs(column_delta) * 'rdllu'
-                else:
-                    move_it += abs(column_delta) * 'rulld'
-            # apply common move as last
-            move_it += row_delta * combo
-
-        return move_it
-
     def solve_col0_tile(self, target_row):
         """
         Solve tile in column zero on specified row (> 1)
         Updates puzzle and returns a move string
         """
+        # assert target_row > 1
         assert self.lower_row_invariant(target_row, 0)
-        move_it = 'ur'
-        self.update_puzzle(move_it)
+        all_moves = 'ur'
+        self.update_puzzle('ur')
+        # LUCKY CASE when just 'ur' solves the problem
+        if self.current_position(target_row, 0) == (target_row, 0):
+            zero_row, zero_col = self.current_position(0, 0)
+            all_moves += 'r' * (self._width - 1 - zero_col)
+            self.update_puzzle('r' * (self._width - 1 - zero_col))
+        elif self.current_position(target_row, 0) != (target_row, 0):
+            # position the target tile to (i-1, 1)
+            zero_row, zero_col = self.current_position(0, 0)
+            # all_moves += 'u' * (self._height - zero_row)
+            # self.update_puzzle('u' * (self._height - zero_row))
+            # all_moves += 'l'
+            # self.update_puzzle('l')
+            zero_row, zero_col = self.current_position(0, 0)
+            # position the zero tile to (i-1, 0) with solve_interior_tile
+            # all_moves += 'druld' * (self._height - 2 - zero_row)
+            # self.update_puzzle('druld' * (self._height - 2 - zero_row))
+            print(self)
+            print(zero_row, zero_col)
+            print("BOSS")
+            print(self)
+            return
+            # then apply a 3x2 puzzle move string to move target_tile to i,0
+            all_moves += 'ruldrdlurdluurddlur'
+            self.update_puzzle('ruldrdlurdluurddlur')
+            zero_row, zero_col = self.current_position(0, 0)
+            # finally end by moving zero tile to end of row i-1
+            all_moves += 'r' * (self._width - 1 - zero_col)
+            self.update_puzzle('r' * (self._width - 1 - zero_col))
 
-        # unpack tile row and column values
-        row, column = self.current_position(target_row, 0)
-        # got lucky, target tile already in place
-        if row == target_row and column == 0:
-            # move tile zero to the right end of that row
-            step = (self.get_width() - 2) * 'r'
-            self.update_puzzle(step)
-            move_it += step
-        else:
-            # target tile to position (i-1, 1) and zero tile to position (i-1, 0)
-            step = self.move(target_row - 1, 1, row, column)
-            # use move string for a 3x2 puzzle to bring the target tile into position (i, 0),
-            # then moving tile zero to the right end of row i-1
-            step += 'ruldrdlurdluurddlu' + (self.get_width() - 1) * 'r'
-            self.update_puzzle(step)
-            move_it += step
-
-        assert self.lower_row_invariant(target_row - 1, self.get_width() - 1)
-        return move_it
+        print(all_moves)
+        # assert self.lower_row_invariant(target_row - 1, self._width - 1)
+        return all_moves
 
     #############################################################
     # Phase two methods
