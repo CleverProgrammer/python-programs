@@ -132,8 +132,8 @@ class TestFifteen(unittest.TestCase):
         fifteen._grid[2][0] = 12
         fifteen._grid[0][0] = 8
         # # print(fifteen)
-        # self.assertEqual(fifteen.solve_col0_tile(3), 'urrr', 'Test solve col0')
-        # self.assertEqual(fifteen._grid[2][3], 0, 'should be at end of row-1')
+        self.assertEqual(fifteen.solve_col0_tile(3), 'urrr', 'Test solve col0')
+        self.assertEqual(fifteen._grid[2][3], 0, 'should be at end of row-1')
         # # print(fifteen)
         # # print('========END LUCKY CASE WITH "UR"========\n')
         obj = Puzzle(3, 3, [[3, 2, 1], [6, 5, 4], [0, 7, 8]])
@@ -145,9 +145,9 @@ class TestFifteen(unittest.TestCase):
                             [7, 6, 5, 4, 3],
                             [2, 1, 8, 13, 14],
                             [0, 16, 17, 18, 19]])
-        print(obj)
+        # print(obj)
         obj.solve_col0_tile(3)
-        print(obj)
+        # print(obj)
 
     def test_solve_interior_tile_thirteen(self):
         fifteen = Puzzle(4, 4)
@@ -179,6 +179,25 @@ class TestFifteen(unittest.TestCase):
         # uuu lddru lddru ld
         # print('final solution call:\n', fifteen)
         self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
+
+    def test_row1_invariant(self):
+        fifteen = Puzzle(4, 4, [[4, 6, 1, 3],
+                                [5, 2, 0, 7],
+                                [8, 9, 10, 11],
+                                [12, 13, 14, 15]]
+                         )
+        # print('here:\n', fifteen)
+        fifteen.row1_invariant(2)
+
+    def test_row0_invariant(self):
+        fifteen = Puzzle(4, 4, [[4, 2, 0, 3],
+                                [5, 1, 6, 7],
+                                [8, 9, 10, 11],
+                                [12, 13, 14, 15]]
+                         )
+        print('breh:\n', fifteen)
+        self.assertEqual(fifteen.row0_invariant(2), True)
+
 
     def test_two_by_two(self):
         fifteen = Puzzle(2, 2)
