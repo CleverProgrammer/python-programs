@@ -380,10 +380,6 @@ class Puzzle:
         Solve the tile in row zero at the specified column
         Updates puzzle and returns a move string
         """
-        # replace with your code
-        # descending order from left to right and zeroth tile at row 0, last col
-        # get the target_tile to row + 1, last col - 1
-        #
         pass
 
     def solve_row1_tile(self, target_col):
@@ -391,8 +387,12 @@ class Puzzle:
         Solve the tile in row one at the specified column
         Updates puzzle and returns a move string
         """
-        # replace with your code
-        return ""
+        assert self.row1_invariant(target_col)
+        all_moves = self.solve_interior_tile(target_row=1, target_col=target_col)
+        all_moves += 'ur'
+        self.update_puzzle('ur')
+        assert self.row0_invariant(target_col)
+        return all_moves
 
     ###########################################################
     # Phase 3 methods
