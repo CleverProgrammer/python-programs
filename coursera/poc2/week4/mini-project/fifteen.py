@@ -242,7 +242,6 @@ class Puzzle:
 
         return all_moves
 
-
     def solve_interior_tile(self, target_row, target_col):
         """
         Place correct tile at target position
