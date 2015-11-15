@@ -412,13 +412,44 @@ class Puzzle:
     ###########################################################
     # Phase 3 methods
 
+    def legal_moves(self):
+        available_moves = ''
+        zero_row, zero_col = self.current_position(0, 0)
+        if (zero_row, zero_col) == (0, 0):
+            available_moves = 'dr'
+        elif (zero_row, zero_col) == (0, 1):
+            available_moves = 'ld'
+        elif (zero_row, zero_col) == (1, 0):
+            available_moves = 'ur'
+        elif (zero_row, zero_col) == (1, 1):
+            available_moves = 'lu'
+        return available_moves
+
     def solve_2x2(self):
         """
         Solve the upper left 2x2 part of the puzzle
         Updates the puzzle and returns a move string
         """
-        # replace with your code
-        return ""
+        import random
+        assert self.row1_invariant(1)
+        all_moves = ''
+        solved_board = self.solved_board()
+        known_position = [[solved_board[0][0], solved_board[1][1]],
+                          [solved_board[0][1], solved_board[1][0]]
+                          ]
+        # shuffle till you get to a known position
+        while self._grid[0][:2] != known_position[0][:2] or\
+                        self._grid[1][:2] != known_position[1][:2]:
+            legal_moves = self.legal_moves()
+            move = random.choice(legal_moves)
+            all_moves += move
+            self.update_puzzle(move)
+        # now solve the known position
+        if self._grid[0][:2] == known_position[0][:2] and\
+                        self._grid[1][:2] == known_position[1][:2]:
+            all_moves += 'rdlurdlu'
+            self.update_puzzle('rdlurdlu')
+        return all_moves
 
     def solve_puzzle(self):
         """

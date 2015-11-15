@@ -244,7 +244,7 @@ class TestFifteen(unittest.TestCase):
                                 [8, 9, 10, 11],
                                 [12, 13, 14, 15]]
                          )
-        # self.assertEqual(fifteen.solve_row0_tile(2), 'ldlurdlurrdluldrruld')
+        self.assertEqual(fifteen.solve_row0_tile(2), 'ldlurdlurrdluldrruld')
 
         fifteen = Puzzle(4, 5, [[1, 2, 0, 3, 4],
                                 [6, 5, 7, 8, 9],
@@ -266,38 +266,25 @@ class TestFifteen(unittest.TestCase):
         self.assertEqual(fifteen.solve_row1_tile(2), 'ulldrruldruldur')
 
     def test_two_by_two(self):
-        fifteen = Puzzle(2, 2)
-        # # print('2x2:\n', fifteen)
+        fifteen = Puzzle(2, 2, [[3, 2],
+                                [1, 0]]
+                         )
+        # print('STARTING POSITION:\n', fifteen)
+        # fifteen.solve_2x2()
 
-    def test_three_by_two(self):
-        fifteen = Puzzle(3, 2)
-        fifteen._grid[0][0] = 2
-        fifteen._grid[0][1] = 4
-        fifteen._grid[1][0] = 3
-        fifteen._grid[1][1] = 1
-        fifteen._grid[2][0] = 0
-        fifteen._grid[2][1] = 5
-        # # print('3x2:\n', fifteen)
-        fifteen.update_puzzle('uruld')
-        # # print('3x2:\n', fifteen)
-        fifteen.update_puzzle('ruldrdlurdluurddlur')  # solution to move BL tile
-        # # print('3x2:\n', fifteen)
-
-    def test_two_by_three(self):
-        fifteen = Puzzle(2, 3)
-        fifteen._grid[0][0] = 3
-        fifteen._grid[0][1] = 1
-        fifteen._grid[0][2] = 0
-        fifteen._grid[1][0] = 2
-        fifteen._grid[1][1] = 4
-        fifteen._grid[1][2] = 5
-        # # print(fifteen._grid[0].index(3))
-        # # print('2x3:\n', fifteen)
-        fifteen.update_puzzle('ldl')
-        # # print('ldl:\n', fifteen)
-        fifteen.update_puzzle('urdlurrdluldrruld')
-        # # print('urdlurrdluldrruld:\n', fifteen)
-
+        fifteen = Puzzle(3, 3, [[4, 3, 2],
+                                [1, 0, 5],
+                                [6, 7, 8]]
+                         )
+        # print(fifteen)
+        # fifteen.solve_2x2()
+        fifteen = Puzzle(5, 4, [[5, 4, 2, 3],
+                                [1, 0, 6, 7],
+                                [8, 9, 10, 11],
+                                [12, 13, 14, 15],
+                                [16, 17, 18, 19]])
+        print(fifteen)
+        print(fifteen.solve_2x2())
 
 if __name__ == '__main__':
     unittest.main()
