@@ -238,6 +238,20 @@ class TestFifteen(unittest.TestCase):
         # # print('here:\n', fifteen)
         self.assertEqual(fifteen1.row1_invariant(2), False)
 
+    def test_solve_row0_tile(self):
+        fifteen = Puzzle(4, 4, [[4, 5, 0, 3],
+                                [2, 1, 6, 7],
+                                [8, 9, 10, 11],
+                                [12, 13, 14, 15]]
+                         )
+        # self.assertEqual(fifteen.solve_row0_tile(2), 'ldlurdlurrdluldrruld')
+
+        fifteen = Puzzle(4, 5, [[1, 2, 0, 3, 4],
+                                [6, 5, 7, 8, 9],
+                                [10, 11, 12, 13, 14],
+                                [15, 16, 17, 18, 19]])
+        self.assertEqual(fifteen.solve_row0_tile(2), 'ld')
+
     def test_solve_row1_tile(self):
         fifteen = Puzzle(4, 4, [[4, 6, 1, 3],
                                 [5, 2, 0, 7],

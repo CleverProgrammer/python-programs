@@ -380,7 +380,22 @@ class Puzzle:
         Solve the tile in row zero at the specified column
         Updates puzzle and returns a move string
         """
-        pass
+        assert self.row0_invariant(target_col)
+        solved_board = self.solved_board()
+        all_moves = 'ld'
+        self.update_puzzle('ld')
+        if solved_board[0][target_col] == self._grid[0][target_col]:
+            return all_moves
+        zero_row, zero_col = self.current_position(0, 0)
+        solved_val_row, solved_val_col = (self.current_position(zero_row, zero_col))
+        all_moves += self.helper_solve_interior(target_solved_row=0,
+                                                target_solved_col=target_col,
+                                                zero_row=zero_row, zero_col=zero_col,
+                                                solved_val_row=solved_val_row,
+                                                solved_val_col=solved_val_col)
+        all_moves += 'urdlurrdluldrruld'
+        self.update_puzzle('urdlurrdluldrruld')
+        return all_moves
 
     def solve_row1_tile(self, target_col):
         """
