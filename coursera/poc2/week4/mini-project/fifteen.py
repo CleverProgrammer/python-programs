@@ -264,22 +264,36 @@ class Puzzle:
                 self.update_puzzle('d')
 
             # if the target tile is above me and to the right
-            # ******* SOMETHING IS WRONG WITH THIS METHOD *******
+            # ******* SOMETHING IS WRONG WITH THIS LOGIC *******
             elif target_current_col > target_col:
-                print(self)
-                print('it is above me and to the right')
+                # print(self)
+                # print('it is above me and to the right')
                 all_moves += 'r' * (target_current_col - target_col)
                 self.update_puzzle('r' * (target_current_col - target_col))
-                _, target_current_col = self.current_position(target_row, target_col)
-                all_moves += 'dllur' * (target_current_col - target_col)
-                self.update_puzzle('dllur' * (target_current_col - target_col))
-                all_moves += 'dlul'
-                self.update_puzzle('dlul')
-                target_current_row, _ = self.current_position(target_row, target_col)
-                all_moves += 'ddrul' * (target_row - target_current_row)
-                self.update_puzzle('ddrul' * (target_row - target_current_row))
-                all_moves += 'd'
-                self.update_puzzle('d')
+                zero_row, zero_col = self.current_location(0)
+                if zero_row > 0:
+                    _, target_current_col = self.current_position(target_row, target_col)
+                    # print(target_current_col, target_col)
+                    if target_current_col == target_col:
+                        all_moves += 'ull'
+                        self.update_puzzle('ull')
+                        # print('CUZ\n', self)
+                        target_current_row, _ = self.current_position(target_row, target_col)
+                        all_moves += 'ddrul' * (target_row - target_current_row)
+                        self.update_puzzle('ddrul' * (target_row - target_current_row))
+                        all_moves += 'd'
+                        self.update_puzzle('d')
+                else:
+                    _, target_current_col = self.current_position(target_row, target_col)
+                    all_moves += 'dllur' * (target_current_col - target_col)
+                    self.update_puzzle('dllur' * (target_current_col - target_col))
+                    all_moves += 'dlul'
+                    self.update_puzzle('dlul')
+                    target_current_row, _ = self.current_position(target_row, target_col)
+                    all_moves += 'ddrul' * (target_row - target_current_row)
+                    self.update_puzzle('ddrul' * (target_row - target_current_row))
+                    all_moves += 'd'
+                    self.update_puzzle('d')
 
         elif target_current_row == target_row:
             if target_col - target_current_col == 1:
