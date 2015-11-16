@@ -179,32 +179,13 @@ class Puzzle:
         :param zero_col:  give me the col of zero
         :return: string
         """
-        # print()
-        # we have 10 by passing in (1, 1)
-        target_current_row, target_current_col = self.current_position(target_solved_row, target_solved_col)
-        # print('solving for:',
-        # self.get_number(target_current_row, target_current_col))
+        target_current_row, target_current_col = self.current_position(target_solved_row,
+                                                                       target_solved_col)
         want_moved = self.get_number(target_current_row, target_current_col)
         replace_with = self.get_number(solved_val_row, solved_val_col)
-        # print('location of the number:', (target_current_row, target_current_col))
-        # print('location_based_on_number:', self.current_location(10))
-        # make 10 the solved config of where 0 currently is
-        # 1. get index of where zero tile started
-        # 2. get index of what tile SHOULD be in place of 0
-        # solved_row, solved_col
-        # print('want_moved:', want_moved)
-        # print('replace_with:', replace_with)
-        # print('zero_position:', (zero_row, zero_col))
-        # print('13 position:', self.current_position(zero_row, zero_col))
-        # 3. get index of tile that we ACTUALLY want
         self.set_number(target_current_row, target_current_col, replace_with)
         self.set_number(solved_val_row, solved_val_col, want_moved)
-
-        # ============CALL THE SOLVER================
         all_moves = self.solve_interior_tile(zero_row, zero_col)
-
-        # print(self.current_location(replace_with))
-        # print(self.current_location(want_moved))
         self.set_number(*self.current_location(replace_with), value=want_moved)
         self.set_number(*self.current_location(want_moved), value=replace_with)
         return all_moves
@@ -215,8 +196,11 @@ class Puzzle:
         Place correct tile at target position
         Updates puzzle and returns a move string
         """
+        print("ENTERING SOLVE_INTERIOR_TILE")
+        print(self)
         # print()
         target_current_row, target_current_col = self.current_position(target_row, target_col)
+        # HERE
         # print('solving for:',
         # self.get_number(target_current_row, target_current_col))
         all_moves = ""
@@ -309,6 +293,20 @@ class Puzzle:
                 _, target_current_col = self.current_position(target_row, target_col)
                 all_moves += 'urrdl' * (target_col - target_current_col)
                 self.update_puzzle('urrdl' * (target_col - target_current_col))
+            elif target_current_col - target_col >= 1:
+                print('SO THATS THE PROBLEM')
+                all_moves += 'r' * (target_current_col - target_col)
+                self.update_puzzle('r' * (target_current_col - target_col))
+                # print('elif of sit\n', self)
+                _, target_current_col = self.current_position(target_row, target_col)
+                # print('tcc - tc:', target_current_col - target_col)
+                all_moves += 'ulldr' * (target_current_col - target_col)
+                self.update_puzzle('ulldr' * (target_current_col - target_col))
+                all_moves += 'ulld'
+                self.update_puzzle('ulld')
+        # problem is that it doesn't do anything if it's on the same row and on right side
+        print('LEAVING SOLVE_INTERIOR_TILE')
+        print(self)
         return all_moves
 
     def solve_col0_tile(self, target_row):
@@ -328,43 +326,27 @@ class Puzzle:
         if self.current_position(target_row, 0) == (target_row, 0):
             # get current position of zero tile
             zero_row, zero_col = self.current_position(0, 0)
-            # move all the move to the right
+            # move all the way to the right
             all_moves += 'r' * (self._width - 1 - zero_col)
             self.update_puzzle('r' * (self._width - 1 - zero_col))
         elif self.current_position(target_row, 0) != (target_row, 0):
-            # get current position of 0
-            # print('CHECK IT 0:\n', self)
+            # print('suP:', target_row)
             zero_row, zero_col = self.current_position(0, 0)
-            # what's the thing that goes where my zero currently is
+            # print('zero stuff:', zero_row, zero_col)
+            # print('suPTwOoo:\n', self)
             solved_val_row, solved_val_col = self.current_position(zero_row, zero_col)
-            # since I don't want to call this whole method again in self.update_puzzle
-            dummy_store = self.helper_solve_interior(target_row, 0,
+            # print('svr and svc:', solved_val_row, solved_val_col)
+            # helper_solve_interior updates the position by itself.
+            all_moves += self.helper_solve_interior(target_row, 0,
                                                      zero_row, zero_col,
                                                      solved_val_row, solved_val_col)
-            all_moves += dummy_store
-            # self.update_puzzle(dummy_store)
-            print(self)
-            # print('CHECK IT:\n', self)
-            # print(target_solved_row, target_solved_col)
-            # self.helper_solve_interior(original_zero_row, original_zero_col)
-            # position the target tile to (i-1, 1)
-            # all_moves += 'u' * (self._height - zero_row)
-            # self.update_puzzle('u' * (self._height - zero_row))
-            # all_moves += 'l'
-            # self.update_puzzle('l')
-            # zero_row, zero_col = self.current_position(0, 0)
-            # position the zero tile to (i-1, 0) with solve_interior_tile
-            # all_moves += 'druld' * (self._height - 2 - zero_row)
-            # self.update_puzzle('druld' * (self._height - 2 - zero_row))
-            # then apply a 3x2 puzzle move string to move target_tile to i,0
+            print('==after solve_interior call inside of solve_col0==\n', self)
             all_moves += 'ruldrdlurdluurddlur'
             self.update_puzzle('ruldrdlurdluurddlur')
             zero_row, zero_col = self.current_position(0, 0)
-            # finally end by moving zero tile to end of row i-1
             all_moves += 'r' * (self._width - 1 - zero_col)
             self.update_puzzle('r' * (self._width - 1 - zero_col))
 
-        # print(all_moves)
         # assert self.lower_row_invariant(target_row - 1, self._width - 1)
         return all_moves
 
@@ -513,33 +495,38 @@ class Puzzle:
         print(reversed_grid)
         row, col = self.current_location(reversed_grid[0][0])
         self.move(row, col)
-        counter = 0
+        interior_counter = 0
+        col0_counter = 0
         for row in range(self.get_height()):
             for col in range(self.get_width()):
                 # target_row, target_col = self.current_location(reversed_grid[row][col])
                 target_row, target_col = self.current_location(0)
                 # last bottom right square
                 if (target_row, target_col) == (self.get_height() - 1, self.get_width() - 1):
-                    counter += 1
+                    interior_counter += 1
                     print('================IN FIRST IF=================')
                     self.solve_interior_tile(target_row, target_col)
                     print('after first if\n', self)
                 elif target_row > 1 and target_col == 0:
                     print('===============calling solve_col0_tile=============')
+                    # print(target_row)
+                    # print('YOOOOO')
                     self.solve_col0_tile(target_row)
                     print(self)
-                    counter += 1
+                    col0_counter += 1
                 elif self.lower_row_invariant(target_row, target_col) and \
                         not self.row1_invariant(target_col):
-                    counter += 1
-                    print('================{0}. IN ELIF================='.format(counter - 1))
+                    interior_counter += 1
+                    print('================{0}. IN ELIF================='.format(interior_counter - 1))
                     print('target_row, target_col', (target_row, target_col))
                     print(self)
                     self.solve_interior_tile(target_row, target_col)
                     print('after second elif\n', self)
-                if counter == 4:
-                    print('solve_interior_tile was called {0} times'.format(counter))
+                if interior_counter + col0_counter == 7:
+                    print('solve_interior_tile was called {0} times'.format(interior_counter))
+                    print('solve_col0_tile was called {0} times'.format(col0_counter))
                     print('FINAL position')
+                    print('WHAT:\n', self)
                     return
 
                     # if row > 1 and col > 0:
@@ -549,7 +536,11 @@ class Puzzle:
                     #         self.solve_interior_tile(row, col)
                     #         counter += 1
                     #         if counter == 2:
-                    #             return self
+        print('=============DID NOT GET CAUGHT IN ANY IF STATEMENTS==============')
+        print('solve_interior_tile was called {0} times'.format(interior_counter))
+        print('solve_col0_tile was called {0} times'.format(col0_counter))
+        print('FINAL position')
+        print('WHAT:\n', self)
         return ""
 
 # Start interactive simulation
