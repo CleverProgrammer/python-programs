@@ -7,7 +7,7 @@ Use the arrows key to swap this tile with its neighbors
 
 # import poc_fifteen_gui
 
-# noinspection PyMethodMayBeStatic,PyUnreachableCode
+# noinspection PyMethodMayBeStatic,PyUnreachableCode,PyProtectedMember
 class Puzzle:
     """
     Class representation for the Fifteen puzzle
@@ -189,9 +189,14 @@ class Puzzle:
         replace_with = self.get_number(solved_val_row, solved_val_col)
         self.set_number(target_current_row, target_current_col, replace_with)
         self.set_number(solved_val_row, solved_val_col, want_moved)
+        print('SWAPPED VALUES', self)
         all_moves = self.solve_interior_tile(zero_row, zero_col)
+        # AMAZING Rosuav trick!!!!
+        wm = self.current_location(want_moved)
         self.set_number(*self.current_location(replace_with), value=want_moved)
-        self.set_number(*self.current_location(want_moved), value=replace_with)
+        self.set_number(*wm, value=replace_with)
+        print('LEAVING HELPER_SOLVE_INTERIOR')
+        print(self)
         return all_moves
 
     def solve_interior_tile(self, target_row, target_col):
@@ -342,8 +347,8 @@ class Puzzle:
             # print('svr and svc:', solved_val_row, solved_val_col)
             # helper_solve_interior updates the position by itself.
             all_moves += self.helper_solve_interior(target_row, 0,
-                                                     zero_row, zero_col,
-                                                     solved_val_row, solved_val_col)
+                                                    zero_row, zero_col,
+                                                    solved_val_row, solved_val_col)
             print('==after solve_interior call inside of solve_col0==\n', self)
             all_moves += 'ruldrdlurdluurddlur'
             self.update_puzzle('ruldrdlurdluurddlur')
@@ -389,6 +394,7 @@ class Puzzle:
         """
         assert self.row0_invariant(target_col)
         solved_board = self.solved_board()
+        print('entered solve_row0_tile:\n', self)
         all_moves = 'ld'
         self.update_puzzle('ld')
         if solved_board[0][target_col] == self._grid[0][target_col]:
@@ -442,6 +448,8 @@ class Puzzle:
         Solve the upper left 2x2 part of the puzzle
         Updates the puzzle and returns a move string
         """
+        print('ENTERED SOLVE_2x2')
+        print(self)
         import random
         assert self.row1_invariant(1)
         all_moves = ''
@@ -449,19 +457,47 @@ class Puzzle:
         known_position = [[solved_board[0][0], solved_board[1][1]],
                           [solved_board[0][1], solved_board[1][0]]
                           ]
+        print(self._grid[0][:2])
+        print(self._grid[1][:2])
+        print(known_position[0][:2])
+        print(known_position[1][:2])
+        # [ [0, 5], [1, 4] ]
+        print(self._grid)
         # shuffle till you get to a known position
-        while self._grid[0][:2] != known_position[0][:2] or \
-                        self._grid[1][:2] != known_position[1][:2]:
-            legal_moves = self.legal_moves()
-            move = random.choice(legal_moves)
-            all_moves += move
-            self.update_puzzle(move)
+        # no possible way to reach certain positions
+        clockwise_mapping = {(0, 0): 'rdlu',
+                             (0, 1): 'dlur',
+                             (1, 0): 'urdl',
+                             (1, 1): 'lurd'}
+        zero_row, zero_col = self.current_position(0, 0)
+        clockwise_moves = clockwise_mapping[(zero_row, zero_col)] * 5
+        for clockwise_move in clockwise_moves:
+            all_moves += clockwise_move
+            self.update_puzzle(clockwise_move)
+            if self._grid[0][:2] == solved_board[0][:2] and \
+                            self._grid[1][:2] == solved_board[1][:2]:
+                return all_moves
+                # return all moves
+                # self.update_puzzle(clockwise_mapping[(zero_row, zero_col)] * 5)
+
+       # while self._grid[0][:2] != known_position[0][:2] or \
+       #                 self._grid[1][:2] != known_position[1][:2]:
+       #     legal_moves = self.legal_moves()
+       #     # print(legal_moves)
+       #     pick_legal_move = random.choice(legal_moves)
+       #     # print(pick_legal_move)
+       #     all_moves += pick_legal_move
+       #     self.update_puzzle(pick_legal_move)
+            # move clockwise
+            # print('HELLO:', self)
         # now solve the known position
-        if self._grid[0][:2] == known_position[0][:2] and \
-                        self._grid[1][:2] == known_position[1][:2]:
-            all_moves += 'rdlurdlu'
-            self.update_puzzle('rdlurdlu')
-        return all_moves
+       # if self._grid[0][:2] == known_position[0][:2] and \
+       #                 self._grid[1][:2] == known_position[1][:2]:
+       #     all_moves += 'rdlurdlu'
+       #     self.update_puzzle('rdlurdlu')
+        print('LEAVING SOLVE_2x2')
+        print(self)
+        return 'NOT SOLVABLE'
 
     def move(self, target_row, target_col):
         """
@@ -491,6 +527,7 @@ class Puzzle:
         Generate a solution string for a puzzle
         Updates the puzzle and returns a move string
         """
+        all_moves = ''
         solved_board = self.solved_board()
         board_copy = self.clone()
         reversed_grid = []
@@ -499,40 +536,48 @@ class Puzzle:
             for row in board_copy._grid[::-1]:
                 reversed_grid.append(row[::-1])
         else:
-            return False
+            return ''
         # if it's NOT already solved
         print(reversed_grid)
         row, col = self.current_location(reversed_grid[0][0])
-        self.move(row, col)
+        all_moves = self.move(row, col)
         interior_counter = 0
         col0_counter = 0
         row1_counter = 0
         row0_counter = 0
+        solve_2x2_counter = 0
         for row in range(self.get_height()):
             for col in range(self.get_width()):
                 # target_row, target_col = self.current_location(reversed_grid[row][col])
                 target_row, target_col = self.current_location(0)
                 # last bottom right square
                 if (target_row, target_col) == (self.get_height() - 1, self.get_width() - 1):
-                    interior_counter += 1
-                    print('================IN FIRST IF=================')
-                    self.solve_interior_tile(target_row, target_col)
-                    print('after first if\n', self)
+                    if self.get_height() > 2 and self.get_width() > 2:
+                        interior_counter += 1
+                        print('================IN FIRST IF=================')
+                        all_moves += self.solve_interior_tile(target_row, target_col)
+                        print('after first if\n', self)
+                if target_row == 1 and target_col == 1:
+                    print('===============calling solve_2x2=============')
+                    all_moves += self.solve_2x2()
+                    print(self)
+                    solve_2x2_counter += 1
+                    return all_moves
                 elif target_row == 0:
                     print('===============calling solve_row0_tile=============')
-                    self.solve_row0_tile(target_col)
+                    all_moves += self.solve_row0_tile(target_col)
                     print(self)
                     row0_counter += 1
                 elif target_row == 1:
                     print('===============calling solve_row1_tile=============')
-                    self.solve_row1_tile(target_col)
+                    all_moves += self.solve_row1_tile(target_col)
                     print(self)
                     row1_counter += 1
                 elif target_row > 1 and target_col == 0:
                     print('===============calling solve_col0_tile=============')
                     # print(target_row)
                     # print('YOOOOO')
-                    self.solve_col0_tile(target_row)
+                    all_moves += self.solve_col0_tile(target_row)
                     print(self)
                     col0_counter += 1
                 elif self.lower_row_invariant(target_row, target_col) and \
@@ -541,16 +586,18 @@ class Puzzle:
                     print('================{0}. IN ELIF================='.format(interior_counter - 1))
                     print('target_row, target_col', (target_row, target_col))
                     print(self)
-                    self.solve_interior_tile(target_row, target_col)
+                    all_moves += self.solve_interior_tile(target_row, target_col)
                     print('after second elif\n', self)
                 # now that all bottom row methods are completed, time to work on the top 2 rows
-                if interior_counter + col0_counter + row1_counter + row0_counter == 12:
-                    print('solve_interior_tile was called {0} times'.format(interior_counter))
-                    print('solve_col0_tile was called {0} times'.format(col0_counter))
-                    print('solve_row0_tile was called {0} times'.format(row0_counter))
-                    print('solve_row1_tile was called {0} times'.format(row1_counter))
-                    print('FINAL position')
-                    return
+                # if interior_counter + col0_counter + row1_counter + row0_counter \
+                #         + solve_2x2_counter == 12:
+                #     print('solve_interior_tile was called {0} times'.format(interior_counter))
+                #     print('solve_col0_tile was called {0} times'.format(col0_counter))
+                #     print('solve_row0_tile was called {0} times'.format(row0_counter))
+                #     print('solve_row1_tile was called {0} times'.format(row1_counter))
+                #     print('solve_2x2 was called {0} times'.format(solve_2x2_counter))
+                #     print('FINAL position')
+                #     return
 
                     # if row > 1 and col > 0:
                     #     if not self.lower_row_invariant(row, col):
@@ -563,7 +610,7 @@ class Puzzle:
         print('solve_interior_tile was called {0} times'.format(interior_counter))
         print('solve_col0_tile was called {0} times'.format(col0_counter))
         print('FINAL position')
-        return ""
+        return all_moves
 
 # Start interactive simulation
 # poc_fifteen_gui.FifteenGUI(Puzzle(4, 4))

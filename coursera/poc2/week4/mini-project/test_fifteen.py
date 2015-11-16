@@ -231,12 +231,45 @@ class TestFifteen(unittest.TestCase):
         fifteen = Puzzle(4, 4, [[5, 3, 6, 7],
                                 [2, 14, 15, 9],
                                 [11, 8, 4, 1],
-                                [0, 10, 13, 12]],
+                                [0, 10, 13, 12]]
+
+                         )
+        # print(fifteen)
+        # fifteen.solve_puzzle()
+        # print(fifteen)
+
+        fifteen = Puzzle(3, 3, [[8, 7, 6],
+                                [5, 4, 3],
+                                [2, 1, 0]]
+                         )
+        # print(fifteen)
+        # fifteen.solve_puzzle()
+        # print(fifteen)
+
+        fifteen = Puzzle(4, 5, [[15, 16, 0, 3, 4],
+                                [5, 6, 7, 8, 9],
+                                [10, 11, 12, 13, 14],
+                                [1, 2, 17, 18, 19]]
+                         )
+        # print(fifteen)
+        # fifteen.solve_puzzle()
+        # print(fifteen)
+        fifteen = Puzzle(4, 5, [[15, 16, 0, 3, 4],
+                                [5, 6, 7, 8, 9],
+                                [10, 11, 12, 13, 14],
+                                [1, 2, 17, 18, 19]],
+                         'UNDER CONSTRUCTION'
+                         )
+        # print(fifteen)
+        # print(fifteen.solve_puzzle())
+        # print(fifteen)
+
+        fifteen = Puzzle(2, 4, [[0, 3, 2, 7],
+                                [4, 5, 6, 1]],
                          'UNDER CONSTRUCTION'
                          )
         print(fifteen)
         fifteen.solve_puzzle()
-        print(fifteen)
 
 
 if __name__ == '__main__':
