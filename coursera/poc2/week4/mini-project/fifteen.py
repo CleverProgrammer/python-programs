@@ -337,9 +337,13 @@ class Puzzle:
             zero_row, zero_col = self.current_position(0, 0)
             # what's the thing that goes where my zero currently is
             solved_val_row, solved_val_col = self.current_position(zero_row, zero_col)
-            all_moves += self.helper_solve_interior(target_row, 0,
-                                                    zero_row, zero_col,
-                                                    solved_val_row, solved_val_col)
+            # since I don't want to call this whole method again in self.update_puzzle
+            dummy_store = self.helper_solve_interior(target_row, 0,
+                                                     zero_row, zero_col,
+                                                     solved_val_row, solved_val_col)
+            all_moves += dummy_store
+            # self.update_puzzle(dummy_store)
+            print(self)
             # print('CHECK IT:\n', self)
             # print(target_solved_row, target_solved_col)
             # self.helper_solve_interior(original_zero_row, original_zero_col)
@@ -516,27 +520,36 @@ class Puzzle:
                 target_row, target_col = self.current_location(0)
                 # last bottom right square
                 if (target_row, target_col) == (self.get_height() - 1, self.get_width() - 1):
+                    counter += 1
+                    print('================IN FIRST IF=================')
                     self.solve_interior_tile(target_row, target_col)
                     print('after first if\n', self)
-                elif self.lower_row_invariant(target_row, target_col) and\
-                        not self.row1_invariant(target_col):
-                    print('second if')
-                    print('target_row, target_col', (target_row, target_col))
-                    self.solve_interior_tile(target_row, target_col)
-                    print('after second if\n', self)
+                elif target_row > 1 and target_col == 0:
+                    print('===============calling solve_col0_tile=============')
+                    self.solve_col0_tile(target_row)
+                    print(self)
                     counter += 1
-                    if counter == 2:
-                        print(self)
-                        return
+                elif self.lower_row_invariant(target_row, target_col) and \
+                        not self.row1_invariant(target_col):
+                    counter += 1
+                    print('================{0}. IN ELIF================='.format(counter - 1))
+                    print('target_row, target_col', (target_row, target_col))
+                    print(self)
+                    self.solve_interior_tile(target_row, target_col)
+                    print('after second elif\n', self)
+                if counter == 4:
+                    print('solve_interior_tile was called {0} times'.format(counter))
+                    print('FINAL position')
+                    return
 
-               # if row > 1 and col > 0:
-               #     if not self.lower_row_invariant(row, col):
-               #         # move the zero to the first unsolved number on bottom right
-               #         self.move(row, col)
-               #         self.solve_interior_tile(row, col)
-               #         counter += 1
-               #         if counter == 2:
-               #             return self
+                    # if row > 1 and col > 0:
+                    #     if not self.lower_row_invariant(row, col):
+                    #         # move the zero to the first unsolved number on bottom right
+                    #         self.move(row, col)
+                    #         self.solve_interior_tile(row, col)
+                    #         counter += 1
+                    #         if counter == 2:
+                    #             return self
         return ""
 
 # Start interactive simulation

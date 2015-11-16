@@ -275,7 +275,7 @@ class TestFifteen(unittest.TestCase):
                                 [0, 10, 13, 12]]
                          )
         print(fifteen)
-        fifteen.solve_puzzle()
+        # fifteen.solve_puzzle()
         print(fifteen)
 
 if __name__ == '__main__':
