@@ -7,18 +7,18 @@ Use the arrows key to swap this tile with its neighbors
 
 # import poc_fifteen_gui
 
-
 # noinspection PyMethodMayBeStatic,PyUnreachableCode
 class Puzzle:
     """
     Class representation for the Fifteen puzzle
     """
 
-    def __init__(self, puzzle_height, puzzle_width, initial_grid=None):
+    def __init__(self, puzzle_height, puzzle_width, initial_grid=None, id_=None):
         """
         Initialize puzzle with default height and width
         Returns a Puzzle object
         """
+        self.id = id_
         self._height = puzzle_height
         self._width = puzzle_width
         # create the grid
@@ -40,7 +40,11 @@ class Puzzle:
         for row in range(self._height):
             ans += str(self._grid[row])
             ans += "\n"
-        return ans
+        if self.id is not None:
+            puzzle_info = str(self.id) + '\n' + ans
+        else:
+            puzzle_info = ans
+        return puzzle_info
 
     #####################################
     # GUI methods
@@ -405,11 +409,16 @@ class Puzzle:
         Solve the tile in row one at the specified column
         Updates puzzle and returns a move string
         """
+        print('ENTERED solve_row1_tile')
+        print('target_col:', target_col)
+        print(self)
         assert self.row1_invariant(target_col)
         all_moves = self.solve_interior_tile(target_row=1, target_col=target_col)
         all_moves += 'ur'
         self.update_puzzle('ur')
         assert self.row0_invariant(target_col)
+        print('LEAVING solve_row1_tile')
+        print(self)
         return all_moves
 
     ###########################################################
@@ -497,6 +506,8 @@ class Puzzle:
         self.move(row, col)
         interior_counter = 0
         col0_counter = 0
+        row1_counter = 0
+        row0_counter = 0
         for row in range(self.get_height()):
             for col in range(self.get_width()):
                 # target_row, target_col = self.current_location(reversed_grid[row][col])
@@ -507,6 +518,16 @@ class Puzzle:
                     print('================IN FIRST IF=================')
                     self.solve_interior_tile(target_row, target_col)
                     print('after first if\n', self)
+                elif target_row == 0:
+                    print('===============calling solve_row0_tile=============')
+                    self.solve_row0_tile(target_col)
+                    print(self)
+                    row0_counter += 1
+                elif target_row == 1:
+                    print('===============calling solve_row1_tile=============')
+                    self.solve_row1_tile(target_col)
+                    print(self)
+                    row1_counter += 1
                 elif target_row > 1 and target_col == 0:
                     print('===============calling solve_col0_tile=============')
                     # print(target_row)
@@ -522,11 +543,13 @@ class Puzzle:
                     print(self)
                     self.solve_interior_tile(target_row, target_col)
                     print('after second elif\n', self)
-                if interior_counter + col0_counter == 7:
+                # now that all bottom row methods are completed, time to work on the top 2 rows
+                if interior_counter + col0_counter + row1_counter + row0_counter == 12:
                     print('solve_interior_tile was called {0} times'.format(interior_counter))
                     print('solve_col0_tile was called {0} times'.format(col0_counter))
+                    print('solve_row0_tile was called {0} times'.format(row0_counter))
+                    print('solve_row1_tile was called {0} times'.format(row1_counter))
                     print('FINAL position')
-                    print('WHAT:\n', self)
                     return
 
                     # if row > 1 and col > 0:
@@ -540,7 +563,6 @@ class Puzzle:
         print('solve_interior_tile was called {0} times'.format(interior_counter))
         print('solve_col0_tile was called {0} times'.format(col0_counter))
         print('FINAL position')
-        print('WHAT:\n', self)
         return ""
 
 # Start interactive simulation

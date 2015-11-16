@@ -231,7 +231,8 @@ class TestFifteen(unittest.TestCase):
         fifteen = Puzzle(4, 4, [[5, 3, 6, 7],
                                 [2, 14, 15, 9],
                                 [11, 8, 4, 1],
-                                [0, 10, 13, 12]]
+                                [0, 10, 13, 12]],
+                         'UNDER CONSTRUCTION'
                          )
         print(fifteen)
         fifteen.solve_puzzle()
