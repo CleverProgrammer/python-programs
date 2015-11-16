@@ -228,7 +228,7 @@ class Puzzle:
             all_moves += 'u' * (target_row - target_current_row)
             self.update_puzzle('u' * (target_row - target_current_row))
 
-            # if the target tile is above me but to the left
+            # if the target tile is above me and to the left
             if target_current_col < target_col:
                 # go left (target_col - target_current_col) times
                 all_moves += 'l' * (target_col - target_current_col)
@@ -263,8 +263,11 @@ class Puzzle:
                 all_moves += 'd'
                 self.update_puzzle('d')
 
-            # if the target tile is above me but to the right
+            # if the target tile is above me and to the right
+            # ******* SOMETHING IS WRONG WITH THIS METHOD *******
             elif target_current_col > target_col:
+                print(self)
+                print('it is above me and to the right')
                 all_moves += 'r' * (target_current_col - target_col)
                 self.update_puzzle('r' * (target_current_col - target_col))
                 _, target_current_col = self.current_position(target_row, target_col)
@@ -438,17 +441,40 @@ class Puzzle:
                           [solved_board[0][1], solved_board[1][0]]
                           ]
         # shuffle till you get to a known position
-        while self._grid[0][:2] != known_position[0][:2] or\
+        while self._grid[0][:2] != known_position[0][:2] or \
                         self._grid[1][:2] != known_position[1][:2]:
             legal_moves = self.legal_moves()
             move = random.choice(legal_moves)
             all_moves += move
             self.update_puzzle(move)
         # now solve the known position
-        if self._grid[0][:2] == known_position[0][:2] and\
+        if self._grid[0][:2] == known_position[0][:2] and \
                         self._grid[1][:2] == known_position[1][:2]:
             all_moves += 'rdlurdlu'
             self.update_puzzle('rdlurdlu')
+        return all_moves
+
+    def move(self, target_row, target_col):
+        """
+        takes in a target location to go to and then moves the zero tile there legally.
+        updates the puzzle and returns the move string
+        :return: move string
+        """
+        # get the current location of 0
+        all_moves = ''
+        zero_row, zero_col = self.current_location(0)
+        if target_row > zero_row:
+            all_moves += 'd' * (target_row - zero_row)
+            self.update_puzzle('d' * (target_row - zero_row))
+        if target_row < zero_row:
+            all_moves += 'u' * (zero_row - target_row)
+            self.update_puzzle('u' * (zero_row - target_row))
+        if target_col > zero_col:
+            all_moves += 'r' * (target_col - zero_col)
+            self.update_puzzle('r' * (target_col - zero_col))
+        if target_col < zero_col:
+            all_moves += 'l' * (zero_col - target_col)
+            self.update_puzzle('l' * (zero_col - target_col))
         return all_moves
 
     def solve_puzzle(self):
@@ -456,7 +482,47 @@ class Puzzle:
         Generate a solution string for a puzzle
         Updates the puzzle and returns a move string
         """
-        # replace with your code
+        solved_board = self.solved_board()
+        board_copy = self.clone()
+        reversed_grid = []
+        # if it is already solved
+        if solved_board != self._grid:
+            for row in board_copy._grid[::-1]:
+                reversed_grid.append(row[::-1])
+        else:
+            return False
+        # if it's NOT already solved
+        print(reversed_grid)
+        row, col = self.current_location(reversed_grid[0][0])
+        self.move(row, col)
+        counter = 0
+        for row in range(self.get_height()):
+            for col in range(self.get_width()):
+                # target_row, target_col = self.current_location(reversed_grid[row][col])
+                target_row, target_col = self.current_location(0)
+                # last bottom right square
+                if (target_row, target_col) == (self.get_height() - 1, self.get_width() - 1):
+                    self.solve_interior_tile(target_row, target_col)
+                    print('after first if\n', self)
+                elif self.lower_row_invariant(target_row, target_col) and\
+                        not self.row1_invariant(target_col):
+                    print('second if')
+                    print('target_row, target_col', (target_row, target_col))
+                    self.solve_interior_tile(target_row, target_col)
+                    print('after second if\n', self)
+                    counter += 1
+                    if counter == 2:
+                        print(self)
+                        return
+
+               # if row > 1 and col > 0:
+               #     if not self.lower_row_invariant(row, col):
+               #         # move the zero to the first unsolved number on bottom right
+               #         self.move(row, col)
+               #         self.solve_interior_tile(row, col)
+               #         counter += 1
+               #         if counter == 2:
+               #             return self
         return ""
 
 # Start interactive simulation

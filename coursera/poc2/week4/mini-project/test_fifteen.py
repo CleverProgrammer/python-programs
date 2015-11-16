@@ -181,37 +181,6 @@ class TestFifteen(unittest.TestCase):
         self.assertEqual(obj.solve_col0_tile(3), 'uruurrrdllurdllurdlulddruldruldrdlurdluurddlurrrr')
         # print(obj)
 
-    def test_solve_interior_tile_thirteen(self):
-        fifteen = Puzzle(4, 4)
-        # fifteen._grid[0][0] = 4
-        # fifteen._grid[0][1] = 13
-        # fifteen._grid[0][2] = 1
-        # fifteen._grid[0][3] = 3
-        # fifteen._grid[1][0] = 5
-        # fifteen._grid[1][1] = 10
-        # fifteen._grid[1][2] = 2
-        # fifteen._grid[1][3] = 7
-        # fifteen._grid[2][0] = 8
-        # fifteen._grid[2][1] = 12
-        # fifteen._grid[2][2] = 6
-        # fifteen._grid[2][3] = 11
-        # fifteen._grid[3][0] = 9
-        # fifteen._grid[3][1] = 0
-        # fifteen._grid[3][2] = 14
-        # fifteen._grid[3][3] = 15
-        fifteen.update_puzzle('dddruldrulurdruulddd')
-        # # print('before solution call:\n', fifteen)
-        zero_row, zero_col = fifteen.current_position(0, 0)
-        # # print(fifteen.current_position(zero_row, zero_col))
-        fifteen.update_puzzle('uuu')
-        # # print('mid solution call:\n', fifteen)
-        fifteen.update_puzzle('lddru')
-        # # print('still mid solution call:\n', fifteen)
-        fifteen.update_puzzle('lddruld')
-        # uuu lddru lddru ld
-        # # print('final solution call:\n', fifteen)
-        self.assertEqual(fifteen.lower_row_invariant(3, 0), True)
-
     def test_row0_invariant(self):
         fifteen = Puzzle(4, 4, [[4, 2, 0, 3],
                                 [5, 1, 6, 7],
@@ -265,26 +234,49 @@ class TestFifteen(unittest.TestCase):
                                 [15, 16, 17, 18, 19]])
         self.assertEqual(fifteen.solve_row1_tile(2), 'ulldrruldruldur')
 
-    def test_two_by_two(self):
+    def test_solve_2x2(self):
         fifteen = Puzzle(2, 2, [[3, 2],
                                 [1, 0]]
                          )
-        # print('STARTING POSITION:\n', fifteen)
-        # fifteen.solve_2x2()
+        fifteen.solve_2x2()
+        solved_fifteen = Puzzle(2, 2, [[0, 1],
+                                       [2, 3]]
+                                )
+        self.assertEqual(fifteen._grid, solved_fifteen._grid)
 
         fifteen = Puzzle(3, 3, [[4, 3, 2],
                                 [1, 0, 5],
                                 [6, 7, 8]]
                          )
-        # print(fifteen)
-        # fifteen.solve_2x2()
+        solved_fifteen = Puzzle(3, 3, [[0, 1, 2],
+                                       [3, 4, 5],
+                                       [6, 7, 8]]
+                                )
+        fifteen.solve_2x2()
+        self.assertEqual(fifteen._grid, solved_fifteen._grid)
+
         fifteen = Puzzle(5, 4, [[5, 4, 2, 3],
                                 [1, 0, 6, 7],
                                 [8, 9, 10, 11],
                                 [12, 13, 14, 15],
                                 [16, 17, 18, 19]])
+        solved_fifteen = Puzzle(5, 4, [[0, 1, 2, 3],
+                                       [4, 5, 6, 7],
+                                       [8, 9, 10, 11],
+                                       [12, 13, 14, 15],
+                                       [16, 17, 18, 19]])
+        fifteen.solve_2x2()
+        self.assertEqual(fifteen._grid, solved_fifteen._grid)
+
+    def test_solve_puzzle(self):
+        fifteen = Puzzle(4, 4, [[5, 3, 6, 7],
+                                [2, 14, 15, 9],
+                                [11, 8, 4, 1],
+                                [0, 10, 13, 12]]
+                         )
         print(fifteen)
-        print(fifteen.solve_2x2())
+        fifteen.solve_puzzle()
+        print(fifteen)
 
 if __name__ == '__main__':
     unittest.main()
