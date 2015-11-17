@@ -480,21 +480,21 @@ class Puzzle:
                 # return all moves
                 # self.update_puzzle(clockwise_mapping[(zero_row, zero_col)] * 5)
 
-       # while self._grid[0][:2] != known_position[0][:2] or \
-       #                 self._grid[1][:2] != known_position[1][:2]:
-       #     legal_moves = self.legal_moves()
-       #     # print(legal_moves)
-       #     pick_legal_move = random.choice(legal_moves)
-       #     # print(pick_legal_move)
-       #     all_moves += pick_legal_move
-       #     self.update_puzzle(pick_legal_move)
-            # move clockwise
-            # print('HELLO:', self)
-        # now solve the known position
-       # if self._grid[0][:2] == known_position[0][:2] and \
-       #                 self._grid[1][:2] == known_position[1][:2]:
-       #     all_moves += 'rdlurdlu'
-       #     self.update_puzzle('rdlurdlu')
+                # while self._grid[0][:2] != known_position[0][:2] or \
+                #                 self._grid[1][:2] != known_position[1][:2]:
+                #     legal_moves = self.legal_moves()
+                #     # print(legal_moves)
+                #     pick_legal_move = random.choice(legal_moves)
+                #     # print(pick_legal_move)
+                #     all_moves += pick_legal_move
+                #     self.update_puzzle(pick_legal_move)
+                # move clockwise
+                # print('HELLO:', self)
+                # now solve the known position
+                # if self._grid[0][:2] == known_position[0][:2] and \
+                #                 self._grid[1][:2] == known_position[1][:2]:
+                #     all_moves += 'rdlurdlu'
+                #     self.update_puzzle('rdlurdlu')
         print('LEAVING SOLVE_2x2')
         print(self)
         return 'NOT SOLVABLE'
@@ -588,16 +588,16 @@ class Puzzle:
                     print(self)
                     all_moves += self.solve_interior_tile(target_row, target_col)
                     print('after second elif\n', self)
-                # now that all bottom row methods are completed, time to work on the top 2 rows
-                # if interior_counter + col0_counter + row1_counter + row0_counter \
-                #         + solve_2x2_counter == 12:
-                #     print('solve_interior_tile was called {0} times'.format(interior_counter))
-                #     print('solve_col0_tile was called {0} times'.format(col0_counter))
-                #     print('solve_row0_tile was called {0} times'.format(row0_counter))
-                #     print('solve_row1_tile was called {0} times'.format(row1_counter))
-                #     print('solve_2x2 was called {0} times'.format(solve_2x2_counter))
-                #     print('FINAL position')
-                #     return
+                    # now that all bottom row methods are completed, time to work on the top 2 rows
+                    # if interior_counter + col0_counter + row1_counter + row0_counter \
+                    #         + solve_2x2_counter == 12:
+                    #     print('solve_interior_tile was called {0} times'.format(interior_counter))
+                    #     print('solve_col0_tile was called {0} times'.format(col0_counter))
+                    #     print('solve_row0_tile was called {0} times'.format(row0_counter))
+                    #     print('solve_row1_tile was called {0} times'.format(row1_counter))
+                    #     print('solve_2x2 was called {0} times'.format(solve_2x2_counter))
+                    #     print('FINAL position')
+                    #     return
 
                     # if row > 1 and col > 0:
                     #     if not self.lower_row_invariant(row, col):
