@@ -1,8 +1,7 @@
-
-
 # Get this figure: fig = py.get_figure("https://plot.ly/~AnnaG/2/")
 # Get this figure's data: data = py.get_figure("https://plot.ly/~AnnaG/2/").get_data()
-# Add data to this figure: py.plot(Data([Scatter(x=[1, 2], y=[2, 3])]), filename ="Barometer: Children's Safety", fileopt="extend"))
+# Add data to this figure: py.plot(Data([Scatter(x=[1, 2], y=[2, 3])]), filename ="Barometer: Children's Safety",
+# fileopt="extend"))
 # Get y data of first trace: y1 = py.get_figure("https://plot.ly/~AnnaG/2/").get_data()[0]["y"]
 
 # Get figure documentation: https://plot.ly/python/get-requests/
@@ -15,10 +14,11 @@
 
 import plotly.plotly as py
 from plotly.graph_objs import *
-py.sign_in('rafeh01', '1iglsyzwiy')
+
 trace1 = Bar(
     x=[0.29, 0.17, 0.21, 0.07, 0.11, 0.07, 0.12, 0.3, 0.04, 0.09, 0.04, 0.1, 0.05, 0.04, 0.03, 0.02],
-    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia', 'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
+    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia',
+       'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
     marker=Marker(
         color='rgb(131, 186, 106)'
     ),
@@ -28,7 +28,8 @@ trace1 = Bar(
 )
 trace2 = Bar(
     x=[0.52, 0.28, 0.32, 0.17, 0.25, 0.18, 0.21, 0.3, 0.16, 0.24, 0.13, 0.18, 0.13, 0.09, 0.13, 0.12],
-    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia', 'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
+    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia',
+       'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
     marker=Marker(
         color='rgb(168, 209, 152)'
     ),
@@ -38,7 +39,8 @@ trace2 = Bar(
 )
 trace3 = Bar(
     x=[0.05, 0.33, 0.16, 0.3, 0.25, 0.19, 0.3, 0.2, 0.21, 0.08, 0.21, 0.13, 0.11, 0.19, 0.37, 0.13],
-    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia', 'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
+    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia',
+       'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
     marker=Marker(
         color='rgb(209, 230, 201)'
     ),
@@ -48,7 +50,8 @@ trace3 = Bar(
 )
 trace4 = Bar(
     x=[0.06, 0.15, 0.18, 0.3, 0.28, 0.36, 0.23, 0.14, 0.38, 0.33, 0.42, 0.15, 0.3, 0.39, 0.38, 0.44],
-    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia', 'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
+    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia',
+       'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
     marker=Marker(
         color='rgb(182, 206, 210)'
     ),
@@ -57,8 +60,11 @@ trace4 = Bar(
     uid='0ce36f'
 )
 trace5 = Bar(
-    x=[0.07999999999999985, 0.06999999999999995, 0.1299999999999999, 0.15999999999999992, 0.10999999999999999, 0.19999999999999996, 0.14000000000000012, 0.05999999999999994, 0.20999999999999996, 0.26, 0.19999999999999996, 0.43999999999999995, 0.41000000000000003, 0.29000000000000004, 0.08999999999999997, 0.29000000000000004],
-    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia', 'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
+    x=[0.07999999999999985, 0.06999999999999995, 0.1299999999999999, 0.15999999999999992, 0.10999999999999999,
+       0.19999999999999996, 0.14000000000000012, 0.05999999999999994, 0.20999999999999996, 0.26, 0.19999999999999996,
+       0.43999999999999995, 0.41000000000000003, 0.29000000000000004, 0.08999999999999997, 0.29000000000000004],
+    y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia',
+       'Israel', 'Denmark', 'Sweden', 'Germany', 'Norway', 'Japan', 'Finland'],
     marker=Marker(
         color='rgb(150, 182, 199)'
     ),
@@ -168,7 +174,8 @@ layout = Layout(
     separators='.,',
     showlegend=False,
     smith=False,
-    title='Agreement with: <i>"Some young people and adults in the area make you afraid to let your children play outdoors."</i>',
+    title='Agreement with: <i>"Some young people and adults in the area make you afraid to let your '
+          'children play outdoors."</i>',
     titlefont=dict(
         color='',
         family='"PT Sans Narrow", sans-serif',
@@ -264,3 +271,6 @@ layout = Layout(
 )
 fig = Figure(data=data, layout=layout)
 plot_url = py.plot(fig)
+
+# save as png
+py.image.save_as(fig, 'the_plotly.pdf')
