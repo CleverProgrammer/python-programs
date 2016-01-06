@@ -15,7 +15,6 @@
 import plotly.plotly as py
 from plotly.graph_objs import *
 
-py.sign_in('rafeh01', '1iglsyzwiy' )
 trace1 = Bar(
     x=[0.29, 0.17, 0.21, 0.07, 0.11, 0.07, 0.12, 0.3, 0.04, 0.09, 0.04, 0.1, 0.05, 0.04, 0.03, 0.02],
     y=['Sri Lanka', 'Italy', 'South Africa', 'France', 'England', 'Ireland', 'Portugal', 'Brazil', 'Australia',
