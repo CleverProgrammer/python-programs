@@ -1,6 +1,7 @@
 # python misc files
 *.pyc
 *.swp
+*.mp3
 
 # pycharm ide misc files
 *.idea/
